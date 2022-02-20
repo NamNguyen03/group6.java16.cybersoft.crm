@@ -1,7 +1,6 @@
-package cybersoft.javabackend.crm.filter;
+package group6.java16.cybersoft.javabackend.crm.filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,16 +9,20 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-@WebFilter
+@WebFilter(urlPatterns = {UrlConst.GLOBAL})
 public class EncodeFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		((HttpServletRequest) request).setCharacterEncoding("UTF-8");
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+		
+		req.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);
-		((HttpServletResponse) response).setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 	}
 
 }

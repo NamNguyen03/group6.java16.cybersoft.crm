@@ -11,6 +11,7 @@
   	<jstl.version>1.2</jstl.version>
   	<mysql.connector.version>8.0.28</mysql.connector.version>
   	<sitemesh.version>2.4.2</sitemesh.version>
+  	<lombok.version>1.18.22</lombok.version>
   </properties>
   
   <dependencies>
@@ -32,7 +33,13 @@
 	    <artifactId>sitemesh</artifactId>
 	    <version>${sitemesh.version}</version>
 	</dependency>
-
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
   </dependencies>
   
   <build>
