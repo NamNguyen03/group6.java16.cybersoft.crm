@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<title>Home</title>
+<title>Update Role</title>
 
 <body>
 	<div class="container page__heading-container">
@@ -13,9 +13,11 @@
 						<ol class="breadcrumb mb-0">
 							<li class="breadcrumb-item"><a
 								href="<c:url value="<%=UrlConst.HOME %>" />">Dashboard</a></li>
+							<li class="breadcrumb-item"><a
+								href="<c:url value="<%=UrlConst.UPDATE_ROLE %>" />">Update Role</a></li>
 						</ol>
 					</nav>
-					<h1 class="m-0">Dashboard</h1>
+					<h1 class="m-0">Update Role</h1>
 				</div>
 			</div>
 		</div>
