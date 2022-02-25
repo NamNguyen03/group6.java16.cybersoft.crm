@@ -11,4 +11,13 @@ public interface UserRepo {
 	 * @return User if username exists or null if username not exists
 	 */
 	User findByUsername(String username);
+	
+	/**
+	 * Retrieves an User by its username
+	 * 
+	 * @param username must not be {@literal null}.
+	 * 
+	 * @return true if role of user is admin else false
+	 */
+	boolean isAdmin(String username);
 }

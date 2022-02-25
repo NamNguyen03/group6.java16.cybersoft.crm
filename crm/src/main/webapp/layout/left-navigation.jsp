@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page__header mb-0">
     <div class="container page__container">
         <div class="navbar navbar-secondary navbar-light navbar-expand-sm p-0">
@@ -34,6 +38,9 @@
                             </a>
                             <a class="dropdown-item" href="#">
                                 Create User
+                            </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_ROLE %>" />">
+                                Update Role
                             </a>
                         </div>
                     </li>
