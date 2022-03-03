@@ -30,3 +30,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Private Data ###
+
+nam-query-data.sql

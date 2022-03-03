@@ -48,4 +48,20 @@ public interface UserRepo {
 	 */
 	List<UserResponseModels.UserResponseModel> findByRoleName(String roleName);
 
+	/**
+	 * check id user exists
+	 * 
+	 * @param idUser
+	 * @return true if id exists else false
+	 */
+	boolean existsById(int id);
+
+	/**
+	 * find User by id
+	 * 
+	 * @param idUser
+	 * @return User if id exists else return null
+	 */
+	User findById(int id);
+
 }

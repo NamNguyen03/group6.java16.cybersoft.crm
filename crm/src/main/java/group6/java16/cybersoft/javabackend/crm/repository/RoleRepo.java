@@ -55,4 +55,23 @@ public interface RoleRepo {
 	 * @return true if insert success else return false
 	 */
 	boolean saveRoleDetails(String email, int idRole);
+
+	/**
+	 * remove role in project 
+	 * 
+	 * @param idUser
+	 * @param projectName
+	 * @param roleName
+	 * @return true if remove success else fails
+	 */
+	boolean removeRoleInProject(int idUser, String projectName, String roleName);
+
+	/**
+	 * remove role 
+	 * 
+	 * @param idUser
+	 * @param roleName
+	 * @return true if remove success else fails
+	 */
+	boolean removeRole(int idUser, String roleName);
 }

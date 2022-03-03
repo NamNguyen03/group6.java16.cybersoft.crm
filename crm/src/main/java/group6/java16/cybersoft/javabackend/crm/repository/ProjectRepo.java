@@ -45,4 +45,13 @@ public interface ProjectRepo {
 	 */
 	boolean existsByNameAndLeaderIsNull(String projectName);
 
+	/**
+	 * check project by name and check this have leader equals usernameReq
+	 * 
+	 * @param projectName
+	 * @param usernameReq
+	 * @return true if project exists name and have leader is usernameReg else false
+	 */
+	boolean existsByNameAndLeader(String projectName, String usernameReq);
+
 }

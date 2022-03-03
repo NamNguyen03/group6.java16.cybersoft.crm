@@ -101,7 +101,7 @@ public class RoleRepoImpl implements RoleRepo {
 			return false;
 		}
 		try (Connection connection = MySQLConnection.getConnection()) {
-		
+
 			String query = "CALL save_role_in_project( ? , ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, email);
@@ -126,20 +126,73 @@ public class RoleRepoImpl implements RoleRepo {
 					+ "WHERE NOT EXISTS ( SELECT id FROM role_details WHERE user_id = "
 					+ "(select id from t_user where username = ? ) and role_id = ? ) LIMIT 1;";
 			PreparedStatement statement;
-			try {
-				statement = connection.prepareStatement(query);
-				statement.setString(1, email);
-				statement.setInt(2, idRole);
-				statement.setString(3, email);
-				statement.setInt(4, idRole);
-				statement.executeUpdate();
-				return true;
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			statement = connection.prepareStatement(query);
+			statement.setString(1, email);
+			statement.setInt(2, idRole);
+			statement.setString(3, email);
+			statement.setInt(4, idRole);
+			statement.executeUpdate();
 			return true;
+
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeRoleInProject(int idUser, String projectName, String roleName) {
+		if( idUser <=0) {
+			return false;
+		}
+		if( projectName == null || "".equals(projectName)) {
+			return false;
+		}
+		if( roleName == null || "".equals(roleName)) {
+			return false;
+		}
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "delete from project_role where "
+					+ "	project_id = (select id from project where project_name = ? ) "
+					+ "    and role_details_id = (select id from role_details where "
+					+ "		user_id = ? and role_id = (select id from u_role where role_name = ? )); ";
+			PreparedStatement statement;
+			statement = connection.prepareStatement(query);
+			statement.setString(1, projectName);
+			statement.setInt(2, idUser);
+			statement.setString(3, roleName);
+			
+			
+			statement.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean removeRole(int idUser, String roleName) {
+		if( idUser <= 0) {
+			return false;
+		}
+		if( roleName == null || "".equals(roleName)) {
+			return false;
+		}
+		
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "delete from role_details where user_id = ? and  role_id = (select id from u_role where role_name = ? );";
+			
+			PreparedStatement statement;
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, idUser);
+			statement.setString(2, roleName);		
+			
+			statement.executeUpdate();
+			return true;
+		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;

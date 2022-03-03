@@ -19,6 +19,7 @@ import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImp
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleRequestModels;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleService;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleServiceImpl;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserService;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserServiceImpl;
@@ -29,7 +30,7 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
  * @author nam
  *
  */
-@WebServlet(name = "userServlet", urlPatterns = UrlConst.UPDATE_ROLE)
+@WebServlet(name = "userServlet", urlPatterns = {UrlConst.UPDATE_ROLE, UrlConst.REMOVE_ROLE})
 public class UserServlet extends HttpServlet {
 
 	private RoleService roleService;
@@ -62,12 +63,33 @@ public class UserServlet extends HttpServlet {
 		case UrlConst.UPDATE_ROLE:
 			updateRole(req, resp);
 			break;
-
+		case UrlConst.REMOVE_ROLE:
+			removeRole(req, resp);
+			break;
 		default:
 			break;
 		}
 		
 
+	}
+
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void removeRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int idUser = Integer.parseInt(req.getParameter("idUser"));
+		String username = req.getParameter("username");
+		String roleName = req.getParameter("roleName");
+		String projectName = req.getParameter("projectName");
+		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
+		
+		boolean rp = roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
+		
+		getPageUpdateRole(req, resp);
+		
 	}
 
 	/**

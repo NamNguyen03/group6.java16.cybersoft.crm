@@ -22,4 +22,16 @@ public class RoleRequestModels {
 		private String projectName;
 		private String usernameReq;
 	}
+	
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class RemoveRoleRequestModel{
+		private int idUser;
+		private String username;
+		private String roleName;
+		private String projectName;
+		private String usernameReq;
+	}
 }

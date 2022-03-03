@@ -97,7 +97,13 @@ tr:nth-child(even) {
 						<td><c:out value="${user.roleName}" /></td>
 						<td><c:out value="${user.projectName}" /></td>
 						<td>
-							<button type="button" class="btn btn-danger">Delete</button>
+							<form action="<c:url value="<%=UrlConst.REMOVE_ROLE %>" />" method="POST">
+								<input type="hidden" name="idUser" value="${user.idUser}" />
+								<input type="hidden" name="username" value="${user.username}" />
+								<input type="hidden" name="roleName" value="${user.roleName}" />
+								<input type="hidden" name="projectName" value="${user.projectName}" />
+								<button type="submit" class="btn btn-danger" >Delete</button>
+							</form>
 						</td>
 					</tr>
 				</c:forEach>

@@ -136,4 +136,39 @@ public class ProjectRepoImpl extends EntityRepo<Project> implements ProjectRepo 
 		return false;
 	}
 
+	@Override
+	public boolean existsByNameAndLeader(String projectName, String usernameReq) {
+		if(projectName == null || "".equals(projectName)) {
+			return false;
+		}	
+		if(usernameReq == null || "".equals(usernameReq)) {
+			return false;
+		}	
+		
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists (select id from project where project_name = ? and "
+					+ "id = (select project_id from project_role where "
+					+ "role_details_id = (select id from role_details where "
+					+ "user_id = (select id from t_user where username = ? ) and "
+					+ "role_id = (select id from u_role where role_name = ? ))))";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+	
+			statement.setString(1, projectName);
+			statement.setString(2, usernameReq);
+			statement.setString(3,"LEADER");
+			
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			return results.getBoolean(1);
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
 }

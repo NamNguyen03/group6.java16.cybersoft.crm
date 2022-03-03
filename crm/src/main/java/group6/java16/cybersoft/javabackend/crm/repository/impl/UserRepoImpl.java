@@ -97,7 +97,8 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 					+ "left join role_details rd on rd.user_id = u.id "
 					+ "left join u_role r on r.id = rd.role_id "
 					+ "left join project_role pr on pr.role_details_id = rd.id "
-					+ "left join project p on p.id = pr.project_id) as T order by role_name ASC ";
+					+ "left join project p on p.id = pr.project_id) as T where role_name = 'ADMIN' or "
+					+ "project_name IS NOT NULL  order by role_name ASC ";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			
@@ -125,7 +126,8 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 					+ "left join role_details rd on rd.user_id = u.id "
 					+ "left join u_role r on r.id = rd.role_id "
 					+ "left join project_role pr on pr.role_details_id = rd.id "
-					+ "left join project p on p.id = pr.project_id ) AS T where role_name = ? ";
+					+ "left join project p on p.id = pr.project_id ) AS T where role_name = ? "
+					+ " and (role_name = 'ADMIN' or project_name IS NOT NULL )";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, roleName);
 			ResultSet results = statement.executeQuery();
@@ -145,6 +147,59 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			e.printStackTrace();
 		}
 		return rs;
+	}
+
+	@Override
+	public boolean  existsById(int id) {
+		if(id <= 0) {
+			return false;
+		}
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists( select id from t_user where id = ? )";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+	
+			statement.setInt(1, id);
+			
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			return results.getBoolean(1);
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	@Override
+	public User findById(int id) {
+		if(id >= 0 ) {
+			return null;
+		}
+		User user = null;
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where id = ? ";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet results = statement.executeQuery();
+			
+			results.next();
+			user = new User();
+			
+			user = super.setFiels(user, results);
+			
+			user.setUsername(results.getString("username"));
+			user.setPassword(results.getString("user_password"));
+			user.setFullname(results.getString("fullname"));
+			user.setAddress(results.getString("user_address"));
+			user.setPhone(results.getString("phone"));;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	
