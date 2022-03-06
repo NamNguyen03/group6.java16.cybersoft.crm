@@ -34,8 +34,7 @@ public class AuthFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
-
-		if(servletPath.startsWith(UrlConst.LOGIN)){
+		if(servletPath.startsWith(UrlConst.LOGIN) || servletPath.startsWith(UrlConst.FORGOT_PASSWORD)){
 			chain.doFilter(request, response);
 		}
 		else {

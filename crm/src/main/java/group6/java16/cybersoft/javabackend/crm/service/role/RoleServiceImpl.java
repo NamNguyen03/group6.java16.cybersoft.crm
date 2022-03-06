@@ -7,7 +7,6 @@ import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.Project;
 import group6.java16.cybersoft.javabackend.crm.model.Role;
-import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.repository.ProjectRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.RoleRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;

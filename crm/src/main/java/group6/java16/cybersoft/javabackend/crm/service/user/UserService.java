@@ -3,6 +3,7 @@ package group6.java16.cybersoft.javabackend.crm.service.user;
 import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 
 public interface UserService {
@@ -32,5 +33,37 @@ public interface UserService {
 	 * @return List<User> 
 	 */
 	List<UserResponseModels.UserResponseModel> findByRoleName(String roleName);
+
+	/**
+	 * update password
+	 * 
+	 * @param username
+	 * @param password
+	 * @return true if update success else false
+	 */
+	boolean updateNewPassword(String username, String password);
+
+	/**
+	 * get all user request reset password
+	 * 
+	 * @returnList AcceptResetPasswordResponseModel 
+	 */
+	List<AcceptResetPasswordResponseModel> getAllUserRequestResetPassword();
+
+	/**
+	 * accept reset password
+	 * 
+	 * @param username
+	 * @return true if update success else false
+	 */
+	boolean acceptResetPassword(String username);
+
+	/**
+	 * reject reset password
+	 * 
+	 * @param username
+	 * @return true if update success else false
+	 */
+	boolean rejectResetPassword(String username);
 
 }

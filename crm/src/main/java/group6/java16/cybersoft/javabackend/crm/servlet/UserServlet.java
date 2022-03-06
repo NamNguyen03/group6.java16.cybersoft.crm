@@ -30,19 +30,25 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
  * @author nam
  *
  */
-@WebServlet(name = "userServlet", urlPatterns = {UrlConst.UPDATE_ROLE, UrlConst.REMOVE_ROLE})
+@WebServlet(name = "userServlet", urlPatterns = {
+		UrlConst.UPDATE_ROLE, 
+		UrlConst.REMOVE_ROLE,
+		UrlConst.FORGOT_PASSWORD,
+		UrlConst.ACCEPT_RESET_PASSWORD,
+		UrlConst.REJECT_RESET_PASSWORD
+})
 public class UserServlet extends HttpServlet {
 
 	private RoleService roleService;
 	private UserService userService;
 	private ProjectService projectService;
-	
+
 	public UserServlet() {
 		roleService = new RoleServiceImpl();
 		userService = new UserServiceImpl();
 		projectService = new ProjectServiceImpl();
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
@@ -51,11 +57,20 @@ public class UserServlet extends HttpServlet {
 			getPageUpdateRole(req, resp);
 			break;
 
+		case UrlConst.FORGOT_PASSWORD:
+			req.getRequestDispatcher(JspConst.FORGOT_PASSWORD)
+			.forward(req, resp);
+			break;
+			
+		case UrlConst.ACCEPT_RESET_PASSWORD:
+			getPageAcceptResetPassword(req, resp);
+			break;
+			
 		default:
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
@@ -63,13 +78,53 @@ public class UserServlet extends HttpServlet {
 		case UrlConst.UPDATE_ROLE:
 			updateRole(req, resp);
 			break;
+
 		case UrlConst.REMOVE_ROLE:
 			removeRole(req, resp);
+			break;
+			
+		case UrlConst.FORGOT_PASSWORD:
+			updatePassword(req, resp);
+			break;
+		
+		case UrlConst.ACCEPT_RESET_PASSWORD:
+			acceptResetPassword(req, resp);
+			break;
+			
+		case UrlConst.REJECT_RESET_PASSWORD:
+			rejectResetPassword(req,resp);
 			break;
 		default:
 			break;
 		}
+
+
+	}
+
+
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void updatePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String rePassword = req.getParameter("rePassword");
+
+		if(password == null || rePassword == null || !rePassword.equals(password) ) {
+			req.setAttribute("message", "Password not equals password repeat");
+			req.getRequestDispatcher(JspConst.FORGOT_PASSWORD)
+			.forward(req, resp);
+			return;
+		}
 		
+		boolean rp = userService.updateNewPassword(username, password);
+		
+
+		req.getRequestDispatcher(JspConst.AUTH_LOGIN)
+		.forward(req, resp);
 
 	}
 
@@ -85,11 +140,12 @@ public class UserServlet extends HttpServlet {
 		String roleName = req.getParameter("roleName");
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
-		
+
 		boolean rp = roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
+	
 		
 		getPageUpdateRole(req, resp);
-		
+
 	}
 
 	/**
@@ -103,8 +159,9 @@ public class UserServlet extends HttpServlet {
 		String roleName =  req.getParameter("roleName");
 		String projectName =  req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
-		
+
 		boolean rp = roleService.saveRole(new RoleRequestModels.UpdateRoleRequest(roleName, email, projectName, usernameReq));
+
 		
 		getPageUpdateRole(req, resp);
 	}
@@ -116,21 +173,66 @@ public class UserServlet extends HttpServlet {
 	 * @throws ServletException 
 	 */
 	private void getPageUpdateRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		List<Role> roles = roleService.getAll();
 		req.setAttribute("roles", roles);
 		String roleName = req.getParameter("name");
 		roleName = roleName == null || "".equals(roleName) ? "all" : roleName;
 		req.setAttribute("name",roleName );
-		
+
 		List<UserResponseModels.UserResponseModel> users = "all".equals(roleName) ? userService.getAll() : userService.findByRoleName(roleName);
 		req.setAttribute("users", users);
-		
+
 		List<ProjectRequestModels.ProjectRoleResponse> projects = projectService.getAllProjectByLeaderIsNull();
 		req.setAttribute("projects", projects);
-		
+
 		req.getRequestDispatcher(JspConst.UPDATE_ROLE)
 		.forward(req, resp);
+
+	}
+	
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void getPageAcceptResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<UserResponseModels.AcceptResetPasswordResponseModel> users = userService.getAllUserRequestResetPassword();
+		
+		req.setAttribute("users", users);
+		
+		req.getRequestDispatcher(JspConst.ACCEPT_RESET_PASSWORD)
+		.forward(req, resp);
+	}
+
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void acceptResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String username = req.getParameter("username");
+		
+		boolean rp = userService.acceptResetPassword(username);
+		
+		getPageAcceptResetPassword(req, resp);
+	}
+
+	
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void rejectResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String username = req.getParameter("username");
+		
+		boolean rp = userService.rejectResetPassword(username);
+		
+		getPageAcceptResetPassword(req, resp);
 		
 	}
 }

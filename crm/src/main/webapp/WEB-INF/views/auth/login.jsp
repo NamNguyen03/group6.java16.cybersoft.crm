@@ -92,7 +92,7 @@
 			<div class="form-group text-center">
 				<button class="btn btn-primary mb-5" type="submit">Login</button>
 				<br> <a
-					href="<c:url value="<%=UrlConst.AUTH_FORGOT_PASSWORD%>" />">Forgot
+					href="<c:url value="<%=UrlConst.FORGOT_PASSWORD%>" />">Forgot
 					password?</a>
 			</div>
 		</form>

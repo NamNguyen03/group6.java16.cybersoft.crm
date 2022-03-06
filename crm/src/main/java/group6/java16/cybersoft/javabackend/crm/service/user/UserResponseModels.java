@@ -24,4 +24,12 @@ public class UserResponseModels {
 		private String roleName;
 		private String projectName;
 	}
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class AcceptResetPasswordResponseModel {
+		private String username;
+		private String fullname;
+	}
 }

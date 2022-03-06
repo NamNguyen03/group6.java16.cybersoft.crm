@@ -42,6 +42,9 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_ROLE %>" />">
                                 Update Role
                             </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.ACCEPT_RESET_PASSWORD %>" />">
+                               	Accept Reset Password
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">
