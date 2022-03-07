@@ -2,7 +2,9 @@ package group6.java16.cybersoft.javabackend.crm.repository.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.model.seedword.Auditable;
 import group6.java16.cybersoft.javabackend.crm.model.seedword.MyEntity;
 
@@ -26,5 +28,12 @@ public class EntityRepo<T extends MyEntity> {
 			((Auditable) entity).setCreateDate(results.getDate("create_date"));
 		}
 		return entity;
+	}
+
+	/**
+	 * @return
+	 */
+	public List<User> getListUser() {
+		return null;
 	}  
 }

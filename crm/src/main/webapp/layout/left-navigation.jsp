@@ -33,14 +33,17 @@
                             User
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_LIST%>" />">
                                 User List
                             </a>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_ADD%>" />">
                                 Create User
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_ROLE %>" />">
                                 Update Role
+                            </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS %>" />">
+                                Update Status
                             </a>
                         </div>
                     </li>

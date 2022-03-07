@@ -1,5 +1,9 @@
 package group6.java16.cybersoft.javabackend.crm.service.user;
 
+import java.util.List;
+
+import group6.java16.cybersoft.javabackend.crm.model.User;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 
@@ -15,5 +19,21 @@ public interface UserService {
 	 * return null 
 	 */
 	LoginResponseModel login(LoginRequestModel loginRequestModel);
+
+	/**
+	 * @param user
+	 * @return
+	 */
+	boolean add(CreateUserRequestModel user);
+
+	/**
+	 * @return
+	 */
+	List<User> getListUser();
+
+	/**
+	 * @param id
+	 */
+	void deleteById(int id);
 
 }

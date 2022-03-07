@@ -53,6 +53,13 @@ public class AuthFilter implements Filter{
 				}
 			}
 			
+			if(servletPath.startsWith(UrlConst.USER_ADD)) {
+				if(!repo.isAdmin(username)) {
+					resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
+					return;
+				}
+			}
+			
 			chain.doFilter(request, response);
 			
 				

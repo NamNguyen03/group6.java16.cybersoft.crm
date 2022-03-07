@@ -13,4 +13,19 @@ public class UserResponseModels {
 		private String username;
 		private String fullname;
 	}
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class CreateUserResponseModel{
+		private String username;
+		private String password;
+		private String fullname;
+		private String address;
+		private String phone;
+		private String createBy;
+
+	}
+	
+	
+	
 }
