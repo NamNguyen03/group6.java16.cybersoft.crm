@@ -1,16 +1,14 @@
 package group6.java16.cybersoft.javabackend.crm.repository;
 
-import java.sql.SQLException;
 import java.util.List;
-
 import group6.java16.cybersoft.javabackend.crm.model.User;
-import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 
 public interface UserRepo {
 	/**
 	 * Retrieves an User by its username
 	 * 
-	 * @param username must not be {@literal null}.
+	 * @param username 
 	 * 
 	 * @return User if username exists or null if username not exists
 	 */
@@ -19,7 +17,7 @@ public interface UserRepo {
 	/**
 	 * Retrieves an User by its username
 	 * 
-	 * @param username must not be {@literal null}.
+	 * @param username 
 	 * 
 	 * @return true if role of user is admin else false
 	 */
@@ -31,7 +29,7 @@ public interface UserRepo {
 	 * @param user
 	 * @return
 	 */
-	boolean checkExist(CreateUserRequestModel user);
+	boolean checkExistByUsername(String username);
 
 	/**
 	 * @return
@@ -42,5 +40,44 @@ public interface UserRepo {
 	 * @param id
 	 */
 	void deleteById(int id);
+	/**
+	 * Retrieves an User by its username
+	 * 
+	 * @param usernam
+	 * 
+	 * @return true if role of user is leader else false
+	 */
+	boolean isLeader(String username);
+
+	/**
+	 * get all user and role in DB
+	 * 
+	 * @return List<User>
+	 */
+	List<UserResponseModels.UserResponseModel> getAllUserAndRole();
+
+	/**
+	 * find all user in DB have role.name equals roleName 
+	 * 
+	 * @param roleName
+	 * @return List<User> 
+	 */
+	List<UserResponseModels.UserResponseModel> findByRoleName(String roleName);
+
+	/**
+	 * check id user exists
+	 * 
+	 * @param idUser
+	 * @return true if id exists else false
+	 */
+	boolean existsById(int id);
+
+	/**
+	 * find User by id
+	 * 
+	 * @param idUser
+	 * @return User if id exists else return null
+	 */
+	User findById(int id);
 
 }

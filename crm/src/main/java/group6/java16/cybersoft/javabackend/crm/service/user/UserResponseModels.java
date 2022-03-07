@@ -28,4 +28,15 @@ public class UserResponseModels {
 	
 	
 	
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class UserResponseModel{
+		private int idUser;
+		private String username;
+		private String fullname;
+		private String roleName;
+		private String projectName;
+	}
 }

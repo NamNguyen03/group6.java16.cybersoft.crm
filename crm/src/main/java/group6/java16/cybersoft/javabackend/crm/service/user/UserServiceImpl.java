@@ -21,8 +21,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public LoginResponseModel login(LoginRequestModel loginRequestModel) {
+
 		User user = userRepo.findByUsername(loginRequestModel.getUsername());
-		if (user.getPassword() == null) {
+		if (user == null || user.getPassword() == null) {
 			return null;
 		}
 		if (user.getPassword().equals(loginRequestModel.getPassword())) {
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 				|| userRequest.getPhone() == null || userRequest.getCreateBy() == null) {
 			return false;
 		}
-		if (userRepo.checkExist(userRequest)) {
+		if (userRepo.checkExistByUsername(userRequest.getUsername())) {
 			return false;
 		}
 		if (!userRepo.isAdmin(userRequest.getCreateBy())) {
@@ -54,19 +55,27 @@ public class UserServiceImpl implements UserService {
 
 		return userRepo.add(user);
 	}
-	
+
 	@Override
-	public List<User> getListUser(){
-		List<User> listUser = null;
-		
-			listUser = userRepo.getListUser();
-	
-			return listUser;
+	public List<User> getListUser() {
+
+		return userRepo.getListUser();
 	}
+
 	@Override
 	public void deleteById(int id) {
 		userRepo.deleteById(id);
 		System.out.println("service");
-	}	
-	
+	}
+
+	@Override
+	public List<UserResponseModels.UserResponseModel> getAllUserAndRole() {
+		return userRepo.getAllUserAndRole();
+	}
+
+	@Override
+	public List<UserResponseModels.UserResponseModel> findByRoleName(String roleName) {
+		return userRepo.findByRoleName(roleName);
+	}
+
 }

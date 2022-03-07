@@ -28,7 +28,6 @@ public class AuthFilter implements Filter{
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-
 		String servletPath = req.getServletPath();
 
 		if(req.getRequestURI().matches(".*(css|eot|ttf|woff|woff2|svg|jpg|png|gif|js)")){

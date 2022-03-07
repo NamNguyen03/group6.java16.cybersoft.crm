@@ -35,5 +35,18 @@ public interface UserService {
 	 * @param id
 	 */
 	void deleteById(int id);
+	 /* get all user and role
+	 * 
+	 * @return List<User> 
+	 */
+	List<UserResponseModels.UserResponseModel> getAllUserAndRole();
+
+	/**
+	 * get user have role.name equals roleName
+	 * 
+	 * @param roleName
+	 * @return List<User> 
+	 */
+	List<UserResponseModels.UserResponseModel> findByRoleName(String roleName);
 
 }
