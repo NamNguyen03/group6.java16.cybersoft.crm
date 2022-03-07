@@ -19,8 +19,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="container page__container">
-			
+		<div class="container page_container">
+
 		</div>
 	</div>
 </body>
