@@ -5,18 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.repository.MySQLConnection;
 import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 
 public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	
 	@Override
 	public User findByUsername(String username) {
-		if(username == null) {
+		if (username == null) {
 			return null;
 		}
 		User user = null;
@@ -44,13 +46,19 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
 	@Override
 	public boolean isAdmin(String username) {
-	
+		if(username == null || "".equals(username)) {
+			return false;
+		}
+
 		return checkRole(username, "ADMIN");
 	}
 	
 	@Override
 	public boolean isLeader(String username) {
-	
+		if(username == null || "".equals(username)) {
+			return false;
+		}
+
 		return checkRole(username, "LEADER");
 	}
 
@@ -62,18 +70,17 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	 * @return true if role equal role input, else false
 	 */
 	private boolean checkRole(String username, String roleName) {
-		if(username == null) {
+		if(username == null || "".equals(username)) {
 			return false;
 		}
 
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "SELECT EXISTS( select * from  role_details "
-					+ "	where ("
+			String query = "SELECT EXISTS( select * from  role_details " + "	where ("
 					+ " user_id = (select id  from t_user where username = ? )"
 					+ "	and role_id = (select id from u_role where role_name = ? )));";
 
 			PreparedStatement statement = connection.prepareStatement(query);
-	
+
 			statement.setString(1, username);
 			statement.setString(2,roleName);
 			
@@ -82,7 +89,6 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			results.next();
 			return results.getBoolean(1);
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -90,7 +96,52 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	}
 
 	@Override
-	public List<UserResponseModels.UserResponseModel> getAll() {
+	public boolean add(User user) {
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "INSERT INTO t_user(username, user_password, fullname, user_address, phone, create_by, update_by)"
+					+ "VALUES(?,?,?,?,?,?,?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, user.getUsername());
+			statement.setString(2, user.getPassword());
+			statement.setString(3, user.getFullname());
+			statement.setString(4, user.getAddress());
+			statement.setString(5, user.getPhone());
+			statement.setString(6, user.getCreateBy());
+			statement.setString(7, user.getUpdateBy());
+
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database");
+			e.printStackTrace();
+		}
+		System.out.println("false");
+		return false;
+	}
+	@Override
+	public boolean checkExistByUsername(String username) {
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "SELECT EXISTS( select * from  t_user where username = ?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			statement.setString(1, username);
+
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			
+			
+			return results.getBoolean(1);
+
+		} catch (SQLException e) {
+		
+		}
+		return false;
+	}
+	
+	@Override
+	public List<UserResponseModels.UserResponseModel> getAllUserAndRole() {
 		List<UserResponseModels.UserResponseModel> rs = new ArrayList<>();
 		try (Connection connection = MySQLConnection.getConnection())  {
 			String query = "select * from (select u.id as 'id_user', u.username, u.fullname , r.role_name, p.project_name from t_user u "
@@ -172,13 +223,64 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		}
 		
 		return false;
+
+	}
+	@Override
+	public List<User> getListUser(){
+		List<User> listUser = new LinkedList();
+		
+		
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "SELECT id, fullname, username,user_address, phone, create_by FROM t_user ";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet results = statement.executeQuery();
+
+			while(results.next()) {
+				User user = new User();
+				
+				user.setId(results.getInt("id"));
+				user.setFullname(results.getString("fullname"));
+				user.setUsername(results.getString("username"));
+				user.setAddress(results.getString("user_address"));
+				user.setPhone(results.getString("phone"));
+				user.setCreateBy(results.getString("create_by"));
+
+				
+				listUser.add(user);
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listUser;
+		
+	}
+	@Override
+	public void deleteById(int id) {
+//		String query = "DELETE FROM t_user WHERE id =?";
+//		Connection connection = MySQLConnection.getConnection();
+//		
+//		try {
+//			PreparedStatement statement = connection.prepareStatement(query);
+//			statement.setInt(1, id);
+//			
+//			statement.executeUpdate();
+//			connection.close();
+//			
+//		}catch(SQLException e) {
+//			System.out.println("unable to connect database");
+//			e.printStackTrace();
+//	}
+	
+
 	}
 
 	@Override
 	public User findById(int id) {
-		if(id >= 0 ) {
-			return null;
-		}
+		
 		User user = null;
 		try (Connection connection = MySQLConnection.getConnection()) {
 			String query = "SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where id = ? ";
@@ -204,3 +306,5 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
 	
 }
+
+

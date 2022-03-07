@@ -1,7 +1,6 @@
 package group6.java16.cybersoft.javabackend.crm.repository;
 
 import java.util.List;
-
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 
@@ -24,6 +23,23 @@ public interface UserRepo {
 	 */
 	boolean isAdmin(String username);
 	
+	boolean add(User user) ;
+
+	/**
+	 * @param user
+	 * @return
+	 */
+	boolean checkExistByUsername(String username);
+
+	/**
+	 * @return
+	 */
+	List<User> getListUser();
+
+	/**
+	 * @param id
+	 */
+	void deleteById(int id);
 	/**
 	 * Retrieves an User by its username
 	 * 
@@ -34,11 +50,11 @@ public interface UserRepo {
 	boolean isLeader(String username);
 
 	/**
-	 * get all user in DB
+	 * get all user and role in DB
 	 * 
 	 * @return List<User>
 	 */
-	List<UserResponseModels.UserResponseModel> getAll();
+	List<UserResponseModels.UserResponseModel> getAllUserAndRole();
 
 	/**
 	 * find all user in DB have role.name equals roleName 

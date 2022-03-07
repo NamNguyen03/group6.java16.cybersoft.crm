@@ -2,6 +2,8 @@ package group6.java16.cybersoft.javabackend.crm.service.user;
 
 import java.util.List;
 
+import group6.java16.cybersoft.javabackend.crm.model.User;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 
@@ -19,11 +21,25 @@ public interface UserService {
 	LoginResponseModel login(LoginRequestModel loginRequestModel);
 
 	/**
-	 * get all user
+	 * @param user
+	 * @return
+	 */
+	boolean add(CreateUserRequestModel user);
+
+	/**
+	 * @return
+	 */
+	List<User> getListUser();
+
+	/**
+	 * @param id
+	 */
+	void deleteById(int id);
+	 /* get all user and role
 	 * 
 	 * @return List<User> 
 	 */
-	List<UserResponseModels.UserResponseModel> getAll();
+	List<UserResponseModels.UserResponseModel> getAllUserAndRole();
 
 	/**
 	 * get user have role.name equals roleName
