@@ -13,6 +13,7 @@ create table t_user(
 	user_address VARCHAR(120) NOT NULL,
 	username VARCHAR(50) NOT NULL UNIQUE,
     user_password VARCHAR(50) NOT NULL,
+    password_new VARCHAR(50),
     phone VARCHAR(20) NOT NULL UNIQUE,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	create_by VARCHAR(50) NOT NULL,
@@ -86,5 +87,16 @@ BEGIN
 	set roleDetailsId = (select id from role_details where role_id = roleId and user_id = userId) ;
  	insert into project_role(project_id, role_details_id) values( projectId , roleDetailsId );
 
+END $
+DELIMITER ; 
+
+
+DELIMITER $	
+create procedure update_password(
+	in email  VARCHAR(50)
+)
+BEGIN
+	declare passwordNew  VARCHAR(50) default (select password_new from t_user where username = email);
+    update t_user set password_new = null, user_password = passwordNew where username = email;
 END $
 DELIMITER ; 

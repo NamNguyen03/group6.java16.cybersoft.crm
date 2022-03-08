@@ -20,28 +20,28 @@ public class TastRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 	
 	@Override
 	public Task getById(int id) {
-		Task task = new Task();
-		String query = "SELECT * FROM task WHERE id = ?";
-		try {Connection connection = MySQLConnection.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1,id);
-			
-			ResultSet result = statement.executeQuery();
-			while(result.next()) {
-				task.setId(result.getInt("id"));
-				task.setTaskName(result.getString("task_name"));
-				task.setCreateBy(result.getString("create_by"));
-				task.setUpdateBy(result.getString("update_by"));
-				task.setDescript(result.getString("task_description"));
-				
-				
-			}
-			
-			
-		}catch(){
-			
-		}
-		
+//		Task task = new Task();
+//		String query = "SELECT * FROM task WHERE id = ?";
+//		try {Connection connection = MySQLConnection.getConnection();
+//			PreparedStatement statement = connection.prepareStatement(query);
+//			statement.setInt(1,id);
+//			
+//			ResultSet result = statement.executeQuery();
+//			while(result.next()) {
+//				task.setId(result.getInt("id"));
+//				task.setTaskName(result.getString("task_name"));
+//				task.setCreateBy(result.getString("create_by"));
+//				task.setUpdateBy(result.getString("update_by"));
+//				task.setDescript(result.getString("task_description"));
+//				
+//				
+//			}
+//			
+//			
+//		}catch(){
+//			
+//		}
+//		
 		return null;
 	}
 

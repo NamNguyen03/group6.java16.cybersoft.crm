@@ -13,6 +13,7 @@ import group6.java16.cybersoft.javabackend.crm.repository.MySQLConnection;
 import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
 
 public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	
@@ -302,6 +303,116 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	@Override
+	public boolean existsByUsername(String username) {
+		if(username == null || username.equals("")) {
+			return false;
+		}
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists( select id from t_user where username = ? )";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+	
+			statement.setString(1, username);
+			
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			return results.getBoolean(1);
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean updateNewPassword(String username, String password) {
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "update t_user set password_new = ? where username = ? ";
+			PreparedStatement statement = connection.prepareStatement(query);
+	
+			statement.setString(1, password);
+			statement.setString(2, username);
+			
+			statement.executeUpdate();
+			return true;
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	@Override
+	public List<AcceptResetPasswordResponseModel> getAllUserRequestResetPassword() {
+		List<AcceptResetPasswordResponseModel>  users = null;
+		AcceptResetPasswordResponseModel user;
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select username, fullname from t_user where password_new is not null";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet results = statement.executeQuery();
+			users = new ArrayList<>();
+			while(results.next()) {
+				user = new AcceptResetPasswordResponseModel();
+				user.setUsername(results.getString("username"));
+				user.setFullname(results.getString("fullname"));
+				users.add(user);
+			};
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	@Override
+	public boolean acceptResetPassword(String username) {
+		if(username == null || username.equals("")) {
+			return false;
+		}
+		try (Connection connection = MySQLConnection.getConnection()) {
+
+			String query = "call update_password(?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
+			statement.executeUpdate();
+			connection.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+		return false;
+	}
+
+	@Override
+	public boolean RejectResetPassword(String username) {
+		if(username == null || username.equals("")) {
+			return false;
+		}
+		
+		try (Connection connection = MySQLConnection.getConnection()) {
+
+			String query = "update t_user set password_new = null where username = ? ";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, username);
+			statement.executeUpdate();
+			connection.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 	

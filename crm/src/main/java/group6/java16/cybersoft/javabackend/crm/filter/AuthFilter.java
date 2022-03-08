@@ -34,8 +34,7 @@ public class AuthFilter implements Filter{
 			chain.doFilter(request, response);
 			return;
 		}
-
-		if(servletPath.startsWith(UrlConst.LOGIN)){
+		if(servletPath.startsWith(UrlConst.LOGIN) || servletPath.startsWith(UrlConst.FORGOT_PASSWORD)){
 			chain.doFilter(request, response);
 		}
 		else {
@@ -45,19 +44,14 @@ public class AuthFilter implements Filter{
 				resp.sendRedirect(req.getContextPath() + UrlConst.LOGIN);
 				return;
 			}
-			if(servletPath.startsWith(UrlConst.UPDATE_ROLE)) {
+			if(servletPath.startsWith(UrlConst.ROLE) || servletPath.startsWith(UrlConst.USER_ADD) || 
+					servletPath.startsWith(UrlConst.ACCEPT_RESET_PASSWORD) || servletPath.startsWith(UrlConst.USER_LIST)) {
 				if(!repo.isAdmin(username)) {
 					resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
 					return;
 				}
 			}
 			
-			if(servletPath.startsWith(UrlConst.USER_ADD)) {
-				if(!repo.isAdmin(username)) {
-					resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
-					return;
-				}
-			}
 			
 			chain.doFilter(request, response);
 			

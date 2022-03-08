@@ -3,6 +3,7 @@ package group6.java16.cybersoft.javabackend.crm.repository;
 import java.util.List;
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
 
 public interface UserRepo {
 	/**
@@ -79,5 +80,45 @@ public interface UserRepo {
 	 * @return User if id exists else return null
 	 */
 	User findById(int id);
+
+	/**
+	 * check username exists
+	 * 
+	 * @param username
+	 * @return true if username exists else false
+	 */
+	boolean existsByUsername(String username);
+
+	/**
+	 * update new password
+	 * 
+	 * @param username
+	 * @param password
+	 * @return true if update success else false
+	 */
+	boolean updateNewPassword(String username, String password);
+
+	/**
+	 * get all user request reset password
+	 * 
+	 * @returnList AcceptResetPasswordResponseModel 
+	 */
+	List<AcceptResetPasswordResponseModel> getAllUserRequestResetPassword();
+
+	/**
+	 * accept reset password
+	 * 
+	 * @param username
+	 * @return true if update success else false
+	 */
+	boolean acceptResetPassword(String username);
+
+	/**
+	 * reject reset password
+	 * 
+	 * @param username
+	 * @return true if update success else false
+	 */
+	boolean RejectResetPassword(String username);
 
 }

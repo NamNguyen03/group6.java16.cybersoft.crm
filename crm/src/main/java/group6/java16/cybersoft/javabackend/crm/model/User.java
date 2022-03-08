@@ -20,5 +20,5 @@ public class User implements MyEntity, Auditable {
 	private String fullname;
 	private String address;
 	private String phone;
-	
+	private String passwordNew;
 }

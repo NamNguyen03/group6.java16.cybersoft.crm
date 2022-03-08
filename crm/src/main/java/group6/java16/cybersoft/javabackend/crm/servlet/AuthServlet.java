@@ -17,11 +17,11 @@ import group6.java16.cybersoft.javabackend.crm.service.user.UserServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.util.*;
 
 @WebServlet(name = "loginServlet", urlPatterns = UrlConst.LOGIN)
-public class LoginServlet extends HttpServlet {
+public class AuthServlet extends HttpServlet {
 	
 	private UserService userService;
 	
-	public LoginServlet() {
+	public AuthServlet() {
 		userService = new UserServiceImpl();
 	}
 	
