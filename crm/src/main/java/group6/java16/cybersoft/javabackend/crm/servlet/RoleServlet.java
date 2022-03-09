@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import group6.java16.cybersoft.javabackend.crm.model.Role;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequestModels;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleRequestModels;
@@ -85,7 +85,7 @@ public class RoleServlet extends HttpServlet {
 		List<UserResponseModels.UserResponseModel> users = "all".equals(roleName) ? userService.getAllUserAndRole() : userService.findByRoleName(roleName);
 		req.setAttribute("users", users);
 
-		List<ProjectRequestModels.ProjectRoleResponse> projects = projectService.getAllProjectByLeaderIsNull();
+		List<ProjectResponseModels.ProjectRoleResponse> projects = projectService.getAllProjectByLeaderIsNull();
 		req.setAttribute("projects", projects);
 
 		req.getRequestDispatcher(JspConst.UPDATE_ROLE)
@@ -105,12 +105,8 @@ public class RoleServlet extends HttpServlet {
 		String roleName = req.getParameter("roleName");
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
-
 		roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
-	
-		
-		getPageUpdateRole(req, resp);
-
+		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
 	}
 
 	/**
@@ -125,7 +121,7 @@ public class RoleServlet extends HttpServlet {
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
 		roleService.saveRole(new RoleRequestModels.UpdateRoleRequest(roleName, email, projectName, usernameReq));
-		getPageUpdateRole(req, resp);
+		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
 	}
 	
 }

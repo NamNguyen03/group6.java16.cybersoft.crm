@@ -24,4 +24,5 @@ public class UrlConst {
 	
 	public static final String ACCEPT_RESET_PASSWORD = "/accept-reset-password";
 	public static final String REJECT_RESET_PASSWORD = "/reject-reset-password";
+	public static final String ADMIN_RESET_PASSWORD = "/admin-reset-pasword";
 }
