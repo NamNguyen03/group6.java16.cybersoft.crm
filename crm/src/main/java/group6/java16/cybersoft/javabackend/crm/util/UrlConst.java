@@ -7,7 +7,6 @@ public class UrlConst {
 	public static final String HOME = "/dashboard";
 	public static final String FORGOT_PASSWORD = "/forgot-password";
 	public static final String UPDATE_STATUS = "/update-status";
-
 	
 	//user
 	public static final String USER_DASHBOARD = "/user";
@@ -28,4 +27,8 @@ public class UrlConst {
 	
 	public static final String MANAGE_PROJECT = "/manage-project";
 	public static final String PROJECT_INFO = "/project-info";
+	
+	public static final String PROJECT_USER = "/project-user";
+	
+	public static final String WORK_SPACE = "/work-space";
 }
