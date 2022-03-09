@@ -14,5 +14,8 @@ public class JspConst {
 	
 	public static final String PROJECT_INFO = "/WEB-INF/views/pages/project-info.jsp";
 	public static final String MANAGE_PROJECT = "/WEB-INF/views/pages/manage-project.jsp";
+	
+	public static final String PROJECT_USER = "/WEB-INF/views/pages/project/project-user.jsp";
 
+	public static final String WORK_SPACE = "/WEB-INF/views/pages/work-space.jsp";
 }

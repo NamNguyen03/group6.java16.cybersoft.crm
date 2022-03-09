@@ -17,8 +17,17 @@ public class ProjectResponseModels {
 	@NoArgsConstructor
 	@Data
 	public static class ProjectRoleResponse{
-		
 		private int id;
 		private String name;
+	}
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class ProjectResponse{
+		private int id;
+		private String name;
+		private String description;
+		private String status;
 	}
 }
