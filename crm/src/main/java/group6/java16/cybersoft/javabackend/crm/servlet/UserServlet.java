@@ -17,7 +17,7 @@ import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels;
 import group6.java16.cybersoft.javabackend.crm.model.Role;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequestModels;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleRequestModels;

@@ -25,7 +25,8 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 @WebServlet(name = "userPasswordServlet", urlPatterns = {
 		UrlConst.FORGOT_PASSWORD,
 		UrlConst.ACCEPT_RESET_PASSWORD,
-		UrlConst.REJECT_RESET_PASSWORD
+		UrlConst.REJECT_RESET_PASSWORD,
+		UrlConst.ADMIN_RESET_PASSWORD
 })
 public class UserPasswordServlet extends HttpServlet  {
 	private UserService userService;
@@ -43,7 +44,7 @@ public class UserPasswordServlet extends HttpServlet  {
 			.forward(req, resp);
 			break;
 			
-		case UrlConst.ACCEPT_RESET_PASSWORD:
+		case UrlConst.ADMIN_RESET_PASSWORD:
 			getPageAcceptResetPassword(req, resp);
 			break;
 			
@@ -91,12 +92,8 @@ public class UserPasswordServlet extends HttpServlet  {
 			.forward(req, resp);
 			return;
 		}
-		
 		userService.updateNewPassword(username, password);
-		
-
-		req.getRequestDispatcher(JspConst.AUTH_LOGIN)
-		.forward(req, resp);
+		req.getRequestDispatcher(JspConst.AUTH_LOGIN).forward(req, resp);
 
 	}
 
@@ -107,11 +104,9 @@ public class UserPasswordServlet extends HttpServlet  {
 	 * @throws ServletException 
 	 */
 	private void acceptResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
-		
+		String username = req.getParameter("username");	
 		userService.acceptResetPassword(username);
-		
-		getPageAcceptResetPassword(req, resp);
+		resp.sendRedirect(req.getContextPath() + UrlConst.ADMIN_RESET_PASSWORD);
 	}
 
 	
@@ -123,12 +118,8 @@ public class UserPasswordServlet extends HttpServlet  {
 	 */
 	private void rejectResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
-		
-		boolean rp = userService.rejectResetPassword(username);
-		
-		getPageAcceptResetPassword(req, resp);
-		
-		req.getRequestDispatcher(JspConst.UPDATE_ROLE).forward(req, resp);
+		userService.rejectResetPassword(username);		
+		resp.sendRedirect(req.getContextPath() + UrlConst.ADMIN_RESET_PASSWORD);
 
 	}
 	
@@ -140,10 +131,7 @@ public class UserPasswordServlet extends HttpServlet  {
 	 */
 	private void getPageAcceptResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<UserResponseModels.AcceptResetPasswordResponseModel> users = userService.getAllUserRequestResetPassword();
-		
 		req.setAttribute("users", users);
-		
-		req.getRequestDispatcher(JspConst.ACCEPT_RESET_PASSWORD)
-		.forward(req, resp);
+		req.getRequestDispatcher(JspConst.ADMIN_RESET_PASSWORD).forward(req, resp);
 	}
 }

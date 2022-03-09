@@ -6,7 +6,7 @@ package group6.java16.cybersoft.javabackend.crm.repository;
 import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.Project;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequestModels.ProjectRoleResponse;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels.ProjectRoleResponse;
 
 /**
  * @author nam

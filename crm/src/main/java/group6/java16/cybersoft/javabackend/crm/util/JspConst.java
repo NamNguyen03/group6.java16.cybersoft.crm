@@ -6,7 +6,7 @@ public class JspConst {
 	
 	public static final String HOME = "/WEB-INF/views/pages/home.jsp";
 	public static final String UPDATE_ROLE = "/WEB-INF/views/pages/role/role.jsp";
-	public static final String ACCEPT_RESET_PASSWORD = "/WEB-INF/views/pages/user/accept-reset-password.jsp";
+	public static final String ADMIN_RESET_PASSWORD = "/WEB-INF/views/pages/user/admin-reset-password.jsp";
 	public static final String UPDATE_STATUS = "/WEB-INF/views/pages/update-status.jsp";
 	
 	public static final String USER_ADD = "/WEB-INF/views/pages/user/user-add.jsp";

@@ -13,6 +13,7 @@ public class UserResponseModels {
 		private String username;
 		private String fullname;
 	}
+	
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Data
@@ -25,9 +26,6 @@ public class UserResponseModels {
 		private String createBy;
 
 	}
-	
-	
-	
 	
 	@AllArgsConstructor
 	@NoArgsConstructor

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  * @author nam
  *
  */
-public class ProjectRequestModels {
+public class ProjectResponseModels {
 	
 	@AllArgsConstructor
 	@NoArgsConstructor

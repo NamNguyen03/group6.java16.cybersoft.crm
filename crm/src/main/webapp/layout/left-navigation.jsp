@@ -42,7 +42,7 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ROLE %>" />">
                                 Role
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.ACCEPT_RESET_PASSWORD %>" />">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD %>" />">
                                	Accept Reset Password
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS %>" />">
