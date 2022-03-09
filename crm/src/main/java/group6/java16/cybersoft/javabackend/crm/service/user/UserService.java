@@ -81,5 +81,11 @@ public interface UserService {
 	 * @return true if update success else false
 	 */
 	boolean rejectResetPassword(String username);
+	
+	/**
+	 * update info Staff
+	 * @param id
+	 */
+	void updateId(int id);
 
 }

@@ -65,7 +65,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteById(int id) {
-		userRepo.deleteById(id);
+		try {
+			userRepo.deleteById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("service");
 	}
 
@@ -115,6 +120,17 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return userRepo.RejectResetPassword(username);
+	}
+
+	@Override
+	public void updateId(int id) {
+		// TODO Auto-generated method stub
+		try {
+			userRepo.updateById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

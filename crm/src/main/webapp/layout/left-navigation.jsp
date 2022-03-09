@@ -20,7 +20,7 @@
                             Project
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.MANAGE_PROJECT%>" />">
                                 Manage Project
                             </a>
                             <a class="dropdown-item" href="#">
