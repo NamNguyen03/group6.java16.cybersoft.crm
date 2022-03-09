@@ -170,5 +170,34 @@ public class ProjectRepoImpl extends EntityRepo<Project> implements ProjectRepo 
 		
 		return false;
 	}
+	
+	public List<Project> findAll(){
+		List<Project> projects = new ArrayList<Project>();
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select id,project_name,project_description,project_status,create_date,create_by,update_date,update_by from project";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet results = statement.executeQuery();
+
+			
+			while(results.next()) {
+				Project project = new Project();
+				project.setId(results.getInt("id"));
+				project.setName(results.getString("project_name"));
+				project.setDescription(results.getString("project_description"));
+				project.setStatus(results.getString("project_status")); 
+				project.setCreateBy(results.getString("create_by")); 
+				project.setUpdateBy(results.getString("update_by")); 
+				project.setCreateDate(results.getDate("create_date")); 
+				project.setUpdateDate(results.getDate("update_date")); 
+				projects.add(project);
+			}
+			connection.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return projects;
+	}
 
 }

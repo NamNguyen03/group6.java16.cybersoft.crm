@@ -65,7 +65,6 @@ public class UserServlet extends HttpServlet {
 			break;
 		case UrlConst.USER_DELETE:
 			getUserDelete(req, resp);
-			resp.sendRedirect(req.getContextPath() + UrlConst.USER_LIST);
 			break;
 
 		default:
@@ -93,12 +92,14 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * @param req
 	 * @param resp
+	 * @throws IOException 
 	 */
-	private void getUserDelete(HttpServletRequest req, HttpServletResponse resp) {
+	private void getUserDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		int id = Integer.parseInt(req.getParameter("id"));
 
 		userService.deleteById(id);
 
+		resp.sendRedirect(req.getContextPath() + UrlConst.USER_LIST);
 	}
 
 	private void postUserAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
