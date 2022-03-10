@@ -45,7 +45,7 @@ public class AuthFilter implements Filter{
 				return;
 			}
 			if(servletPath.startsWith(UrlConst.ROLE) || servletPath.startsWith(UrlConst.USER_ADD) || 
-					servletPath.startsWith(UrlConst.ACCEPT_RESET_PASSWORD) || servletPath.startsWith(UrlConst.USER_LIST)) {
+					servletPath.startsWith(UrlConst.ADMIN_RESET_PASSWORD) || servletPath.startsWith(UrlConst.USER_LIST)) {
 				if(!repo.isAdmin(username)) {
 					resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
 					return;

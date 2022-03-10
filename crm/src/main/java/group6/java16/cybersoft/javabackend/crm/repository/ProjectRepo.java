@@ -6,7 +6,8 @@ package group6.java16.cybersoft.javabackend.crm.repository;
 import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.Project;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequestModels.ProjectRoleResponse;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels.ProjectResponse;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels.ProjectRoleResponse;
 
 /**
  * @author nam
@@ -53,5 +54,18 @@ public interface ProjectRepo {
 	 * @return true if project exists name and have leader is usernameReg else false
 	 */
 	boolean existsByNameAndLeader(String projectName, String usernameReq);
+
+	/**
+	 * @return
+	 */
+	List<Project> findAll();
+
+	/**
+	 * get all project user have any permission
+	 * 
+	 * @param usernameReq
+	 * @return List<ProjectRoleResponse>
+	 */
+	List<ProjectResponse> getAllMyProject(String usernameReq);
 
 }

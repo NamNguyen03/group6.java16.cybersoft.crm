@@ -11,14 +11,23 @@ import lombok.NoArgsConstructor;
  * @author nam
  *
  */
-public class ProjectRequestModels {
+public class ProjectResponseModels {
 	
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Data
 	public static class ProjectRoleResponse{
-		
 		private int id;
 		private String name;
+	}
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class ProjectResponse{
+		private int id;
+		private String name;
+		private String description;
+		private String status;
 	}
 }

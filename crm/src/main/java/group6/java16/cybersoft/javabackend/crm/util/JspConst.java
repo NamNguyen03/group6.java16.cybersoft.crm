@@ -10,8 +10,16 @@ public class JspConst {
 	
 	public static final String TASK = "/WEB-INF/views/pages/task/task.jsp";
 	public static final String UPDATE_STATUS_TASK = "/WEB-INF/views/pages/task/update-status-task.jsp";
+	public static final String ADMIN_RESET_PASSWORD = "/WEB-INF/views/pages/user/admin-reset-password.jsp";
+	public static final String UPDATE_STATUS = "/WEB-INF/views/pages/update-status.jsp";
 	
 	public static final String USER_ADD = "/WEB-INF/views/pages/user/user-add.jsp";
 	public static final String USER_LIST = "/WEB-INF/views/pages/user/user-list.jsp";
+	
+	public static final String PROJECT_INFO = "/WEB-INF/views/pages/project-info.jsp";
+	public static final String MANAGE_PROJECT = "/WEB-INF/views/pages/manage-project.jsp";
+	
+	public static final String PROJECT_USER = "/WEB-INF/views/pages/project/project-user.jsp";
 
+	public static final String WORK_SPACE = "/WEB-INF/views/pages/work-space.jsp";
 }

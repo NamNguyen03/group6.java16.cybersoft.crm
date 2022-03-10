@@ -30,7 +30,7 @@ tr:nth-child(even) {
 					<li class="breadcrumb-item"><a
 						href="<c:url value="<%=UrlConst.HOME%>" />">Dashboard</a></li>
 					<li class="breadcrumb-item"><a
-						href="<c:url value="<%=UrlConst.ACCEPT_RESET_PASSWORD%>" />">Accept
+						href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD%>" />">Accept
 							Reset Password</a></li>
 				</ol>
 			</nav>

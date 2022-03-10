@@ -17,7 +17,7 @@ import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels;
 import group6.java16.cybersoft.javabackend.crm.model.Role;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequestModels;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleRequestModels;
@@ -65,7 +65,6 @@ public class UserServlet extends HttpServlet {
 			break;
 		case UrlConst.USER_DELETE:
 			getUserDelete(req, resp);
-			resp.sendRedirect(req.getContextPath() + UrlConst.USER_LIST);
 			break;
 
 		default:
@@ -93,12 +92,14 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * @param req
 	 * @param resp
+	 * @throws IOException 
 	 */
-	private void getUserDelete(HttpServletRequest req, HttpServletResponse resp) {
+	private void getUserDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		int id = Integer.parseInt(req.getParameter("id"));
 
 		userService.deleteById(id);
 
+		resp.sendRedirect(req.getContextPath() + UrlConst.USER_LIST);
 	}
 
 	private void postUserAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {

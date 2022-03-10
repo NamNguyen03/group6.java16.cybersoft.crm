@@ -1,5 +1,6 @@
 package group6.java16.cybersoft.javabackend.crm.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
@@ -39,8 +40,15 @@ public interface UserRepo {
 
 	/**
 	 * @param id
+	 * @throws SQLException 
 	 */
-	void deleteById(int id);
+	void deleteById(int id) throws SQLException;
+	
+	/**
+	 * @param id
+	 * @throws SQLException 
+	 */
+	void updateById(int id) throws SQLException;
 	/**
 	 * Retrieves an User by its username
 	 * 
