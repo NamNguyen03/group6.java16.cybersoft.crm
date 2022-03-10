@@ -25,7 +25,7 @@ public class Task implements Auditable,MyEntity{
 	private String updateBy;
 	private Date updateDate;
 	private String taskName;
-	private String descript;
+	private String description;
 	private int user_id;
 	private int status_id;
 	private int project_id;

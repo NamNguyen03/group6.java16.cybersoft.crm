@@ -18,11 +18,11 @@
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME %>" />">Home</a></li>
 	                        <li class="breadcrumb-item"><a href="#">User</a></li>
 	                        <li class="breadcrumb-item active" aria-current="page">
-	                            Task Dashboard
+	                            User Dashboard
 	                        </li>
 	                    </ol>
 	                </nav>
-	                <h1 class="m-0">Task Dashboard</h1>
+	                <h1 class="m-0">User Dashboard</h1>
 	            </div>
 	            <div class="ml-auto">
 	                <a ${user.isAdmin ? "hidden": ""} href="<c:url value="<%=UrlConst.USER_ADD %>" />" class="btn btn-light"><i class="material-icons icon-16pt text-muted mr-1">add</i>

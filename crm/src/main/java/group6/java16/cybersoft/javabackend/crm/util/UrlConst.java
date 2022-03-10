@@ -6,7 +6,10 @@ public class UrlConst {
 	public static final String LOGIN = "/login";
 	public static final String HOME = "/dashboard";
 	public static final String FORGOT_PASSWORD = "/forgot-password";
-	public static final String UPDATE_STATUS = "/update-status";
+
+	//task
+	public static final String TASK = "/task";
+	public static final String UPDATE_STATUS_TASK = "/update-status";
 
 	
 	//user

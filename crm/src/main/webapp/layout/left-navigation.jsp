@@ -45,13 +45,19 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ACCEPT_RESET_PASSWORD %>" />">
                                	Accept Reset Password
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS %>" />">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />">
                                 Update Status
                             </a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Task</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />">
+                                task
+                            </a>
+                          
+                        </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Components</a>
