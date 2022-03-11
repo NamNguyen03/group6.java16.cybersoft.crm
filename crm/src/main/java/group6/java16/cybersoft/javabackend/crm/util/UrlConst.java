@@ -29,6 +29,8 @@ public class UrlConst {
 	public static final String PROJECT_INFO = "/project-info";
 	
 	public static final String PROJECT_USER = "/project-user";
+	public static final String ADD_PROJECT_USER = "/add_project-user";
+	public static final String REMOVE_PROJECT_USER = "/remove_project-user";
 	
 	public static final String WORK_SPACE = "/work-space";
-}
+	}

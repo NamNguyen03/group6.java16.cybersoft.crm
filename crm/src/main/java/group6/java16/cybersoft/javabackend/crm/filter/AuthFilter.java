@@ -51,7 +51,19 @@ public class AuthFilter implements Filter{
 					return;
 				}
 			}
-			
+		
+			if(servletPath.startsWith(UrlConst.PROJECT_USER)) {
+				try {
+					int idProject = Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));	
+					if(!repo.isLeaderProject(username, idProject)) {
+						resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
+						return;
+					}
+				} catch (Exception e) {
+					resp.sendRedirect(req.getContextPath() + UrlConst.WORK_SPACE);
+					return;
+				}
+			}
 			
 			chain.doFilter(request, response);
 			
