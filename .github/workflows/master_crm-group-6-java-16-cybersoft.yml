@@ -20,12 +20,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '11'
-      
-      - name: go to work space
-        run: cd crm
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install ./crm
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
