@@ -22,6 +22,7 @@ import group6.java16.cybersoft.javabackend.crm.service.role.RoleServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserService;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserServiceImpl;
+import group6.java16.cybersoft.javabackend.crm.share.model.MyNotification;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
@@ -57,7 +58,7 @@ public class RoleServlet extends HttpServlet {
 		String path = req.getServletPath();
 		switch (path) {
 		case UrlConst.UPDATE_ROLE:
-			updateRole(req, resp);
+			createRole(req, resp);
 			break;
 
 		case UrlConst.REMOVE_ROLE:
@@ -106,8 +107,14 @@ public class RoleServlet extends HttpServlet {
 		String roleName = req.getParameter("roleName");
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
-		roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
-		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
+		boolean rp = roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
+		if(rp) {
+			req.setAttribute("notification", new MyNotification("Remove role successfully", false));
+		}else {
+			req.setAttribute("notification", new MyNotification("Remove role failed", true));
+		}
+		
+		getPageUpdateRole(req, resp);
 	}
 
 	/**
@@ -116,13 +123,19 @@ public class RoleServlet extends HttpServlet {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	private void updateRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void createRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
 		String roleName = req.getParameter("roleName");
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
-		roleService.saveRole(new RoleRequestModels.UpdateRoleRequest(roleName, email, projectName, usernameReq));
-		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
+		boolean rp = roleService.saveRole(new RoleRequestModels.UpdateRoleRequest(roleName, email, projectName, usernameReq));
+		if(rp) {
+			req.setAttribute("notification", new MyNotification("Create role successfully", false));
+		}else {
+			req.setAttribute("notification", new MyNotification("Create role failed", true));
+		}
+		
+		getPageUpdateRole(req, resp);
 	}
 	
 }
