@@ -45,18 +45,19 @@ public class ProjectServlet extends HttpServlet {
 			break;
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void getListProject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-				List<Project> projects = projectServiceImpl.findAll();
-				if(projects != null) {
-					req.setAttribute("projects", projects);
-				}
-				req.getRequestDispatcher(JspConst.MANAGE_PROJECT).forward(req, resp);
+		List<Project> projects = projectServiceImpl.findAll();
+		if(projects != null) {
+			req.setAttribute("projects", projects);
+		}
+
+		req.getRequestDispatcher(JspConst.MANAGE_PROJECT).forward(req, resp);
 	}
 }

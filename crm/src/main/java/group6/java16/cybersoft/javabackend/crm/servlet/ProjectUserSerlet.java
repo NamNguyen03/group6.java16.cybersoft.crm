@@ -12,10 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import group6.java16.cybersoft.javabackend.crm.model.Role;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
-import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleRequestModels;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleService;
 import group6.java16.cybersoft.javabackend.crm.service.role.RoleServiceImpl;
@@ -29,71 +25,56 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
  * @author nam
  *
  */
-
-@WebServlet(name = "roleServlet", urlPatterns = {
-		UrlConst.UPDATE_ROLE, 
-		UrlConst.REMOVE_ROLE,
-		UrlConst.ROLE
+@WebServlet(name = "projectUserServlet", urlPatterns = {
+		UrlConst.PROJECT_USER,
+		UrlConst.ADD_PROJECT_USER,
+		UrlConst.REMOVE_PROJECT_USER
 })
-public class RoleServlet extends HttpServlet {
-		
-	private RoleService roleService;
-	private UserService userService;
-	private ProjectService projectService;
+public class ProjectUserSerlet  extends HttpServlet  {
 	
-	public RoleServlet() {
-		roleService = new RoleServiceImpl();
+	private UserService userService;
+	private RoleService roleService;
+	
+	public ProjectUserSerlet() {
 		userService = new UserServiceImpl();
-		projectService = new ProjectServiceImpl();
+		roleService = new RoleServiceImpl();
 	}
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		getPageUpdateRole(req, resp);
+		int projectId = -1;
+		String projectName = String.valueOf(req.getSession().getAttribute("projectName"));
+		try {
+			projectId = Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));
+		} catch (Exception e) {
+			
+		}
+		List<UserResponseModels.GetUserInProjectResponseModel> users = null;
+		if(projectId != -1) {
+			users = userService.findAllUserInProject(projectId);
+		}
+		req.setAttribute("users",users );
+		req.setAttribute("projectName",projectName);
+		req.getRequestDispatcher(JspConst.PROJECT_USER)
+		.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
 		switch (path) {
-		case UrlConst.UPDATE_ROLE:
+		case UrlConst.ADD_PROJECT_USER:
 			updateRole(req, resp);
 			break;
 
-		case UrlConst.REMOVE_ROLE:
+		case UrlConst.REMOVE_PROJECT_USER:
 			removeRole(req, resp);
 			break;
 		default:
 			break;
 		}
 	}
-	
-	/**
-	 * @param req
-	 * @param resp
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	private void getPageUpdateRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		List<Role> roles = roleService.getAll();
-		req.setAttribute("roles", roles);
-		
-		String roleName = req.getParameter("name");
-		roleName = roleName == null || "".equals(roleName) ? "all" : roleName;
-		req.setAttribute("name",roleName );
-
-		List<UserResponseModels.UserResponseModel> users = "all".equals(roleName) ? userService.getAllUserAndRole() : userService.findByRoleName(roleName);
-		req.setAttribute("users", users);
-
-		List<ProjectResponseModels.ProjectRoleResponse> projects = projectService.getAllProjectByLeaderIsNull();
-		req.setAttribute("projects", projects);
-
-		req.getRequestDispatcher(JspConst.UPDATE_ROLE)
-		.forward(req, resp);
-
-	}
-	
 	/**
 	 * @param req
 	 * @param resp
@@ -103,11 +84,11 @@ public class RoleServlet extends HttpServlet {
 	private void removeRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int idUser = Integer.parseInt(req.getParameter("idUser"));
 		String username = req.getParameter("username");
-		String roleName = req.getParameter("roleName");
+		String roleName = "MEMBER";
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
 		roleService.removeRole(new RoleRequestModels.RemoveRoleRequestModel(idUser, username, roleName, projectName, usernameReq));
-		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
+		resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_USER);
 	}
 
 	/**
@@ -118,11 +99,11 @@ public class RoleServlet extends HttpServlet {
 	 */
 	private void updateRole(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
-		String roleName = req.getParameter("roleName");
+		String roleName = "MEMBER";
 		String projectName = req.getParameter("projectName");
 		String usernameReq = String.valueOf(req.getSession().getAttribute("username"));
 		roleService.saveRole(new RoleRequestModels.UpdateRoleRequest(roleName, email, projectName, usernameReq));
-		resp.sendRedirect(req.getContextPath() + UrlConst.ROLE);
+		resp.sendRedirect(req.getContextPath() + UrlConst.PROJECT_USER);
 	}
 	
 }

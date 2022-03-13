@@ -5,6 +5,7 @@ import java.util.List;
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
 
 public interface UserRepo {
 	/**
@@ -128,5 +129,22 @@ public interface UserRepo {
 	 * @return true if update success else false
 	 */
 	boolean RejectResetPassword(String username);
+
+	/**
+	 * check username is admin project with id {@value} idProject
+	 * 
+	 * @param username
+	 * @param idProject
+	 * @return true if username is admin or false
+	 */
+	boolean isLeaderProject(String username, int idProject);
+
+	/**
+	 * fill all user have permission in project with id is {@value} idProject
+	 * 
+	 * @param idProject
+	 * @returnList GetUserInProjectResponseModel
+	 */
+	List<GetUserInProjectResponseModel> findAllUserInProject(int idProject);
 
 }
