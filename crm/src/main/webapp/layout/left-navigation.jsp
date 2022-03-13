@@ -32,7 +32,7 @@
                                 Manage Project
                             </a>
                              <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_USER%>" />">
-                                Add User In Project
+                                List User Project
                             </a>
                             <a class="dropdown-item" href="#">
                                 Project Create Project
@@ -55,9 +55,6 @@
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD %>" />">
                                	Accept Reset Password
-                            </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS %>" />">
-                                Update Status
                             </a>
                         </div>
                     </li>

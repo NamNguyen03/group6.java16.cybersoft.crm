@@ -6,6 +6,7 @@ import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 
 public interface UserService {
@@ -87,5 +88,13 @@ public interface UserService {
 	 * @param id
 	 */
 	void updateId(int id);
+
+	/**
+	 * fill all user have permission in project with id is {@value} idProject
+	 * 
+	 * @param idProject
+	 * @returnList GetUserInProjectResponseModel
+	 */
+	List<GetUserInProjectResponseModel> findAllUserInProject(int idProject);
 
 }

@@ -54,8 +54,6 @@ public class RoleServiceImpl implements RoleService {
 		}
 
 		Role role = roleRepo.findByName(updateRoleRequest.getRoleName());
-
-
 		Project project = projectRepo.findByName(updateRoleRequest.getProjectName());
 
 		// admin change is allowed change role admin and change role leader, member if project do not leader
