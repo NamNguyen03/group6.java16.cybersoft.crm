@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -14,8 +15,8 @@ import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-@WebFilter(urlPatterns = UrlConst.GLOBAL)
-public class AuthFilter implements Filter{
+
+public abstract class AuthFilter implements Filter{
 
 	private UserRepo repo;
 	
@@ -72,3 +73,4 @@ public class AuthFilter implements Filter{
 	}
 
 }
+	
