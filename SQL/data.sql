@@ -1,4 +1,4 @@
-use CRM;
+use u411554605_CRM;
 
 -- insert role
 insert into u_role(role_name) 
