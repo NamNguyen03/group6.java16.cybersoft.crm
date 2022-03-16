@@ -5,7 +5,7 @@
 	<groupId>cybersoft.javabackend</groupId>
 	<artifactId>crm</artifactId>
 	<version>0.0.1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>CRM Application</name>
 	<description>CRM Application for Education Purpose</description>
 
@@ -65,10 +65,34 @@
 					<release>11</release>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.3</version>
-			</plugin>
+			<plugin> 
+			<groupId>com.microsoft.azure</groupId>  
+				<artifactId>azure-webapp-maven-plugin</artifactId>  
+				<version>2.2.0</version>  
+				<configuration>
+					<subscriptionId>111111-11111-11111-1111111</subscriptionId>
+					<resourceGroup>spring-boot-xxxxxxxxxx-rg</resourceGroup>
+					<appName>spring-boot-xxxxxxxxxx</appName>
+					<pricingTier>B2</pricingTier>
+					<region>westus</region>
+					<runtime>
+					<os>Linux</os>      
+					<webContainer>Java SE</webContainer>
+					<javaVersion>Java 11</javaVersion>
+					</runtime>
+					<deployment>
+					<resources>
+						<resource>
+						<type>jar</type>
+						<directory>${project.basedir}/target</directory>
+						<includes>
+							<include>*.jar</include>
+						</includes>
+						</resource>
+					</resources>
+					</deployment>
+				</configuration>
+			</plugin> 
 		</plugins>
 	</build>
 </project>
