@@ -18,12 +18,18 @@ public interface TaskRepo {
 	 * @author trunghau
 	 *
 	 */	
-	UpdateStatusTaskResponse getTaskUpdateById(int id);
+	TaskResponseModels.UpdateStatusTaskResponse getTaskUpdateById(int id);
 	
-	void updateStatusTask(int task_id);
+	void updateStatusTask(int task_id,String status_name);
 	
-	List<TaskResponseModels.TaskResponse> getAllTaskByUserId(int user_id);
-	
+	List<TaskResponseModels.TaskResponse> getListTaskByProjectId(int project_id);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	TaskResponseModels.TaskResponse findById(int id);
+	 
 	
 	
 }

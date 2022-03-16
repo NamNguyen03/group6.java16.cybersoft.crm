@@ -13,6 +13,7 @@ import java.util.List;
 import com.mysql.cj.protocol.Resultset;
 
 import group6.java16.cybersoft.javabackend.crm.model.Task;
+import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.model.seedword.MyEntity;
 import group6.java16.cybersoft.javabackend.crm.repository.MySQLConnection;
 import group6.java16.cybersoft.javabackend.crm.repository.TaskRepo;
@@ -47,8 +48,7 @@ public class TaskRepoImpl extends EntityRepo<Task> implements TaskRepo {
 				task.setUserName(result.getString("fullname"));
 				task.setProjectName(result.getString("project_name"));
 
-				return task;
-
+			
 			}
 
 		} catch (SQLException e) {
@@ -56,59 +56,84 @@ public class TaskRepoImpl extends EntityRepo<Task> implements TaskRepo {
 			e.printStackTrace();
 		}
 
-		return null;
+		return task;
 	}
 
 	@Override
-	public void updateStatusTask(int task_id) {
-		String query = "use CRM;"
-				+"UPDATE `CRM`.`task` SET `status_id` = '2' WHERE (`id` = ?);";
+	public void updateStatusTask(int task_id, String status_name) {
+		String query =  "update task set status_id = (select id from status_task where status_task.status_task_name = ?) where id = ? ";
+
 		
 		try (Connection connection = MySQLConnection.getConnection()){
 		PreparedStatement statement = connection.prepareStatement(query);
-		statement.setInt(1,task_id);
-		
-		ResultSet result = statement.executeQuery();
-//		while(result.next()) {
-//			
-//		}
-//		
-	
+		statement.setString(1,status_name);
+		statement.setInt(2,task_id);
+		statement.executeUpdate();
+		connection.close();
+
+
 	}catch(SQLException e)
-	{
+	
+		{
 		System.out.println("update status task fails");
 		e.printStackTrace();
 	}
 }
 	@Override
-	public List<TaskResponseModels.TaskResponse> getAllTaskByUserId(int user_id){
+	public List<TaskResponseModels.TaskResponse> getListTaskByProjectId(int project_id){
 
-			List<TaskResponseModels.TaskResponse> listTasks = new ArrayList();
+			List<TaskResponseModels.TaskResponse> listTasks = new ArrayList<>();
 			try (Connection connection = MySQLConnection.getConnection())  {
-				String query =" select  task.id,task_name,task_description,task.create_by,task.create_date,task.update_by,task.update_date,task.user_id,task.status_id,task.project_id,t_user.fullname,status_task.status_task_name,project.project_name FROM task INNER JOIN t_user ON task.user_id=t_user.id INNER JOIN status_task ON task.status_id = status_task.id INNER JOIN project ON task.project_id=project.id where task.user_id = ?";
+				String query =" select  task.id,task_name,task_description,task.create_by,task.create_date,task.update_by,task.update_date,task.user_id,task.status_id,task.project_id,t_user.fullname,status_task.status_task_name,project.project_name FROM task INNER JOIN t_user ON task.user_id=t_user.id INNER JOIN status_task ON task.status_id = status_task.id INNER JOIN project ON task.project_id=project.id where task.project_id = ?";
 
 				PreparedStatement statement = connection.prepareStatement(query);
+				statement.setInt(1,project_id);
 				ResultSet results = statement.executeQuery();
 				
 				TaskResponseModels.TaskResponse task;
 				while (results.next()) {
 					task = new TaskResponseModels.TaskResponse();
-					task.setId(results.getInt("id_user"));
+					task.setId(results.getInt("id"));
 					task.setTaskName(results.getString("task_name"));
+					task.setDescription(results.getString("task_description"));
 					task.setUserName(results.getString("fullname"));
 					task.setStatusName(results.getString("status_task_name"));
 					task.setProjectName(results.getString("project_name"));
 					
 					listTasks.add(task);
 				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
-		
-
-		
-		
 		return listTasks;
 	}
+
+	@Override
+	public TaskResponseModels.TaskResponse findById(int id) {
+
+		TaskResponseModels.TaskResponse task = null;
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = " select  task.id,task_name,task_description,task.create_by,task.create_date,task.update_by,task.update_date,task.user_id,task.status_id,task.project_id,t_user.fullname,status_task.status_task_name,project.project_name FROM task INNER JOIN t_user ON task.user_id=t_user.id INNER JOIN status_task ON task.status_id = status_task.id INNER JOIN project ON task.project_id=project.id where task.id = ? ";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			task = new TaskResponseModels.TaskResponse();
+
+			task.setId(results.getInt("id"));
+			task.setTaskName(results.getString("task_name"));
+			task.setDescription(results.getString("task_description"));
+			task.setUserName(results.getString("fullname"));
+			task.setStatusName(results.getString("status_task_name"));
+			task.setProjectName(results.getString("project_name"));
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return task;
+	}
+
 }

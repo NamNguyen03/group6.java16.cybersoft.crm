@@ -62,13 +62,8 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Task</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />">
-                                task
-                            </a>
-                          
-                        </div>
+                        <a class="nav-link" href="<c:url value="<%=UrlConst.LIST_TASK%>" />">Task</a>
+                       
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Components</a>

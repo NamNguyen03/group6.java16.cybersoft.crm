@@ -36,8 +36,8 @@
             <table class="table mb-0 thead-border-top-0">
                 <thead>
                     <tr>
-	                     <th>Project</th>
 						 <th>Name</th>
+	                     <th>Project</th>
 	                     <th>Task</th>
 	                     <th>Description</th>
 	                     <th>Status</th>
@@ -49,16 +49,16 @@
                  		<c:otherwise>
                  			<c:forEach var="task" items="${task}" >
 	                 			<tr>
+		                           <td>${task.userName }</td>
 		                           <td>
 		                               ${task.projectName  }
 		                           </td>
-		                           <td>${users }</td>
-		                           <td>${task_name }</td>
-		                           <td>${description }</td>
-		                           <td>${status }</td>		                           
+		                           <td>${task.taskName }</td>
+		                           <td>${task.description }</td>
+		                           <td>${task.statusName }</td>		                           
 		                           <td>
 		                           	<a href="" class="text-muted"><i class="material-icons">settings</i></a>
-		                           	<a href="<c:url value="<%=UrlConst.USER_DELETE%>" />?id=${t_user.id}" class="text-muted"><i class="material-icons">delete</i></a>
+		                           	<a href="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />?id=${task.id}" class="text-muted"><i class="material-icons">delete</i></a>
 		                           </td>
 	                    		</tr>
                  			</c:forEach>

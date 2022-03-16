@@ -42,7 +42,7 @@ insert into t_user(fullname, user_address, username, user_password, phone, creat
 values ('Phan Pham', 'HCM', 'phan_pham@gmail.com', '123456', '09934355' , 'nam@gmail.com' );
 
 insert into t_user(fullname, user_address, username, user_password, phone, create_by)
-values ('Huy Phan Pham', 'HCM', 'phan1@gmail.com', '123456', '0999522255' , 'nam@gmail.com' );
+values ('Huy Phan Pham', 'HCM', 'phan1@gmail.com', '123456', '099952255' , 'nam@gmail.com' );
 
 -- insert role details
 insert into role_details(user_id, role_id)
