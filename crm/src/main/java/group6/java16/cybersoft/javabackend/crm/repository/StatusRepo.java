@@ -14,5 +14,13 @@ import group6.java16.cybersoft.javabackend.crm.service.status.StatusResponseMode
 public interface StatusRepo  {
 	
 	List<StatusTask> getListStatusTask();
+	
+	boolean createStatusTask(String status_name);
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	boolean existsByName(String name);
 
 }

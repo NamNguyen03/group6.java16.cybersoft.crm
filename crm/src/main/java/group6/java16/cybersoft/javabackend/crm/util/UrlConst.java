@@ -9,8 +9,9 @@ public class UrlConst {
 
 	//task
 	public static final String TASK = "/task";
-	public static final String UPDATE_STATUS_TASK = "/update-status";
 	public static final String LIST_TASK="/list-task";
+	public static final String UPDATE_STATUS_TASK = "/update-status";
+	public static final String CREATE_STATUS_TASK = "/create-status-task";
 	
 	//user
 	public static final String USER_DASHBOARD = "/user";

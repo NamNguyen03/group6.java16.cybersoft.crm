@@ -33,7 +33,8 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
  */
 @WebServlet(name = "taskServlet", urlPatterns = { UrlConst.TASK,
 		UrlConst.LIST_TASK,
-		UrlConst.UPDATE_STATUS_TASK })
+		UrlConst.UPDATE_STATUS_TASK,
+		UrlConst.CREATE_STATUS_TASK})
 public class TaskServlet extends HttpServlet {
 	private TaskService taskService;
 
@@ -41,6 +42,25 @@ public class TaskServlet extends HttpServlet {
 		taskService = new TaskServiceImpl();
 		
 
+	}
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String path = req.getServletPath();
+		switch (path) {
+
+		case UrlConst.LIST_TASK:
+			getListTask(req, resp);
+			break;
+		case UrlConst.TASK:
+			getTaskById(req, resp);
+			break;
+		case UrlConst.CREATE_STATUS_TASK:
+			req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	@Override
@@ -57,32 +77,18 @@ public class TaskServlet extends HttpServlet {
 		case UrlConst.TASK:
 			getTaskById(req, resp);
 			break;
+		case UrlConst.CREATE_STATUS_TASK:
+			createStatusTask(req, resp);
+			break;
+
+
+		default:
+			break;
+		}
+
+	}
+
 	
-
-
-		default:
-			break;
-		}
-
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String path = req.getServletPath();
-		switch (path) {
-
-		case UrlConst.LIST_TASK:
-			getListTask(req, resp);
-			break;
-		case UrlConst.TASK:
-			getTaskById(req, resp);
-			break;
-		default:
-			break;
-
-		}
-	}
-
 	/**
 	 * @param req
 	 * @param resp
@@ -124,10 +130,28 @@ public class TaskServlet extends HttpServlet {
 		req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
 	}
 	private void getTaskById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int task_id = Integer.parseInt(req.getParameter("id").toString());
+		int task_id = Integer.parseInt(req.getParameter("id"));
 		
 		TaskResponseModels.TaskResponse task = taskService.findById(task_id);
 		req.setAttribute("task", task);
 		req.getRequestDispatcher(JspConst.TASK).forward(req, resp);;
+	}
+	
+	private void createStatusTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String status_name = req.getParameter("statusName");
+		boolean exists = taskService.existByName(status_name);
+		if(!exists) {
+			req.setAttribute("message", "invalid status name !!");
+
+		}else{
+		boolean create = taskService.createStatusTask(status_name);
+		if(create) {
+			req.setAttribute("message", "create success!!");;
+		}else {
+			req.setAttribute("message", "create failed!!");
+		}
+		}
+		req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);;
+
 	}
 }

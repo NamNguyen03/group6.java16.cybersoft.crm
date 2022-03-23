@@ -53,4 +53,12 @@ public class TaskServiceImpl implements TaskService {
 	public List<StatusTask> getListStatusTask(){
 		return statusRepo.getListStatusTask();
 	}
+	@Override
+	public boolean createStatusTask (String status_name) {
+		return statusRepo.createStatusTask(status_name);
+	}
+	@Override
+	public boolean existByName(String name) {
+		return statusRepo.existsByName(name);
+	}
 }

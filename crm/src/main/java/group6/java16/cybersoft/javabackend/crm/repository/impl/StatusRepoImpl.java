@@ -20,30 +20,71 @@ import group6.java16.cybersoft.javabackend.crm.service.status.StatusResponseMode
  *
  */
 public class StatusRepoImpl extends EntityRepo<Status> implements StatusRepo {
-	
+
 	@Override
 	public List<StatusTask> getListStatusTask() {
 		String query = "select id, status_task_name from status_task";
 		List<StatusTask> listStatus = new ArrayList<>();
-		
-	try(Connection connection = MySQLConnection.getConnection()){
-		PreparedStatement statemnt = connection.prepareStatement(query);
-		
-		ResultSet result = statemnt.executeQuery();
-		
-		StatusTask status ;
-		while(result.next()) {
-			status = new StatusTask();
-			status.setId(result.getInt("id"));
-			status.setStatusName(result.getString("status_task_name"));
-			
-			listStatus.add(status);
-			
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet result = statement.executeQuery();
+
+			StatusTask status;
+			while (result.next()) {
+				status = new StatusTask();
+				status.setId(result.getInt("id"));
+				status.setStatusName(result.getString("status_task_name"));
+
+				listStatus.add(status);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	}catch (SQLException e) {
-		e.printStackTrace();
+
+		return listStatus;
+	}
+
+	@Override
+	public boolean createStatusTask(String status_name) {
+		String query = "INSERT INTO CRM.status_task (status_task_name) VALUE (?)";
+		System.out.println(status_name);
+		try (Connection connection = MySQLConnection.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, status_name);
+
+			statement.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("create status task fails");
+		}
+		return false;
+
+	}
+	@Override
+	public boolean existsByName(String name) {
+		if(name == null || "".equals(name)) {
+			return true;
+		}
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists(select id from status_task where status_task_name = ? )";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, name);
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+
+			return !results.getBoolean(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 	
-	return listStatus ;
-	}
 }

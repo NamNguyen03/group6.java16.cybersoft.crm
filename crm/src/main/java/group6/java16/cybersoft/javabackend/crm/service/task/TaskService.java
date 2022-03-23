@@ -36,5 +36,15 @@ public interface TaskService {
 	TaskResponseModels.TaskResponse findById(int id);
 	
 	List<StatusTask> getListStatusTask();
+	/**
+	 * @param status_name
+	 * @return
+	 */
+	boolean createStatusTask(String status_name);
+	/**
+	 * @param name
+	 * @return
+	 */
+	boolean existByName(String name);
 
 }
