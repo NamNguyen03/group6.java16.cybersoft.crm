@@ -18,11 +18,11 @@
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME %>" />">Home</a></li>
 	                        <li class="breadcrumb-item"><a href="#">User</a></li>
 	                        <li class="breadcrumb-item active" aria-current="page">
-	                            Task Dashboard
+	                            User Dashboard
 	                        </li>
 	                    </ol>
 	                </nav>
-	                <h1 class="m-0">Task Dashboard</h1>
+	                <h1 class="m-0">User Dashboard</h1>
 	            </div>
 	            <div class="ml-auto">
 	                <a ${user.isAdmin ? "hidden": ""} href="<c:url value="<%=UrlConst.USER_ADD %>" />" class="btn btn-light"><i class="material-icons icon-16pt text-muted mr-1">add</i>
@@ -40,31 +40,27 @@
             <table class="table mb-0 thead-border-top-0">
                 <thead>
                     <tr>
-						<th>Name</th>
-	                     <th>Email</th>
-	                     <th>Address</th>
-	                     <th>Phone</th>
-	                     <th>Create By</th>
+						<th>Project</th>
+	                     <th>User</th>
+	                     <th>Task</th>
+	                     <th>Description</th>
+	                     <th>Status</th>
 		              	 <th>#</th>
                     </tr>
                 </thead>
                 <tbody class="list" id="staff02">
                  	<c:choose> 
-                 		<c:when test="${listUser == null}">
-                 			<tr class="row">
-                 				<td class="col-12 text-center">There is no data.</td>
-                 			</tr>
-                 		</c:when>
+               
                  		<c:otherwise>
-                 			<c:forEach var="t_user" items="${listUser}" >
+                 			<c:forEach var="t_user" items="${task}" >
 	                 			<tr>
 		                           <td>
-		                               ${t_user.fullname }
+		                               ${task.project }
 		                           </td>
-		                           <td>${t_user.username }</td>
-		                           <td>${t_user.address }</td>
-		                           <td>${t_user.phone }</td>
-		                           <td>${t_user.createBy }</td>		                           
+		                           <td>${task.users }</td>
+		                           <td>${task.task }</td>
+		                           <td>${task.description }</td>
+		                           <td>${task.status }</td>		                           
 		                           <td>
 		                           	<a href="" class="text-muted"><i class="material-icons">settings</i></a>
 		                           	<a href="<c:url value="<%=UrlConst.USER_DELETE%>" />?id=${t_user.id}" class="text-muted"><i class="material-icons">delete</i></a>

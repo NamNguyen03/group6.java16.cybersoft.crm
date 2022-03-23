@@ -25,7 +25,7 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		}
 		User user = null;
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where username = ?";
+			String query =" SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where username = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
