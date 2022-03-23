@@ -9,6 +9,7 @@ import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 
@@ -124,13 +125,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateId(int id) {
-		// TODO Auto-generated method stub
 		try {
 			userRepo.updateById(id);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<GetUserInProjectResponseModel> findAllUserInProject(int idProject) {
+		return userRepo.findAllUserInProject(idProject);
 	}
 
 }

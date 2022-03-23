@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -14,8 +15,8 @@ import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-@WebFilter(urlPatterns = UrlConst.GLOBAL)
-public class AuthFilter implements Filter{
+
+public abstract class AuthFilter implements Filter{
 
 	private UserRepo repo;
 	
@@ -52,7 +53,19 @@ public class AuthFilter implements Filter{
 					return;
 				}
 			}
-			
+		
+			if(servletPath.startsWith(UrlConst.PROJECT_USER)) {
+				try {
+					int idProject = Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));	
+					if(!repo.isLeaderProject(username, idProject)) {
+						resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
+						return;
+					}
+				} catch (Exception e) {
+					resp.sendRedirect(req.getContextPath() + UrlConst.WORK_SPACE);
+					return;
+				}
+			}
 			
 			chain.doFilter(request, response);
 			
@@ -61,3 +74,4 @@ public class AuthFilter implements Filter{
 	}
 
 }
+	

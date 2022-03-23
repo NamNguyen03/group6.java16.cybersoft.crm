@@ -32,7 +32,7 @@
                                 Manage Project
                             </a>
                              <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_USER%>" />">
-                                Add User In Project
+                                List User Project
                             </a>
                             <a class="dropdown-item" href="#">
                                 Project Create Project

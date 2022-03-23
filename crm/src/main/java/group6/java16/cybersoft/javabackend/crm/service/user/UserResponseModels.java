@@ -45,4 +45,14 @@ public class UserResponseModels {
 		private String username;
 		private String fullname;
 	}
+	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class GetUserInProjectResponseModel {
+		private int idUser;
+		private String username;
+		private String fullname;
+		private String phone;
+	}
 }

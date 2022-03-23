@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserService;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserServiceImpl;
+import group6.java16.cybersoft.javabackend.crm.share.model.MyNotification;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
@@ -41,7 +42,7 @@ public class UserPasswordServlet extends HttpServlet  {
 		switch (path) {
 		case UrlConst.FORGOT_PASSWORD:
 			req.getRequestDispatcher(JspConst.FORGOT_PASSWORD)
-			.forward(req, resp);
+				.forward(req, resp);
 			break;
 			
 		case UrlConst.ADMIN_RESET_PASSWORD:
@@ -93,7 +94,7 @@ public class UserPasswordServlet extends HttpServlet  {
 			return;
 		}
 		userService.updateNewPassword(username, password);
-		req.getRequestDispatcher(JspConst.AUTH_LOGIN).forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + UrlConst.LOGIN);
 
 	}
 
@@ -105,8 +106,14 @@ public class UserPasswordServlet extends HttpServlet  {
 	 */
 	private void acceptResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");	
-		userService.acceptResetPassword(username);
-		resp.sendRedirect(req.getContextPath() + UrlConst.ADMIN_RESET_PASSWORD);
+		boolean rp = userService.acceptResetPassword(username);
+		if(rp) {
+			req.setAttribute("notification", new MyNotification("Accept reset password successfully", false));
+		}else {
+			req.setAttribute("notification", new MyNotification("Accept reset password failed", true));
+		}
+		getPageAcceptResetPassword(req, resp);
+		
 	}
 
 	
@@ -118,8 +125,13 @@ public class UserPasswordServlet extends HttpServlet  {
 	 */
 	private void rejectResetPassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
-		userService.rejectResetPassword(username);		
-		resp.sendRedirect(req.getContextPath() + UrlConst.ADMIN_RESET_PASSWORD);
+		boolean rp = userService.rejectResetPassword(username);		
+		if(rp) {
+			req.setAttribute("notification", new MyNotification("Reject reset password successfully", false));
+		}else {
+			req.setAttribute("notification", new MyNotification("Reject reset password failed", true));
+		}
+		getPageAcceptResetPassword(req, resp);
 
 	}
 	
