@@ -5,7 +5,7 @@
 	<groupId>cybersoft.javabackend</groupId>
 	<artifactId>crm</artifactId>
 	<version>0.0.1</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>CRM Application</name>
 	<description>CRM Application for Education Purpose</description>
 
