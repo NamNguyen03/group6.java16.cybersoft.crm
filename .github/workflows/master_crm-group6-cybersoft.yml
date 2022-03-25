@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/crm/target/*.war'
+          path: '${{ github.workspace }}/crm/target/*.jar'
 
   deploy:
     runs-on: windows-latest
@@ -50,4 +50,4 @@ jobs:
           app-name: 'crm-group6-cybersoft'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0FED361546614B669AE296E06B9A99CB }}
-          package: '*.war'
+          package: '*.jar'
