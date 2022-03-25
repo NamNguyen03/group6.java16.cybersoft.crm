@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cybersoft.javabackend</groupId>
 	<artifactId>crm</artifactId>
-	<version>0.0.1</version>
-	<packaging>war</packaging>
+	<version>1</version>
+	<packaging>jar</packaging>
 	<name>CRM Application</name>
 	<description>CRM Application for Education Purpose</description>
 
@@ -76,7 +76,7 @@
 					<pricingTier>B2</pricingTier>
 					<region>westus</region>
 					<runtime>
-					<os>Linux</os>      
+					<os>Windown</os>      
 					<webContainer>Java SE</webContainer>
 					<javaVersion>Java 11</javaVersion>
 					</runtime>
