@@ -76,7 +76,7 @@
 					<pricingTier>B2</pricingTier>
 					<region>westus</region>
 					<runtime>
-					<os>Windown</os>      
+					<os>Windows</os>      
 					<webContainer>Java SE</webContainer>
 					<javaVersion>Java 11</javaVersion>
 					</runtime>
