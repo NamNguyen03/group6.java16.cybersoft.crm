@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection {
-	private static final String url = "jdbc:mysql://194.59.164.63:3306/u411554605_CRM";
-	private static final String username = "u411554605_root";
+	private static final String url = "jdbc:mysql://194.59.164.63:3306/u411554605_my_crm";
+	private static final String username = "u411554605_my_crm_root";
 	private static final String password = "Nam12345";
 	
 	private static Connection connection;
