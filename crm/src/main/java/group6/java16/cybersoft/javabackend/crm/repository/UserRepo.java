@@ -25,16 +25,22 @@ public interface UserRepo {
 	 */
 	boolean isAdmin(String username);
 	
-	boolean add(User user) ;
-
 	/**
+	 * 
+	 * @param user
+	 * @return true if add user else false
+	 */
+	boolean add(User user) ;
+	
+	/**
+	 * 
 	 * @param user
 	 * @return
 	 */
-	boolean checkExistByUsername(String username);
+	boolean update(User user) ;
 
 	/**
-	 * @return
+	 * @return true if add user else false
 	 */
 	List<User> getListUser();
 
@@ -52,7 +58,7 @@ public interface UserRepo {
 	/**
 	 * Retrieves an User by its username
 	 * 
-	 * @param usernam
+	 * @param username
 	 * 
 	 * @return true if role of user is leader else false
 	 */

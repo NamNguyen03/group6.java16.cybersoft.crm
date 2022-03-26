@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 			return false;
 		}
 
-		if(!updateRoleRequest.getRoleName().equals("ADMIN") && !projectRepo.existsByName(updateRoleRequest.getProjectName())) {
+		if(!updateRoleRequest.getRoleName().equals("ADMIN") && !projectRepo.existsByID(updateRoleRequest.getProjectName())) {
 			return false;
 		}
 
@@ -101,7 +101,7 @@ public class RoleServiceImpl implements RoleService {
 			return false;
 		}
 
-		if(!removeRoleRequestModel.getRoleName().equals("ADMIN") && !projectRepo.existsByName(removeRoleRequestModel.getProjectName())) {
+		if(!removeRoleRequestModel.getRoleName().equals("ADMIN") && !projectRepo.existsByID(removeRoleRequestModel.getProjectName())) {
 			return false;
 		}
 

@@ -6,8 +6,10 @@ import java.util.List;
 import group6.java16.cybersoft.javabackend.crm.model.User;
 import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
+import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequetModel.UpdateProjectRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.UpdateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
@@ -35,11 +37,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean add(CreateUserRequestModel userRequest) {
-		if (userRequest.getUsername() == null || userRequest.getPassword() == null || userRequest.getAddress() == null
+		if (userRequest.getUsername() == null  || userRequest.getAddress() == null
 				|| userRequest.getPhone() == null || userRequest.getCreateBy() == null) {
 			return false;
 		}
-		if (userRepo.checkExistByUsername(userRequest.getUsername())) {
+		if (userRepo.existsByUsername(userRequest.getUsername())) {
 			return false;
 		}
 		if (!userRepo.isAdmin(userRequest.getCreateBy())) {
@@ -48,7 +50,6 @@ public class UserServiceImpl implements UserService {
 
 		User user = new User();
 		user.setUsername(userRequest.getUsername());
-		user.setPassword(userRequest.getPassword());
 		user.setFullname(userRequest.getFullname());
 		user.setAddress(userRequest.getAddress());
 		user.setPhone(userRequest.getPhone());
@@ -124,13 +125,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateId(int id) {
-		// TODO Auto-generated method stub
 		try {
 			userRepo.updateById(id);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	public boolean update(UpdateUserRequestModel userRequest) {
+		
+		if (userRequest.getUsername() == null || userRequest.getPassword() == null || userRequest.getAddress() == null
+				|| userRequest.getPhone() == null || userRequest.getUpdateBy() == null) {
+			return false;
+		}
+		if (!userRepo.isAdmin(userRequest.getUpdateBy())) {
+			return false;
+		}
+
+		User user = new User();
+		user.setUsername(userRequest.getUsername());
+		user.setPassword(userRequest.getPassword());
+		user.setFullname(userRequest.getFullname());
+		user.setAddress(userRequest.getAddress());
+		user.setPhone(userRequest.getPhone());
+		user.setCreateBy(userRequest.getUpdateBy());
+
+		return userRepo.update(user);
+	}
 }

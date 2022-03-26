@@ -21,6 +21,12 @@ import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
+
+/**
+ * 
+ * @author Phạm Huy Phần
+ *
+ */
 @WebServlet(name = "projectInfoServlet", urlPatterns = UrlConst.PROJECT_INFO)
 public class ProjectInfoServlet extends HttpServlet {
 

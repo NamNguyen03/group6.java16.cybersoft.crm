@@ -11,6 +11,7 @@ public class UrlConst {
 	//user
 	public static final String USER_DASHBOARD = "/user";
 	public static final String USER_ADD	= "/user/add";
+	public static final String USER_UPDATE	= "/user/update";
 	public static final String USER_DELETE	= "/user/delete";
 	public static final String USER_LIST	= "/user/list";
 
@@ -27,8 +28,17 @@ public class UrlConst {
 	
 	public static final String MANAGE_PROJECT = "/manage-project";
 	public static final String PROJECT_INFO = "/project-info";
+	public static final String PROJECT_ADD = "/project-add";
+	public static final String PROJECT_UPDATE = "/project-update";
+
 	
 	public static final String PROJECT_USER = "/project-user";
 	
 	public static final String WORK_SPACE = "/work-space";
+	
+	public static final String TASK = "/task";
+	public static final String LIST_TASK = "/list-task";
+	public static final String ASSIGNMENT_TASK = "/assignment-task";
+	public static final String UPDATE_TASK = "/update-task";
+
 }

@@ -50,7 +50,8 @@
 
 				<div class="card-form__body card-body">
 					<h3 class="">Reset Password</h3>
-					<form  action="<c:url value="<%=UrlConst.FORGOT_PASSWORD%>" />" method="post">
+					<form action="<c:url value="<%=UrlConst.FORGOT_PASSWORD%>" />"
+						method="post">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Your email:</label> <input
 								type="email" name="username" class="form-control" required=""
@@ -59,12 +60,12 @@
 						<div class="form-group">
 							<label for="exampleInputPassword1">Your password:</label> <input
 								type="password" name="password" class="form-control" required=""
-								placeholder="Enter your password .."> 
+								placeholder="Enter your password ..">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputPassword1">Your password Repeat:</label>
-							<input type="password" name="rePassword" class="form-control" required=""
-								placeholder="Enter your password Repeat ..">
+							<input type="password" name="rePassword" class="form-control"
+								required="" placeholder="Enter your password Repeat ..">
 						</div>
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
@@ -72,7 +73,7 @@
 			</div>
 		</div>
 	</div>
-		<c:if test="${message!=null}">
+	<c:if test="${message!=null}">
 		<div style="height: 44px; right: 10px; top: 10px; position: absolute;">
 			<div
 				class="alert alert-dismissible bg-danger text-white border-0 fade show"

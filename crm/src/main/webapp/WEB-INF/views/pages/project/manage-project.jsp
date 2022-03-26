@@ -24,15 +24,15 @@
 					<h1 class="m-0">Manage Project</h1>
 				</div>
 				<div class="ml-auto">
-					<a href="" class="btn btn-light"><i
-						class="material-icons icon-16pt text-muted mr-1">settings</i>
-						Settings</a>
-				</div>
+	                <a ${user.isAdmin ? "hidden": ""} href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />" class="btn btn-light"><i class="material-icons icon-16pt text-muted mr-1">add</i>
+	    				Add New Project
+	    			</a>
+	            </div>
 			</div>
 		</div>
 	</div>
 
-	<form action="<c:url value="<%=UrlConst.PROJECT_INFO%>" />" method="post">
+	<form action="#" method="post">
 		<div class="container page__container">
 		<!-- Xep hang -->
 		<div class="row">
@@ -48,7 +48,6 @@
 							<td>Description</td>
 							<td>Status</td>
 							<td>CreateBy</td>
-							
 							<td>CreatDate</td>
 							<td>&emsp;...</td>
 						</tr>
@@ -65,7 +64,7 @@
 											<td>${projects.id}</td>
 											<td style="width: 200px">
 												<div>
-												<a href="<c:url value="<%=UrlConst.PROJECT_INFO%>" />"
+												<a href="#"
 														class="text-15pt d-flex align-items-center"> 
 														<i class="material-icons icon-16pt mr-1">business</i>
 														<strong name="projects">${projects.name}</strong>

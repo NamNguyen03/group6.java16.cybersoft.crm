@@ -4,7 +4,7 @@
 <%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
 <head>
 <meta charset="UTF-8">
-<title>Add New User</title>
+<title>Update User</title>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -17,11 +17,11 @@
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME %>" />">Home</a></li>
 	                        <li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.USER_DASHBOARD%>" />">User</a></li>
 	                        <li class="breadcrumb-item active" aria-current="page">
-	                            Add New User
+	                           Update User
 	                        </li>
 	                    </ol>
 	                </nav>
-	                <h1 class="m-0">Add New User</h1>
+	                <h1 class="m-0">Update User</h1>
 	            </div>
 	        </div>
 	    </div>
@@ -35,14 +35,10 @@
                     <p class="text-muted">There is no rule!</p>
                 </div>
                 <div class="col-lg-8 card-form__body card-body">
-                    <form action="<c:url value="<%=UrlConst.USER_ADD %>" />" method="post">
+                    <form action="<c:url value="<%=UrlConst.USER_UPDATE %>" />" method="post">
                         <div class="form-group">
-                            <label for="email">Email:</label>
+                            <label for="email">Username:</label>
                             <input type="email" class="form-control" name="username" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" name="password" id="password">
                         </div>
                         <div class="form-group">
                             <label for="name">Name:</label>
@@ -56,7 +52,7 @@
                             <label for="address">Address:</label>
                             <textarea type="text" class="form-control" name="address" id="address" aria-label="With textarea"></textarea>
                         </div>
-                        <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Add</button>
+                        <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>

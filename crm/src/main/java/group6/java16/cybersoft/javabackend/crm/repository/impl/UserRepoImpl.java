@@ -123,9 +123,13 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	}
 
 	@Override
-	public boolean checkExistByUsername(String username) {
+	public boolean existsByUsername(String username) {
+		if (username == null || username.equals("")) {
+			return false;
+		}
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "SELECT EXISTS( select * from  t_user where username = ?)";
+			String query = "select exists( select id from t_user where username = ? )";
+
 			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, username);
@@ -133,12 +137,12 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			ResultSet results = statement.executeQuery();
 
 			results.next();
-
 			return results.getBoolean(1);
 
 		} catch (SQLException e) {
-
+			e.printStackTrace();
 		}
+
 		return false;
 	}
 
@@ -271,8 +275,7 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		} catch (SQLException e) {
 			System.out.println("unable to connect database");
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			connection.close();
 		}
 
@@ -306,38 +309,14 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	}
 
 	@Override
-	public boolean existsByUsername(String username) {
-		if (username == null || username.equals("")) {
-			return false;
-		}
-		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "select exists( select id from t_user where username = ? )";
-
-			PreparedStatement statement = connection.prepareStatement(query);
-
-			statement.setString(1, username);
-
-			ResultSet results = statement.executeQuery();
-
-			results.next();
-			return results.getBoolean(1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean updateNewPassword(String username, String password) {
 
 		try (Connection connection = MySQLConnection.getConnection()) {
 			String query = "update t_user set password_new = ? where username = ? ";
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(1, password);
-			statement.setString(2, username);
+			statement.setString(2, password);
+			statement.setString(1, username);
 
 			statement.executeUpdate();
 			return true;
@@ -415,8 +394,30 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
 	@Override
 	public void updateById(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public boolean update(User user) {
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "update t_user set  fullname= ?, user_address= ?, phone= ?, create_by= ?, update_by= ? where username = ?";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, user.getFullname());
+			statement.setString(2, user.getAddress());
+			statement.setString(3, user.getPhone());
+			statement.setString(4, user.getCreateBy());
+			statement.setString(5, user.getUpdateBy());
+			statement.setString(6, user.getUsername());
+
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database");
+			e.printStackTrace();
+		}
+		System.out.println("false");
+		return false;
 	}
 
 }
