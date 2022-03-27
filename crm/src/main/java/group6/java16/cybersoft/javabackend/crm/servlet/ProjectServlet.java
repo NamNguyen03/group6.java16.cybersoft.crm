@@ -47,6 +47,7 @@ public class ProjectServlet extends HttpServlet {
 	private RoleService roleService;
 	private UserService userService;
 
+
 	public ProjectServlet() {
 		projectService = new ProjectServiceImpl();
 	}
@@ -116,14 +117,14 @@ public class ProjectServlet extends HttpServlet {
 
 	}
 
-	private void getListProject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Project> projects = projectServiceImpl.findAll();
-		if(projects != null) {
-			req.setAttribute("projects", projects);
-		}
-
-		req.getRequestDispatcher(JspConst.MANAGE_PROJECT).forward(req, resp);
-	}
+//	private void getListProject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		List<Project> projects = projectServiceImpl.findAll();
+//		if(projects != null) {
+//			req.setAttribute("projects", projects);
+//		}
+//
+//		req.getRequestDispatcher(JspConst.MANAGE_PROJECT).forward(req, resp);
+//	}
 
 	private void postProjectUpdate(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
