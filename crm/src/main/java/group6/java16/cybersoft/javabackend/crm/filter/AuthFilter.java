@@ -16,7 +16,8 @@ import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-public abstract class AuthFilter implements Filter {
+
+public abstract class AuthFilter implements Filter{
 
 	private UserRepo repo;
 
@@ -67,7 +68,7 @@ public abstract class AuthFilter implements Filter {
 					return;
 				}
 			}
-
+			
 			chain.doFilter(request, response);
 
 		}

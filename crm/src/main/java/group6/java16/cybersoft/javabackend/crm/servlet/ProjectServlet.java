@@ -113,6 +113,16 @@ public class ProjectServlet extends HttpServlet {
 			req.setAttribute("notification", new MyNotification("Add project  failed", true));
 		}
 		req.getRequestDispatcher(JspConst.PROJECT_ADD).forward(req, resp);
+
+	}
+
+	private void getListProject(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		List<Project> projects = projectServiceImpl.findAll();
+		if(projects != null) {
+			req.setAttribute("projects", projects);
+		}
+
+		req.getRequestDispatcher(JspConst.MANAGE_PROJECT).forward(req, resp);
 	}
 
 	private void postProjectUpdate(HttpServletRequest req, HttpServletResponse resp)

@@ -36,8 +36,8 @@
 			<table class="table mb-0 thead-border-top-0">
 				<thead>
 					<tr>
-						<th>name</th>
-						<th>Task</th>
+						<th>User Name</th>
+						<th>Task Name</th>
 						<th>ID</th>
 						<th>Description</th>
 						<th>Status</th>
@@ -89,3 +89,4 @@
 	<!-- END BODY -->
 </body>
 
+>
