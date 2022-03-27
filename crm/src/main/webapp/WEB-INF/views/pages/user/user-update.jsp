@@ -38,19 +38,19 @@
                     <form action="<c:url value="<%=UrlConst.USER_UPDATE %>" />" method="post">
                         <div class="form-group">
                             <label for="email">Username:</label>
-                            <input type="email" class="form-control" name="username" id="email">
+                            <input type="email" class="form-control" name="username" id="email"required="">
                         </div>
                         <div class="form-group">
                             <label for="name">Name:</label>
-                            <input type="text" class="form-control" name="fullname" id="name">
+                            <input type="text" class="form-control" name="fullname" id="name" required="">
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone:</label>
-                            <input type="text" class="form-control" name="phone" id="phone">
+                            <input type="text" class="form-control" name="phone" id="phone" required="">
                         </div>
                          <div class="form-group">
                             <label for="address">Address:</label>
-                            <textarea type="text" class="form-control" name="address" id="address" aria-label="With textarea"></textarea>
+                            <textarea type="text" class="form-control" name="address" id="address" aria-label="With textarea" required=""></textarea>
                         </div>
                         <button class="btn btn-primary w-25 justify-content-center" type="submit" class="btn btn-primary">Update</button>
                     </form>

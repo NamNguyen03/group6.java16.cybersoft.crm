@@ -1,5 +1,4 @@
-create database CRM;
-use CRM;
+use u411554605_CRM;
 create table company(
 	id INT(6)  AUTO_INCREMENT PRIMARY KEY,
 	company_name VARCHAR(120) NOT NULL,

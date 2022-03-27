@@ -16,7 +16,7 @@
 				<div>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME%>" />">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Status Task</li>
 						</ol>
@@ -38,10 +38,13 @@
 			<table class="table mb-0 thead-border-top-0">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Task Name</th>
+						<th>Task ID</th>
+						<th>Name</th>
 						<th>Description</th>
+						<th>Username</th>
 						<th>Create By</th>
+						<th>Create Date</th>
+						<th>Status</th>
 						<th>#</th>
 					</tr>
 				</thead>
@@ -55,10 +58,13 @@
 						<c:otherwise>
 							<c:forEach var="tasks" items="${tasks}">
 								<tr>
-									<td>${tasks.id}</td>
-									<td>${tasks.taskName}</td>
-									<td>${tasks.descript }</td>
-									<td>${tasks.createBy }</td>
+							<td>${tasks.id }</td>
+							<td>${tasks.taskName }</td>
+							<td>${tasks.description }</td>
+							<td>${tasks.userName }</td>
+							<td>${tasks.createBy }</td>
+							<td>${tasks.createDate }</td>
+							<td>${tasks.statusName }</td>
 									<td><a href="" class="text-muted"><i
 											class="material-icons">settings</i></a></td>
 								</tr>

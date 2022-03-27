@@ -81,6 +81,10 @@ public interface ProjectService {
 	 * @return
 	 */
 	boolean update(int id, String name,String description, String satus, String updateBy) ;
+	
+	ProjectResponse getAllProjectByName(String projectname);
+	Project findByName(String projectName);
+	Project findById(int Id);
 }
 
 

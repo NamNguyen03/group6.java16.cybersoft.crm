@@ -373,17 +373,17 @@ public class ProjectRepoImpl extends EntityRepo<Project> implements ProjectRepo 
 	}
 
 	@Override
-	public boolean update(int id, String name,String description, String satus, String updateBy) {
-		
+	public boolean update(int id, String name, String description, String satus, String updateBy) {
+
 		try (Connection connection = MySQLConnection.getConnection()) {
 			String query = "update project set project_name = ?,project_description = ? ,project_status = ? ,update_by=? where id = ?";
 
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1,name);
-			statement.setString(2,description);
-			statement.setString(3,satus);
+			statement.setString(1, name);
+			statement.setString(2, description);
+			statement.setString(3, satus);
 			statement.setString(4, updateBy);
-			statement.setInt(5,id );
+			statement.setInt(5, id);
 
 			statement.executeUpdate();
 			return true;
@@ -395,5 +395,51 @@ public class ProjectRepoImpl extends EntityRepo<Project> implements ProjectRepo 
 		return false;
 	}
 
+	@Override
+	public boolean existsByName(String projectName) {
+
+		if (projectName == null || "".equals(projectName)) {
+			return false;
+		}
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists(select id from project where project_name = ? )";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, projectName);
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+
+			return results.getBoolean(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	@Override
+	public ProjectResponse getAllMyProjectByName(String projectName) {
+		ProjectResponse project = null;
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select id , project_name, project_description, project_status from project where project_name = ?";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, projectName);
+			ResultSet results = statement.executeQuery();
+
+			while (results.next()) {
+				ProjectResponse projects = new ProjectResponse();
+				projects.setId(results.getInt("id"));
+				projects.setName(results.getString("project_name"));
+				projects.setStatus(results.getString("project_status"));
+				projects.setDescription(results.getString("project_description"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return project;
+	}
 
 }

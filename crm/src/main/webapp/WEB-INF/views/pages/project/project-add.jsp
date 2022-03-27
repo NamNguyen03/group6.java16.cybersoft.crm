@@ -7,6 +7,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Projects</title>
+
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	padding: 8px;
+	text-align: left;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.notification {
+	display: flex;
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	color: white;
+}
+</style>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -16,7 +41,7 @@
 				<div>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME%>" />">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Forms</li>
 						</ol>
@@ -58,20 +83,17 @@
 													<label for="exampleInputPassword1">Project Name:</label> <input
 														name="name" type="text" class="form-control"
 														id="exampleInputPassword1"
-														placeholder="Enter your name ..">
+														placeholder="Enter your name .." required="" >
 												</div>
 												<div class="form-group">
-													<label for="exampleInputPassword1">Description:</label> <input
-														name="description" type="text" class="form-control"
-														id="exampleInputPassword1"
-														placeholder="Enter your ddescription ..">
+													<label for="exampleInputPassword1">Description:</label> 
+													<textarea name="description" type="text" class="form-control" placeholder="Enter your ddescription .." name="address" id="exampleInputPassword1" aria-label="With textarea" required=""></textarea>
+													
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Status:</label> <select
 														name="status" class="form-control" id="status">
-														<option value="Doing">Doing</option>
-														<option value="Late">Late</option>
-														<option value="Complete">Complete</option>
+														<option value="Start">Start</option>
 													</select>
 												</div>
 												<div style="width: 50%; margin-inline: auto;">
@@ -100,5 +122,29 @@
       'mini': 'mini-dashboard.html'}">
 		</app-settings>
 	</div>
+			<c:if test="${notification!=null}">
+		<div class="notification p-3" id="notification">
+			<div class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
+				<c:out value="${notification.message}" />
+				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
+					<i onclick="closeNotification()" data-v-da9425c4="" class="material-icons" style="cursor: pointer;">close</i> 
+				</div>
+			</div>  
+		</div>
+	</c:if>
+	<script>
+		function closeNotification(){
+			document.getElementById( 'notification' ).style.display = 'none';
+		}
+		document.getElementById("select-project").style.visibility = "hidden";
+		function selectRole() {
+		  	var role = document.getElementById("role").value;
+		 	if(role == "LEADER" || role == "MEMBER"){
+		 		document.getElementById("select-project").style.visibility = "";
+		 	}else{
+		 		document.getElementById("select-project").style.visibility = "hidden";
+		 	}	
+		}
+	</script>
 </body>
 </html>

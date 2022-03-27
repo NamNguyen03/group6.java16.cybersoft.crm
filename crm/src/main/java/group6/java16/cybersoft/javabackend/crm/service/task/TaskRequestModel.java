@@ -12,6 +12,9 @@ public class TaskRequestModel {
 		private String name;
 		private String description;
 		private String createBy;
+		private int projectId;
+		private int userId;
+		private int statusId = 1;
 	}
 	
 	@AllArgsConstructor

@@ -131,6 +131,10 @@ public interface ProjectRepo {
 	 * @return List<Project>
 	 */
 	List<Project> getListProject();
+
+	boolean existsByName(String projectName);
+
+	ProjectResponse getAllMyProjectByName(String projectName);
 	
 	
 }

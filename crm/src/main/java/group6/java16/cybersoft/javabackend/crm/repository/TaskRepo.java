@@ -2,15 +2,16 @@
  * 
  */
 package group6.java16.cybersoft.javabackend.crm.repository;
-
-import java.sql.SQLException;
 import java.util.List;
 import group6.java16.cybersoft.javabackend.crm.model.Task;
+import group6.java16.cybersoft.javabackend.crm.service.task.TaskRequestModel.CreateTaskRequestModel;
+import group6.java16.cybersoft.javabackend.crm.service.task.TaskResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.task.TaskResponseModels.TaskResponse;
 import group6.java16.cybersoft.javabackend.crm.service.task.TaskResponseModels.TaskRoleResponse;
 
 public interface TaskRepo {
-	boolean add(Task task);
+	
+	boolean add(CreateTaskRequestModel task);
 
 	List<TaskRoleResponse> getAllTaskByLeaderIsNull();
 
@@ -22,27 +23,34 @@ public interface TaskRepo {
 
 	boolean existsByNameAndLeader(String taskName, String usernameReq);
 
-
 	List<TaskResponse> getAllMyTask(String usernameReq);
 
-	boolean isAdmin(String userName);
+	void updateById(int id);
 
-
-	boolean isLeader(String username);
-
-	
-	void updateById(int id) throws SQLException;
-
-	
 	boolean existsById(int id);
-
-	Task findById(int id);
 
 	boolean update(Task task);
 
 	List<Task> getListTask();
 	
+	boolean isAdmin(String taskName);
 	
 	public Task getById(int id);
+	/**
+	 * @author trunghau
+	 *
+	 */	
+	TaskResponseModels.UpdateStatusTaskResponse getTaskUpdateById(int id);
+	
+	void updateStatusTask(int task_id,String status_name);
+	
+	List<TaskResponseModels.TaskResponse> getListTaskByProjectId(int project_id);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	TaskResponseModels.TaskResponse findById(int id);
+	 
 	
 }

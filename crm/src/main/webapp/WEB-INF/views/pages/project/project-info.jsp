@@ -1,184 +1,219 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Manage Project</title>
-<link rel="shortcut icon" href="/assets/images/favicon.ico" />
+<title>Project Details</title>
+<style>
+@charset "UTF-8";
+
+@import
+	url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	line-height: 1.42em;
+	color: #A7A1AE;
+	background-color: #1F2739;
+}
+
+h1 {
+	font-size: 3em;
+	font-weight: 300;
+	line-height: 1em;
+	text-align: center;
+	color: #4DC3FA;
+}
+
+h2 {
+	font-size: 1em;
+	font-weight: 300;
+	text-align: center;
+	display: block;
+	line-height: 1em;
+	padding-bottom: 2em;
+	color: #FB667A;
+}
+
+h2 a {
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #FB667A;
+	text-decoration: none;
+}
+
+.blue {
+	color: #185875;
+}
+
+.yellow {
+	color: #FFF842;
+}
+
+.container th h1 {
+	font-weight: bold;
+	font-size: 1em;
+	text-align: left;
+	color: #185875;
+}
+
+.container td {
+	font-weight: normal;
+	font-size: 1em;
+	-webkit-box-shadow: 0 2px 2px -2px #0E1119;
+	-moz-box-shadow: 0 2px 2px -2px #0E1119;
+	box-shadow: 0 2px 2px -2px #0E1119;
+}
+
+.container {
+	text-align: left;
+	overflow: hidden;
+	width: 80%;
+	margin: 0 auto;
+	display: table;
+}
+
+.container td, .container th {
+	padding-bottom: 2%;
+	padding-top: 2%;
+	padding-left: 2%;
+}
+
+/* Background-color of the odd rows */
+.container tr:nth-child(odd) {
+	background-color: #323C50;
+}
+
+/* Background-color of the even rows */
+.container tr:nth-child(even) {
+	background-color: #2C3446;
+}
+
+.container th {
+	background-color: #1F2739;
+}
+
+.container td:first-child {
+	color: #FB667A;
+}
+
+.container tr:hover {
+	background-color: #464A52;
+	-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	-moz-box-shadow: 0 6px 6px -6px #0E1119;
+	box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+.container td:hover {
+	background-color: #FFF842;
+	color: #403E10;
+	font-weight: bold;
+	box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px,
+		#7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+	transform: translate3d(6px, -6px, 0);
+	transition-delay: 0s;
+	transition-duration: 0.4s;
+	transition-property: all;
+	transition-timing-function: line;
+}
+/* CSS Button*/
+.button1 {
+	background-image: linear-gradient(135deg, #008aff, #86d472);
+	border-radius: 6px;
+	box-sizing: border-box;
+	color: #ffffff;
+	display: block;
+	height: 50px;
+	font-size: 1.4em;
+	font-weight: 600;
+	padding: 4px;
+	position: relative;
+	text-decoration: none;
+	width: 200px;
+	z-index: 2;
+}
+
+.button1:hover {
+	color: #fff;
+}
+
+.button1 .btn1 {
+	align-items: center;
+	background: #0e0e10;
+	border-radius: 6px;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	transition: background 0.5s ease;
+}
+
+.button1:hover .btn1 {
+	background: transparent;
+}
+</style>
 </head>
 <body>
-	<!-- Breadcrumb -->
 	<div class="container page__heading-container">
 		<div class="page__heading">
 			<div class="d-flex align-items-center">
 				<div>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a
+								href="<c:url value="<%=UrlConst.HOME%>" />">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">
-								<a href="#">Manage Project</a></li>
-								<li class="breadcrumb-item active" aria-current="page">
-								Project Information</li>
+								Project Detail</li>
 						</ol>
 					</nav>
-					<h1 class="m-0">Project Information</h1>
+					<h1 class="m-0">Project Detail</h1>
 				</div>
 				<div class="ml-auto">
-					<a href="" class="btn btn-light"><i
-						class="material-icons icon-16pt text-muted mr-1">settings</i>
-						Settings</a>
+					<a ${user.isAdmin ? "hidden": ""}
+						href="<c:url value="<%=UrlConst.MANAGE_PROJECT%>" />"
+						class="btn btn-light"><i
+						class=" fas fa-arrow-left icon-16pt text-muted mr-1"></i> Back </a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- End Breadcrumb -->
-	<div class="container page__container">
-		<!-- Page Content -->
-		<div class="card card-form">
-			<div class="row no-gutters">
-				<div class="col-lg-4 card-body">
-					<p>
-						<strong class="headings-color">Description of project
-							information</strong>
-					</p>
-					<p class="text-muted">An e-portal project that connects the
-						world with an investment of $100 billion.</p>
-				</div>
-				<div class="col-lg-8 card-form__body border-left">
-					<div class="table-responsive border-bottom" data-toggle="lists"
-						data-lists-values='["js-lists-values-employee-name"]'>
-
-						<table class="table mb-0 thead-border-top-0">
-							<thead>
-								<tr>
-
-									<th style="width: 18px;">
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox"
-												class="custom-control-input js-toggle-check-all"
-												data-target="#staff" id="customCheckAll"> <label
-												class="custom-control-label" for="customCheckAll"><span
-												class="text-hide">Toggle all</span></label>
-										</div>
-									</th>
-									<th>UserName</th>
-									<th style="width: 37px;">Position</th>
-									<th style="width: 120px;"></th>
-									<th style="width: 51px;">CreateBy</th>
-									<th style="width: 24px;"></th>
-								</tr>
-							</thead>
-							<tbody class="list" id="staff">
-								<tr class="selected">
-
-									<td>
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox"
-												class="custom-control-input js-check-selected-row"
-												checked="" id="customCheck1_1"> <label
-												class="custom-control-label" for="customCheck1_1"><span
-												class="text-hide">Check</span></label>
-										</div>
-									</td>
-
-									<td>
-
-										<div class="media align-items-center">
-											<div class="avatar avatar-xs mr-2">
-												<img
-													src="<c:url value="/assets/images/256_luke-porter-261779-unsplash.jpg"/>"
-													alt="Avatar" class="avatar-img rounded-circle">
-											</div>
-											<div class="media-body">
-
-												<span class="js-lists-values-employee-name">Michael
-													Smith</span>
-
-											</div>
-										</div>
-
-									</td>
-									<td><span class="badge badge-warning">ADMIN</span></td>
-									<td><small class="text-muted"></small></td>
-									<td>&dollar;12,402</td>
-									<td><a href="" class="text-muted"><i
-											class="material-icons">more_vert</i></a></td>
-								</tr>
-								<tr>
-
-									<td>
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox"
-												class="custom-control-input js-check-selected-row"
-												id="customCheck2_1"> <label
-												class="custom-control-label" for="customCheck2_1"><span
-												class="text-hide">Check</span></label>
-										</div>
-									</td>
-
-									<td>
-
-										<div class="media align-items-center">
-											<img src="<c:url value="/assets/images/avatar/green.svg"/>"
-												class="mr-2" alt="avatar" />
-											<div class="media-body">
-
-												<span class="js-lists-values-employee-name">Connie
-													Smith</span>
-
-											</div>
-										</div>
-
-									</td>
-
-
-									<td><span class="badge badge-success">USER</span></td>
-									<td><small class="text-muted"></small></td>
-									<td>&dollar;1,943</td>
-									<td><a href="" class="text-muted"><i
-											class="material-icons">more_vert</i></a></td>
-								</tr>
-								<tr>
-
-									<td>
-										<div class="custom-control custom-checkbox">
-											<input type="checkbox"
-												class="custom-control-input js-check-selected-row"
-												id="customCheck3_1">
-												<label
-												class="custom-control-label" for="customCheck3_1">
-												<span class="text-hide">Check</span>
-												</label>
-										</div>
-									</td>
-
-									<td>${projectname.name}</td>
-
-
-									<td><span class="badge badge-primary">MANAGER</span></td>
-									<td><small class="text-muted">1 week ago</small></td>
-									<td>&dollar;1,943</td>
-									<td><a href="" class="text-muted"><i
-											class="material-icons">more_vert</i></a></td>
-								</tr>
-
-							</tbody>
-						</table>
-					</div>
-
-
-				</div>
-			</div>
-		</div>
-
-		<!-- END Page Content -->
+	<h1>
+		<span>Project Details</pan>
+	</h1>
+	<form action="<c:url value="<%=UrlConst.PROJECT_INFO%>"/>"
+		method="post">
+		<table class="container">
+			<tbody>
+					<tr>
+						<td>Project Name</td>
+						
+						<td style="color: white"><c:out value="${project.name}" /></td>
+					</tr>
+					<tr>
+						<td>Description</td>
+						<td style="color: white">${project.description}</td>
+					</tr>
+					<tr>
+						<td>Status</td>
+						<td style="color: white">${project.status}</td>
+					</tr>
+			</tbody>
+		</table>
+	</form>
+	<div style="margin-top: 5%">
+		<a class="button1"
+			href="<c:url value="<%=UrlConst.ADD_PROJECT_USER%>" />"
+			style="float: left; margin-left: 32%;"> <span class="btn1">List
+				User Project</span>
+		</a>
+		
+		<a class="button1" style="float: left; margin-left: 10%;"
+			href="<c:url value="<%=UrlConst.PROJECT_UPDATE%>"> <c:param name="id" value="${project.id}"/> </c:url>">  <span class="btn1">Update
+				Project</span>
+		</a>
 	</div>
-	<!-- List.js -->
-	<script src="<c:url value="/assets/vendor/list.min.js" />"></script>
-	<script src="<c:url value="/assets/js/list.js" />"></script>
 </body>
 </html>

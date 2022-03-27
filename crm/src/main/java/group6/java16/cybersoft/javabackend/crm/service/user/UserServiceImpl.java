@@ -11,7 +11,9 @@ import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.Cre
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.LoginRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.UpdateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.LoginResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.UserResponseModel;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 
 public class UserServiceImpl implements UserService {
@@ -153,4 +155,8 @@ public class UserServiceImpl implements UserService {
 
 		return userRepo.update(user);
 	}
+	public List<GetUserInProjectResponseModel> findAllUserInProject(int idProject) {
+		return userRepo.findAllUserInProject(idProject);
+	}
+
 }

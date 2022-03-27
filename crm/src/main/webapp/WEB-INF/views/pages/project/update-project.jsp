@@ -7,6 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Update Projects</title>
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	padding: 8px;
+	text-align: left;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.notification {
+	display: flex;
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	color: white;
+}
+</style>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -16,9 +40,7 @@
 				<div>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
-							<li class="breadcrumb-item active" aria-current="page">
-								<a  href="#">Forms</a></li>
+							<li class="breadcrumb-item"><a href="<c:url value="<%=UrlConst.HOME%>" />">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Update Project</li>
 						</ol>
@@ -38,7 +60,6 @@
 		<!-- Page Content -->
 		<div class="col-lg">
 			<div class="z-0">
-				
 				<div class="card">
 					<div class="card-body tab-content">
 						<div class="tab-pane active show fade" id="tab-22">
@@ -61,27 +82,34 @@
 												method="post">
 												<div class="form-group">
 													<label for="exampleInputPassword1">Project ID to
-														Update:</label> <input name="id" type="text"
-														class="form-control" id="exampleInputPassword1"
-														placeholder="Enter your id ..">
+														Update:</label> 
+														<input disabled="disabled" value="${project.id}" type="text"
+														class="form-control"required="" >
+														
+														<input name="id" value="${project.id}" type="hidden"
+														class="form-control"required="" >
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Project Name ( NEW )
-														:</label> <input name="name" type="text"
+														:</label> 
+														<input name="name" type="text" value="${project.name}"
 														class="form-control" id="exampleInputPassword1"
-														placeholder="Enter your name ..">
+														placeholder="Enter your name .." required="">
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1"> Project
-														Description ( NEW ):</label> <input name="description"
+														Description ( NEW ):</label> 
+														<input name="description" value="${project.description}"
 														type="text" class="form-control"
 														id="exampleInputPassword1"
-														placeholder="Enter your description ..">
+														placeholder="Enter your description .." required="">
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Status New ( NEW )
-														:</label> <select name="status" class="form-control"
+														:</label> 
+														<select value="${project.status}" name="status" class="form-control"
 														id="status">
+														<option value="Start">Start</option>
 														<option value="Doing">Doing</option>
 														<option value="Late">Late</option>
 														<option value="complete">Complete</option>
@@ -103,19 +131,6 @@
 			</div>
 		</div>
 		<!-- END Page Content -->
-		<c:if test="${message!=null}">
-		<div style="height: 44px; right: 10px; top: 10px; position: absolute;">
-			<div
-				class="alert alert-dismissible bg-danger text-white border-0 fade show"
-				role="alert">
-				<button type="button" class="close" data-dismiss="alert"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<c:out value="${message}" />
-			</div>
-		</div>
-	</c:if>
 	</div>
 	<!-- App Settings FAB -->
 	<div id="app-settings" hidden>
@@ -127,5 +142,29 @@
       'mini': 'mini-dashboard.html'}">
 		</app-settings>
 	</div>
+		<c:if test="${notification!=null}">
+		<div class="notification p-3" id="notification">
+			<div class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
+				<c:out value="${notification.message}" />
+				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
+					<i onclick="closeNotification()" data-v-da9425c4="" class="material-icons" style="cursor: pointer;">close</i> 
+				</div>
+			</div>  
+		</div>
+	</c:if>
+	<script>
+		function closeNotification(){
+			document.getElementById( 'notification' ).style.display = 'none';
+		}
+		document.getElementById("select-project").style.visibility = "hidden";
+		function selectRole() {
+		  	var role = document.getElementById("role").value;
+		 	if(role == "LEADER" || role == "MEMBER"){
+		 		document.getElementById("select-project").style.visibility = "";
+		 	}else{
+		 		document.getElementById("select-project").style.visibility = "hidden";
+		 	}	
+		}
+	</script>
 </body>
 </html>

@@ -14,6 +14,8 @@ import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.CreateUserRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.UserResponseModel;
 
 public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
@@ -24,7 +26,7 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		}
 		User user = null;
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where username = ?";
+			String query =" SELECT id, username, user_password, fullname, create_date, update_date, create_by, user_address, phone, update_by FROM t_user where username = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, username);
 			ResultSet results = statement.executeQuery();
@@ -39,7 +41,7 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			user.setFullname(results.getString("fullname"));
 			user.setAddress(results.getString("user_address"));
 			user.setPhone(results.getString("phone"));
-			;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -343,7 +345,6 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 				user.setFullname(results.getString("fullname"));
 				users.add(user);
 			}
-			;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -418,6 +419,102 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		}
 		System.out.println("false");
 		return false;
+	}
+
+	@Override
+	public boolean isLeaderProject(String username, int idProject) {
+		if(username == null || username.equals("") || idProject <=0 ) {
+			return false;
+		}
+		
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists (select id from project_role "
+					+ "where project_id = ? "
+					+ "and role_details_id = (select id from role_details "
+					+ "where user_id = (select id from t_user where username = ? ) "
+					+ "and role_id = (select id from u_role where role_name = ? )))";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			statement.setInt(1, idProject);
+			statement.setString(2, username);
+			statement.setString(3, "LEADER");
+
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+			return results.getBoolean(1);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	@Override
+	public List<GetUserInProjectResponseModel> findAllUserInProject(int idProject) {
+		
+		if(idProject <=0 ) {
+			return null;
+		}
+		List<GetUserInProjectResponseModel>  users = null;
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select id, phone, username, fullname from t_user "
+					+ "where id in (select user_id from role_details where id in (select role_details_id from project_role where project_id = ? ))";
+			
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, idProject);
+			ResultSet results = statement.executeQuery();
+			users = new ArrayList<>();
+			GetUserInProjectResponseModel user;
+			while (results.next()) {
+				user = new GetUserInProjectResponseModel();
+				user.setIdUser(results.getInt("id"));
+				user.setUsername(results.getString("username"));
+				user.setFullname(results.getString("fullname"));
+				user.setPhone(results.getString("phone"));
+				users.add(user);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return users;
+	}
+
+	@Override
+	public List<UserResponseModel> getUserName() {
+		List<UserResponseModel> listUser = new LinkedList();
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select id,username from t_user where id in (select user_id from role_details where id  in \r\n"
+					+ "(select role_details_id from project_role where project_id = ?))";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet results = statement.executeQuery();
+			
+			while (results.next()) {
+				UserResponseModel user = new UserResponseModel();
+
+				user.setIdUser(results.getInt("id"));
+				user.setUsername(results.getString("username"));
+
+				listUser.add(user);
+			}
+			listUser.stream().forEach(System.out::println);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listUser;
+	}
+
+	@Override
+	public List<UserResponseModel> getUserNameByIdproject(int idProject) {
+		return null;
 	}
 
 }

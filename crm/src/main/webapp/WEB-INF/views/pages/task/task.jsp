@@ -7,6 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Projects</title>
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	padding: 8px;
+	text-align: left;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.notification {
+	display: flex;
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	color: white;
+}
+</style>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -16,12 +40,13 @@
 				<div>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb mb-0">
-							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item"><a
+								href="<c:url value="<%=UrlConst.HOME%>" />">Home</a></li>
 							<li class="breadcrumb-item active" aria-current="page">
 								Forms</li>
 						</ol>
 					</nav>
-					<h1 class="m-0">Add Task</h1>
+					<h1 class="m-0">Manage Task</h1>
 				</div>
 				<div class="ml-auto">
 					<a ${user.isLeader ? "hidden": ""}
@@ -56,13 +81,24 @@
 													<label for="exampleInputPassword1">Task Name:</label> <input
 														name="name" type="text" class="form-control"
 														id="exampleInputPassword1"
-														placeholder="Enter new task name ..">
+														placeholder="Enter new task name .." required="">
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Description:</label> <input
 														name="description" type="text" class="form-control"
 														id="exampleInputPassword1"
-														placeholder="Enter your description ..">
+														placeholder="Enter your description .." required="">
+												</div>
+												<div class="form-group" id="selectUsername">
+													<label for="username">UserName</label> <select
+														name="userId" id="username" data-toggle="select"
+														class="form-control">
+														<c:forEach items="${users}" var="user">
+															<option value="${user.idUser}"><c:out
+																	value="${user.username}" />
+															</option>
+														</c:forEach>
+													</select>
 												</div>
 												<div style="width: 50%; margin-inline: auto;">
 													<button name="add-update" value="add" style="float: left;"
@@ -86,33 +122,28 @@
 			<table class="table mb-0 thead-border-top-0">
 				<thead>
 					<tr>
-						<th>Id</th>
+						<th>Task ID</th>
 						<th>Name</th>
 						<th>Description</th>
+						<th>Username</th>
 						<th>Create By</th>
+						<th>Create Date</th>
+						<th>Status</th>
 						<th>#</th>
 					</tr>
 				</thead>
-				<tbody class="list" id="staff02">
-					<c:choose>
-						<c:when test="${tasks == null}">
-							<tr class="row">
-								<td class="col-12 text-center">There is no data.</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<c:forEach var="tasks" items="${tasks}">
-								<tr>
-									<td>${tasks.id}</td>
-									<td>${tasks.taskName}</td>
-									<td>${tasks.descript }</td>
-									<td>${tasks.createBy }</td>
-									<td><a href="" class="text-muted"><i
-											class="material-icons">settings</i></a> </td>
-								</tr>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
+				<tbody>
+					<c:forEach var="tasks" items="${tasks}">
+						<tr>
+							<td>${tasks.id }</td>
+							<td>${tasks.taskName }</td>
+							<td>${tasks.description }</td>
+							<td>${tasks.userName }</td>
+							<td>${tasks.createBy }</td>
+							<td>${tasks.createDate }</td>
+							<td>${tasks.statusName }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -127,5 +158,31 @@
       'mini': 'mini-dashboard.html'}">
 		</app-settings>
 	</div>
+	<c:if test="${notification!=null}">
+		<div class="notification p-3" id="notification">
+			<div
+				class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
+				<c:out value="${notification.message}" />
+				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
+					<i onclick="closeNotification()" data-v-da9425c4=""
+						class="material-icons" style="cursor: pointer;">close</i>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<script>
+		function closeNotification() {
+			document.getElementById('notification').style.display = 'none';
+		}
+		document.getElementById("select-project").style.visibility = "hidden";
+		function selectRole() {
+			var role = document.getElementById("role").value;
+			if (role == "LEADER" || role == "MEMBER") {
+				document.getElementById("select-project").style.visibility = "";
+			} else {
+				document.getElementById("select-project").style.visibility = "hidden";
+			}
+		}
+	</script>
 </body>
 </html>

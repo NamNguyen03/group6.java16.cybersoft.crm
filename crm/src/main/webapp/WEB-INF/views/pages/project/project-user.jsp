@@ -2,7 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<title>Update Role</title>
+<title>Role Project</title>
 <head>
 <style>
 table {
@@ -47,8 +47,8 @@ tr:nth-child(even) {
 	<div class="container page_container">
 		<div class="card card-form"
 			style="margin-top: 20px; width: 400px; margin-inline: auto; margin-bottom: 10px; padding: 25px;">
-			<form action="<c:url value="<%=UrlConst.UPDATE_ROLE %>" />" method="POST">
-				<h3 style="text-align: center;">ADD ROLE</h3>
+			<form action="<c:url value="<%=UrlConst.ADD_PROJECT_USER %>" />" method="POST">
+				<h3 style="text-align: center;">ADD USER</h3>
 				<div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Email:</label> <input type="email"
@@ -56,22 +56,7 @@ tr:nth-child(even) {
 							placeholder="Enter your email address ..">
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="role">Role</label> 
-					<select name="roleName" onchange="selectRole()" id="role" data-toggle="select" class="form-control">
-						<c:forEach items="${roles}" var="role">
-							<option value="${role.name}"><c:out value="${role.name}" /></option>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="form-group"  id="select-project" >
-					<label for="role">Project</label> 
-					<select  name="projectName" onchange="selectRole()" id="project" data-toggle="select" class="form-control">
-						<c:forEach items="${projects}" var="project">
-							<option value="${project.name}"><c:out value="${project.name}" /></option>
-						</c:forEach>
-					</select>
-				</div>
+				<input type="hidden" name="projectName" value="${projectName}" />
 				<div>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
@@ -79,35 +64,23 @@ tr:nth-child(even) {
 		</div>
 
 		<div class="card card-form">
-			<div class="card-header card-header-tabs-basic nav "role="tablist">
-				<a class='${name == "all" ? "active": "" }'
-					href="<c:url value="<%=UrlConst.UPDATE_ROLE%>"></c:url>">All</a>
-				<c:forEach items="${roles}" var="role">
-					<a class='${name == role.name ? "active": "" }'
-						href="<c:url value="<%=UrlConst.UPDATE_ROLE%>"> <c:param name="name" value="${role.name}" /></c:url>"><c:out
-							value="${role.name}" /></a>
-				</c:forEach>
-			</div>
 			<table>
 				<tr>
 					<th>Username</th>
 					<th>Full name</th>
-					<th>Role</th>
-					<th>Project Name</th>
+					<th>phone</th>
 					<th>Action</th>
 				</tr>
 				<c:forEach items="${users}" var="user">
 					<tr>
 						<td><c:out value="${user.username}" /></td>
 						<td><c:out value="${user.fullname}" /></td>
-						<td><c:out value="${user.roleName}" /></td>
-						<td><c:out value="${user.projectName}" /></td>
+						<td><c:out value="${user.phone}" /></td>
 						<td>
-							<form action="<c:url value="<%=UrlConst.REMOVE_ROLE %>" />" method="POST">
+							<form action="<c:url value="<%=UrlConst.REMOVE_PROJECT_USER %>" />" method="POST">
 								<input type="hidden" name="idUser" value="${user.idUser}" />
+								<input type="hidden" name="projectName" value="${projectName}" />
 								<input type="hidden" name="username" value="${user.username}" />
-								<input type="hidden" name="roleName" value="${user.roleName}" />
-								<input type="hidden" name="projectName" value="${user.projectName}" />
 								<button type="submit" class="btn btn-danger" >Delete</button>
 							</form>
 						</td>

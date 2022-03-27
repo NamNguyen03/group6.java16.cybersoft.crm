@@ -32,7 +32,7 @@
                                 Manage Project
                             </a>
                              <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_USER%>" />">
-                                Add User In Project
+                                List User Project
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />">
                                 Create Project
@@ -51,10 +51,7 @@
                                  Task List 
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.TASK%>" />">
-                                Add Task
-                            </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.ASSIGNMENT_TASK%>"/>">
-                               Assignment Task
+                                Manage Task
                             </a>
                         </div>
                     </li>
@@ -78,11 +75,16 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD %>" />">
                                	Accept Reset Password
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.UPDATE_STATUS %>" />">
-                                Update Status
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.CREATE_STATUS_TASK%>" />">
+                                Create Status Task
                             </a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="<%=UrlConst.LIST_TASK%>" />">Task</a>
+                       
+                    </li>
+                  
                 </ul>
             </div>
         </div>

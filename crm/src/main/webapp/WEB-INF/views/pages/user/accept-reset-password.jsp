@@ -19,15 +19,6 @@ td, th {
 tr:nth-child(even) {
 	background-color: #dddddd;
 }
-
-.notification {
-	display: flex;
-	position: absolute;
-	top: 180px;
-	right: 30px;
-	color: white;
-}
-
 </style>
 </head>
 <body>
@@ -39,7 +30,7 @@ tr:nth-child(even) {
 					<li class="breadcrumb-item"><a
 						href="<c:url value="<%=UrlConst.HOME%>" />">Dashboard</a></li>
 					<li class="breadcrumb-item"><a
-						href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD%>" />">Accept
+						href="<c:url value="<%=UrlConst.ACCEPT_RESET_PASSWORD%>" />">Accept
 							Reset Password</a></li>
 				</ol>
 			</nav>
@@ -80,20 +71,4 @@ tr:nth-child(even) {
 			</table>
 		</div>
 	</div>
-	<c:if test="${notification!=null}">
-		<div class="notification p-3" id="notification">
-			<div class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
-				<c:out value="${notification.message}" />
-				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
-					<i onclick="closeNotification()" data-v-da9425c4="" class="material-icons" style="cursor: pointer;">close</i> 
-				</div>
-			</div>  
-		</div>
-	</c:if>
-	
-	<script type="text/javascript">
-		function closeNotification(){
-			document.getElementById( 'notification' ).style.display = 'none';
-		}
-	</script>
 </body>

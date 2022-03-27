@@ -24,16 +24,16 @@
 					<h1 class="m-0">Manage Project</h1>
 				</div>
 				<div class="ml-auto">
-	                <a ${user.isAdmin ? "hidden": ""} href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />" class="btn btn-light"><i class="material-icons icon-16pt text-muted mr-1">add</i>
-	    				Add New Project
-	    			</a>
-	            </div>
+					<a ${user.isAdmin ? "hidden": ""}
+						href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />"
+						class="btn btn-light"><i
+						class="material-icons icon-16pt text-muted mr-1">add</i> Add New
+						Project </a>
+				</div>
 			</div>
 		</div>
 	</div>
-
-	<form action="#" method="post">
-		<div class="container page__container">
+	<div class="container page__container">
 		<!-- Xep hang -->
 		<div class="row">
 			<div class="col-md-12">
@@ -45,11 +45,9 @@
 						<tr>
 							<td>ID</td>
 							<td>Name</td>
-							<td>Description</td>
 							<td>Status</td>
 							<td>CreateBy</td>
 							<td>CreatDate</td>
-							<td>&emsp;...</td>
 						</tr>
 						<tbody>
 							<c:choose>
@@ -59,30 +57,26 @@
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="projects" items="${projects}">
+									<c:forEach var="project" items="${projects}">
 										<tr>
-											<td>${projects.id}</td>
+											<td>${project.id}</td>
+											
+											
 											<td style="width: 200px">
-												<div>
-												<a href="#"
-														class="text-15pt d-flex align-items-center"> 
-														<i class="material-icons icon-16pt mr-1">business</i>
-														<strong name="projects">${projects.name}</strong>
-												</a>
-												</div></td>
-											<td>${projects.description}</td>
-											<td class="text-right"
-												style="width: 70px">
-												<div  class="badge badge-soft-success">${projects.status}</div>
+												<a href="<c:url value="<%=UrlConst.PROJECT_INFO%>"> <c:param name="id" value="${project.id}"/> </c:url>"> 
+												<i
+												class="material-icons icon-16pt mr-1">business</i> <strong
+												name="projectsName">${project.name}</strong> </a>
 											</td>
-											<td>${projects.createBy}</td>
-											
-											<td>${projects.createDate}</td>
-											
-											<td>
-												<input type="submit" value="Xem">
+
+
+											<td class="text-right" style="width: 70px">
+												<div class="badge badge-soft-success">${project.status}</div>
 											</td>
-											
+											<td>${project.createBy}</td>
+
+											<td>${project.createDate}</td>
+
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -96,7 +90,6 @@
 			</div>
 		</div>
 	</div>
-	</form>
 	<!-- App Settings FAB -->
 	<div id="app-settings" hidden>
 		<app-settings layout-active="fixed"

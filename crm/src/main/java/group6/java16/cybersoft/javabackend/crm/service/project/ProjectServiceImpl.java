@@ -113,4 +113,19 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		return projectRepo.update(id, name, description, satus, updateBy);
 	}
+
+	@Override
+	public ProjectResponse getAllProjectByName(String projectname) {
+		return projectRepo.getAllMyProjectByName(projectname);
+	}
+
+	@Override
+	public Project findByName(String projectName) {
+		return projectRepo.findByName(projectName);
+	}
+
+	@Override
+	public Project findById(int Id) {
+		return projectRepo.findById(Id);
+	}
 }
