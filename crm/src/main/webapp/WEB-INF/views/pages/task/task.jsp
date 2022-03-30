@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Add Projects</title>
 <style>
 table {
@@ -32,6 +33,7 @@ tr:nth-child(even) {
 	color: white;
 }
 </style>
+
 </head>
 <body>
 	<!-- Breadcrumb -->

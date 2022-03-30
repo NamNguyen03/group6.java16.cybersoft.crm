@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection {
-	private static final String url = "jdbc:mysql://194.59.164.63:3306/u411554605_my_crm";
-	private static final String username = "u411554605_my_crm_root";
-	private static final String password = "Nam12345";
+	private static final String url = "jdbc:mysql://sql228.main-hosting.eu:3306/";
+	private static final String database = "u411554605_crm";
+	private static final String username = "u411554605_user";
+	private static final String password = "Passw0rd";
+	private static final String driver = "com.mysql.jdbc.Driver";
 	
 	private static Connection connection;
 	
@@ -21,14 +23,15 @@ public class MySQLConnection {
 		}
 		
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(url, username, password);
+			Class.forName(driver);
+		    connection = DriverManager.getConnection(url+database,username,password);
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println("connect db fails");
 			e.printStackTrace();
 		} catch (SQLException e) {
 			System.out.println("connect db fails");
-			e.printStackTrace();
+			e.printStackTrace();	
 		}
 		
 		return connection;

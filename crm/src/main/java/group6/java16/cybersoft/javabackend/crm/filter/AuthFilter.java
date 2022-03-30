@@ -16,8 +16,7 @@ import group6.java16.cybersoft.javabackend.crm.repository.UserRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.UserRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-
-public abstract class AuthFilter implements Filter{
+public abstract class AuthFilter implements Filter {
 
 	private UserRepo repo;
 
@@ -46,17 +45,21 @@ public abstract class AuthFilter implements Filter{
 				return;
 			}
 			if (servletPath.startsWith(UrlConst.ROLE) || servletPath.startsWith(UrlConst.USER_ADD)
+
 					|| servletPath.startsWith(UrlConst.ADMIN_RESET_PASSWORD)
 					|| servletPath.startsWith(UrlConst.USER_LIST) || servletPath.startsWith(UrlConst.PROJECT_ADD)
 					|| servletPath.startsWith(UrlConst.PROJECT_UPDATE)) {
+        
 				if (!repo.isAdmin(username)) {
 					resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
 					return;
 				}
 			}
 
+
 			if (servletPath.startsWith(UrlConst.PROJECT_USER) || servletPath.startsWith(UrlConst.CREATE_STATUS_TASK)
 					|| servletPath.startsWith(UrlConst.TASK)) {
+
 				try {
 					int idProject = Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));
 					if (!repo.isLeaderProject(username, idProject)) {
@@ -68,7 +71,20 @@ public abstract class AuthFilter implements Filter{
 					return;
 				}
 			}
-			
+
+			if (servletPath.startsWith(UrlConst.LIST_TASK)) {
+
+				try {
+					Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));
+				
+
+				} catch (Exception e) {
+					resp.sendRedirect(req.getContextPath() + UrlConst.WORK_SPACE);
+					return;
+				}
+			}
+
+
 			chain.doFilter(request, response);
 
 		}

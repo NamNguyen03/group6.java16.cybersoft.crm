@@ -5,7 +5,14 @@
 <%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
 <head>
 <meta charset="UTF-8">
-<title>User Dashboard</title>
+<title>List Task</title>
+<style >
+.form-group{
+width:120px;
+
+}
+
+</style>
 </head>
 <body>
 	<!-- Breadcrumb -->

@@ -25,89 +25,7 @@
                         </form>
 
                         <ul class="nav navbar-nav ml-auto d-none d-md-flex border-left">
-                            <li class="nav-item dropdown">
-                                <a href="#notifications_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
-                                    <i class="material-icons nav-icon navbar-notifications-indicator">
-                                        notifications_none
-                                    </i>
-                                </a>
-                                <div id="notifications_menu" class="dropdown-menu dropdown-menu-right navbar-notifications-menu">
-                                    <div class="dropdown-item d-flex align-items-center py-2">
-                                        <span class="flex navbar-notifications-menu__title m-0">
-                                            Notifications
-                                        </span>
-                                        <a href="javascript:void(0)" class="text-muted">
-                                            <small>Clear all</small>
-                                        </a>
-                                    </div>
-                                    <div class="navbar-notifications-menu__content" data-perfect-scrollbar>
-                                        <div class="py-2">
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <div class="avatar avatar-sm" style="width: 32px; height: 32px">
-                                                        <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle" />
-                                                    </div>
-                                                </div>
-                                                <div class="flex">
-                                                    <a href="">Tiến Hoàng</a> đã bình luận trong
-                                                    <a href="">Stack</a><br />
-                                                    <small class="text-muted">1 phút trước</small>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <a href="#">
-                                                        <div class="avatar avatar-xs" style="width: 32px; height: 32px">
-                                                            <span class="avatar-title bg-purple rounded-circle">
-                                                                <i class="material-icons icon-16pt">
-                                                                person_add
-                                                                </i>
-                                                            </span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="flex">
-                                                    Người dùng mới <a href="#">Trần Minh</a> đã đăng ký tài khoản<br />
-                                                    <small class="text-muted">1 giờ trước.</small>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <a href="#">
-                                                        <div class="avatar avatar-xs" style="width: 32px; height: 32px">
-                                                            <span class="avatar-title rounded-circle">JD</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="flex">
-                                                    <a href="#">Mẫn Nhi</a>
-                                                    <small class="text-muted">nhắn bạn:</small><br />
-                                                    <div>
-                                                        Chào mọi người, vui lòng lưu ý cuộc hẹn lúc 3 giờ chiều
-                                                    </div>
-                                                    <small class="text-muted">2 phút trước đây</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <div class="avatar avatar-sm" style="width: 32px; height: 32px">
-                                                        <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle" />
-                                                    </div>
-                                                </div>
-                                                <div class="flex">
-                                                    <a href="">Tuấn</a> đã bình luận trong
-                                                    <a href="">Stack</a><br />
-                                                    <small class="text-muted">1 phút trước</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="javascript:void(0);" class="dropdown-item text-center navbar-notifications-menu__footer">
-                                        View All
-                                    </a>
-                                </div>
-                            </li>
+                            
                         </ul>
 
                         <ul class="nav navbar-nav d-none d-sm-flex border-left navbar-border navbar-height align-items-center">
@@ -115,14 +33,13 @@
                                 <a href="#account_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
                                     <span class="avatar avatar-sm">
                                         <span class="avatar-title rounded-circle bg-warning">
-                                            Tuấn
+                                            TK
                                         </span>
                                     </span>
                                 </a>
                                 <div id="account_menu" class="dropdown-menu dropdown-menu-right">
                                     <div class="dropdown-item-text dropdown-item-text--lh">
-                                        <div><strong>Tuấn</strong></div>
-                                        <div>@tuanphan</div>
+                                        <div><strong><%= session.getAttribute("fullname") %></strong></div>
                                     </div>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item active" href="dashboard.html">
