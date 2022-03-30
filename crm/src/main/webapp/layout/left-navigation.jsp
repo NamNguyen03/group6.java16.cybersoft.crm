@@ -37,9 +37,7 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />">
                                 Create Project
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_UPDATE%>" />">
-                                Update Project
-                            </a>                           
+                                                      
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -75,15 +73,10 @@
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ADMIN_RESET_PASSWORD %>" />">
                                	Accept Reset Password
                             </a>
-                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.CREATE_STATUS_TASK%>" />">
-                                Create Status Task
-                            </a>
+                      
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="<%=UrlConst.LIST_TASK%>" />">Task</a>
-                       
-                    </li>
+             
                   
                 </ul>
             </div>

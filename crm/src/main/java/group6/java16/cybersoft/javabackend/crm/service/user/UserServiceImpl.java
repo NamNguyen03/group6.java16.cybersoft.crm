@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
 
 		User user = new User();
 		user.setUsername(userRequest.getUsername());
+		user.setPassword(userRequest.getPassword());
 		user.setFullname(userRequest.getFullname());
 		user.setAddress(userRequest.getAddress());
 		user.setPhone(userRequest.getPhone());
@@ -89,10 +90,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateNewPassword(String username, String password) {
+		System.out.println(username);
 		if(!userRepo.existsByUsername(username)) {
 			return false;
 		}
-		
+		System.out.println(username);
 		return userRepo.updateNewPassword(username,password);
 	}
 
@@ -137,7 +139,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean update(UpdateUserRequestModel userRequest) {
 		
-		if (userRequest.getUsername() == null || userRequest.getPassword() == null || userRequest.getAddress() == null
+		if (userRequest.getUsername() == null || userRequest.getAddress() == null
 				|| userRequest.getPhone() == null || userRequest.getUpdateBy() == null) {
 			return false;
 		}
