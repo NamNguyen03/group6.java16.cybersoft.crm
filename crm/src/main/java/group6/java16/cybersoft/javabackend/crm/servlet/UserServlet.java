@@ -37,7 +37,8 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 @WebServlet(name = "userServlet", urlPatterns = {
 		UrlConst.USER_LIST, 
 		UrlConst.USER_ADD,
-		UrlConst.USER_DELETE
+		UrlConst.USER_DELETE,
+		UrlConst.USER_UPDATE
 })
 public class UserServlet extends HttpServlet {
 
@@ -66,7 +67,9 @@ public class UserServlet extends HttpServlet {
 		case UrlConst.USER_DELETE:
 			getUserDelete(req, resp);
 			break;
-
+		case UrlConst.USER_UPDATE:
+			req.getRequestDispatcher(JspConst.USER_UPDATE).forward(req, resp);
+			break;
 		default:
 			break;
 		}
@@ -76,11 +79,12 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
 		switch (path) {
-
 		case UrlConst.USER_ADD:
 			postUserAdd(req, resp);
 			break;
-
+		case UrlConst.USER_UPDATE:
+			postUserUpdate(req, resp);
+			break;
 		default:
 			break;
 		}
@@ -102,24 +106,43 @@ public class UserServlet extends HttpServlet {
 		resp.sendRedirect(req.getContextPath() + UrlConst.USER_LIST);
 	}
 
-	private void postUserAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void postUserAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String username = req.getParameter("username");
-		String password = req.getParameter("password");
 		String fullname = req.getParameter("fullname");
 		String phone = req.getParameter("phone");
 		String address = req.getParameter("address");
 		UserRequetModels.CreateUserRequestModel user = new UserRequetModels.CreateUserRequestModel();
 		user.setUsername(username);
+		user.setFullname(fullname);
+		user.setAddress(address);
+		user.setPhone(phone);
+		user.setCreateBy(req.getSession().getAttribute("username").toString());
+		
+		boolean check = userService.add(user);
+		if (check) {
+			resp.sendRedirect(req.getContextPath()+ UrlConst.USER_ADD);
+		}
+
+	}
+	
+	private void postUserUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		String fullname = req.getParameter("fullname");
+		String phone = req.getParameter("phone");
+		String address = req.getParameter("address");
+		
+		UserRequetModels.UpdateUserRequestModel user = new UserRequetModels.UpdateUserRequestModel();
+		user.setUsername(username);
 		user.setPassword(password);
 		user.setFullname(fullname);
 		user.setAddress(address);
 		user.setPhone(phone);
-
-		user.setCreateBy(req.getSession().getAttribute("username").toString());
-
-		boolean check = userService.add(user);
+		user.setUpdateBy(req.getSession().getAttribute("username").toString());
+		
+		boolean check = userService.update(user);
 		if (check) {
-			resp.sendRedirect(req.getContextPath() + UrlConst.USER_ADD);
+			req.getRequestDispatcher(JspConst.USER_UPDATE).forward(req, resp);
 		}
 
 	}

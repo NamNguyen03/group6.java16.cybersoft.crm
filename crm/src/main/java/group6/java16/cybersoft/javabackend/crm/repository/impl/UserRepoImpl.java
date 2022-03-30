@@ -15,6 +15,7 @@ import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels.Cre
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.AcceptResetPasswordResponseModel;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.GetUserInProjectResponseModel;
+import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels.UserResponseModel;
 
 public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
@@ -124,9 +125,13 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	}
 
 	@Override
-	public boolean checkExistByUsername(String username) {
+	public boolean existsByUsername(String username) {
+		if (username == null || username.equals("")) {
+			return false;
+		}
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "SELECT EXISTS( select * from  t_user where username = ?)";
+			String query = "select exists( select id from t_user where username = ? )";
+
 			PreparedStatement statement = connection.prepareStatement(query);
 
 			statement.setString(1, username);
@@ -134,12 +139,12 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			ResultSet results = statement.executeQuery();
 
 			results.next();
-
 			return results.getBoolean(1);
 
 		} catch (SQLException e) {
-
+			e.printStackTrace();
 		}
+
 		return false;
 	}
 
@@ -272,8 +277,7 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		} catch (SQLException e) {
 			System.out.println("unable to connect database");
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			connection.close();
 		}
 
@@ -307,38 +311,14 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	}
 
 	@Override
-	public boolean existsByUsername(String username) {
-		if (username == null || username.equals("")) {
-			return false;
-		}
-		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "select exists( select id from t_user where username = ? )";
-
-			PreparedStatement statement = connection.prepareStatement(query);
-
-			statement.setString(1, username);
-
-			ResultSet results = statement.executeQuery();
-
-			results.next();
-			return results.getBoolean(1);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean updateNewPassword(String username, String password) {
 
 		try (Connection connection = MySQLConnection.getConnection()) {
 			String query = "update t_user set password_new = ? where username = ? ";
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(1, password);
-			statement.setString(2, username);
+			statement.setString(2, password);
+			statement.setString(1, username);
 
 			statement.executeUpdate();
 			return true;
@@ -415,7 +395,30 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 
 	@Override
 	public void updateById(int id) throws SQLException {
-		
+
+	}
+
+	@Override
+	public boolean update(User user) {
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "update t_user set  fullname= ?, user_address= ?, phone= ?, create_by= ?, update_by= ? where username = ?";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, user.getFullname());
+			statement.setString(2, user.getAddress());
+			statement.setString(3, user.getPhone());
+			statement.setString(4, user.getCreateBy());
+			statement.setString(5, user.getUpdateBy());
+			statement.setString(6, user.getUsername());
+
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			System.out.println("Unable to connect to database");
+			e.printStackTrace();
+		}
+		System.out.println("false");
+		return false;
 	}
 
 	@Override
@@ -479,6 +482,39 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 		}
 		
 		return users;
+	}
+
+	@Override
+	public List<UserResponseModel> getUserName() {
+		List<UserResponseModel> listUser = new LinkedList();
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select id,username from t_user where id in (select user_id from role_details where id  in \r\n"
+					+ "(select role_details_id from project_role where project_id = ?))";
+
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet results = statement.executeQuery();
+			
+			while (results.next()) {
+				UserResponseModel user = new UserResponseModel();
+
+				user.setIdUser(results.getInt("id"));
+				user.setUsername(results.getString("username"));
+
+				listUser.add(user);
+			}
+			listUser.stream().forEach(System.out::println);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listUser;
+	}
+
+	@Override
+	public List<UserResponseModel> getUserNameByIdproject(int idProject) {
+		return null;
 	}
 
 }

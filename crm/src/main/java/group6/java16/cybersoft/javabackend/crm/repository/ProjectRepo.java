@@ -3,6 +3,7 @@
  */
 package group6.java16.cybersoft.javabackend.crm.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.Project;
@@ -15,20 +16,22 @@ import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseMo
  */
 public interface ProjectRepo {
 
+	boolean add(Project project);
+
 	/**
 	 * get all project not have leader in DB
 	 * 
-	 * @return 	List<ProjectRoleResponse> 
+	 * @return List<ProjectRoleResponse>
 	 */
 	List<ProjectRoleResponse> getAllProjectByLeaderIsNull();
 
 	/**
-	 * check name is exists
+	 * check id is exists
 	 * 
-	 * @param name
+	 * @param id
 	 * @return true if name exists else false
 	 */
-	boolean existsByName(String name);
+	boolean existsByID(String id);
 
 	/**
 	 * find project by name
@@ -56,11 +59,6 @@ public interface ProjectRepo {
 	boolean existsByNameAndLeader(String projectName, String usernameReq);
 
 	/**
-	 * @return
-	 */
-	List<Project> findAll();
-
-	/**
 	 * get all project user have any permission
 	 * 
 	 * @param usernameReq
@@ -68,4 +66,75 @@ public interface ProjectRepo {
 	 */
 	List<ProjectResponse> getAllMyProject(String usernameReq);
 
+	/**
+	 * Retrieves an User by its projectName
+	 * 
+	 * @param userName
+	 * 
+	 * @return true if role of user is admin else false
+	 */
+	boolean isAdmin(String userName);
+
+	/**
+	 * Retrieves an User by its username
+	 * 
+	 * @param username
+	 * 
+	 * @return true if role of user is leader else false
+	 */
+
+	boolean isLeader(String username);
+
+	/**
+	 * @param id
+	 * @throws SQLException
+	 */
+	void updateById(int id) throws SQLException;
+
+	/**
+	 * check id user exists
+	 * 
+	 * @param idProject
+	 * @return true if id exists else false
+	 */
+	boolean existsById(int id);
+
+	/**
+	 * find User by id
+	 * 
+	 * @param idProject
+	 * @return User if id exists else return null
+	 */
+	Project findById(int id);
+
+	/**
+	 * 
+	 * @param projectname
+	 * @param description
+	 * @param status
+	 * @return true if update success else false
+	 */
+	boolean updatet(Project project);
+	
+	/**
+	 * 
+	 * @param id
+	 * @param description
+	 * @param satus
+	 * @param updateBy
+	 * @return
+	 */
+	boolean update(int id,String name,String description ,String satus,String updateBy);
+
+	/**
+	 * 
+	 * @return List<Project>
+	 */
+	List<Project> getListProject();
+
+	boolean existsByName(String projectName);
+
+	ProjectResponse getAllMyProjectByName(String projectName);
+	
+	
 }

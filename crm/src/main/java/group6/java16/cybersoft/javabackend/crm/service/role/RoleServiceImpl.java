@@ -39,7 +39,6 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public boolean saveRole(UpdateRoleRequest updateRoleRequest) {
-		
 		// can't change my role
 		if(updateRoleRequest.getUsernameReq().equals(updateRoleRequest.getEmail())) {
 			return false;
@@ -55,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
 
 		Role role = roleRepo.findByName(updateRoleRequest.getRoleName());
 		Project project = projectRepo.findByName(updateRoleRequest.getProjectName());
-
+	
 		// admin change is allowed change role admin and change role leader, member if project do not leader
 		if(userRepo.isAdmin(updateRoleRequest.getUsernameReq())) {
 
@@ -99,7 +98,7 @@ public class RoleServiceImpl implements RoleService {
 			return false;
 		}
 
-		if(!removeRoleRequestModel.getRoleName().equals("ADMIN") && !projectRepo.existsByName(removeRoleRequestModel.getProjectName())) {
+		if(!removeRoleRequestModel.getRoleName().equals("ADMIN") && !projectRepo.existsByID(removeRoleRequestModel.getProjectName())) {
 			return false;
 		}
 

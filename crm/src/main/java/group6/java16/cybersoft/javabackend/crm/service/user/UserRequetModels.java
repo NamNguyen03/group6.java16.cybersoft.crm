@@ -28,4 +28,17 @@ public class UserRequetModels {
 
 	}
 	
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Data
+	public static class UpdateUserRequestModel{
+		private String username;
+		private String password;
+		private String fullname;
+		private String address;
+		private String phone;
+		private String UpdateBy;
+
+	}
+	
 }

@@ -61,7 +61,7 @@
 				<div class="input-group input-group-merge">
 					<input id="email" name="email" type="email" value="${email}"
 						required="" class="form-control form-control-prepended"
-						placeholder="contact@tuanphan.dev">
+						placeholder="Input user name or gmail">
 					<div class="input-group-prepend">
 						<div class="input-group-text">
 							<span class="far fa-envelope"></span>

@@ -163,7 +163,6 @@ public class RoleRepoImpl implements RoleRepo {
 			statement.setInt(2, idUser);
 			statement.setString(3, roleName);
 			
-			
 			statement.executeUpdate();
 			return true;
 

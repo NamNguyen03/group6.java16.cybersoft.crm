@@ -48,6 +48,8 @@ public class AuthServlet extends HttpServlet {
 			HttpSession session = req.getSession(); 
 			session.setAttribute("fullname", loginResponseModel.getFullname());
 			session.setAttribute("username", loginResponseModel.getUsername());
+			session.setAttribute("projectName",null);
+			session.setAttribute("projectId", null);
 			resp.sendRedirect(req.getContextPath() + UrlConst.HOME);
 		}
 		

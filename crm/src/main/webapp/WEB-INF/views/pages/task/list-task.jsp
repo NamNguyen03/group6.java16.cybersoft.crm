@@ -43,8 +43,8 @@ width:120px;
 			<table class="table mb-0 thead-border-top-0">
 				<thead>
 					<tr>
-						<th>User</th>
-						<th>Task</th>
+						<th>User Name</th>
+						<th>Task Name</th>
 						<th>ID</th>
 						<th>Description</th>
 						<th>Status</th>
@@ -66,6 +66,7 @@ width:120px;
 									<td>${task.id}</td>
 									<td>${task.description }</td>
 									<td>${task.statusName }</td>
+									
 									<form
 										action="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />"
 										method="POST">
@@ -94,4 +95,5 @@ width:120px;
 	</div>
 	<!-- END BODY -->
 </body>
+
 >

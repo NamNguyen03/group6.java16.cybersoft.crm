@@ -8,9 +8,7 @@ public class JspConst {
 	public static final String UPDATE_ROLE = "/WEB-INF/views/pages/role/role.jsp";
 	public static final String ACCEPT_RESET_PASSWORD = "/WEB-INF/views/pages/user/accept-reset-password.jsp";
 	
-	//task
-	public static final String TASK = "/WEB-INF/views/pages/task/task.jsp";
-	public static final String LIST_TASK = "/WEB-INF/views/pages/task/list-task.jsp";
+	// status task
 	public static final String UPDATE_STATUS_TASK = "/WEB-INF/views/pages/task/update-status-task.jsp";
 	public static final String CREATE_STATUS_TASK = "/WEB-INF/views/pages/task/create-status-task.jsp";
 	
@@ -19,11 +17,19 @@ public class JspConst {
 	
 	public static final String USER_ADD = "/WEB-INF/views/pages/user/user-add.jsp";
 	public static final String USER_LIST = "/WEB-INF/views/pages/user/user-list.jsp";
+	public static final String USER_UPDATE = "/WEB-INF/views/pages/user/user-update.jsp";
 	
-	public static final String PROJECT_INFO = "/WEB-INF/views/pages/project-info.jsp";
-	public static final String MANAGE_PROJECT = "/WEB-INF/views/pages/manage-project.jsp";
+	public static final String PROJECT_INFO = "/WEB-INF/views/pages/project/project-info.jsp";
+	public static final String MANAGE_PROJECT = "/WEB-INF/views/pages/project/manage-project.jsp";
+	public static final String PROJECT_ADD = "/WEB-INF/views/pages/project/project-add.jsp";
 	
+	public static final String PROJECT_UPDATE = "/WEB-INF/views/pages/project/update-project.jsp";
 	public static final String PROJECT_USER = "/WEB-INF/views/pages/project/project-user.jsp";
 
 	public static final String WORK_SPACE = "/WEB-INF/views/pages/work-space.jsp";
+	
+	//Task
+	public static final String LIST_TASK = "/WEB-INF/views/pages/task/task-list.jsp";
+	public static final String TASK = "/WEB-INF/views/pages/task/task.jsp";
+	public static final String UPDATE_TASK = "/WEB-INF/views/pages/task/update-list.jsp";
 }

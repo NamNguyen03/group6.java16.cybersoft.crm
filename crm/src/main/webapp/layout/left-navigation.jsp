@@ -34,8 +34,24 @@
                              <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_USER%>" />">
                                 List User Project
                             </a>
-                            <a class="dropdown-item" href="#">
-                                Project Create Project
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_ADD%>" />">
+                                Create Project
+                            </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.PROJECT_UPDATE%>" />">
+                                Update Project
+                            </a>                           
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            Task
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.LIST_TASK%>" />">
+                                 Task List 
+                            </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.TASK%>" />">
+                                Manage Task
                             </a>
                         </div>
                     </li>
@@ -49,6 +65,9 @@
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_ADD%>" />">
                                 Create User
+                            </a>
+                            <a class="dropdown-item" href="<c:url value="<%=UrlConst.USER_UPDATE%>" />">
+                                Update User
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.ROLE %>" />">
                                 Role
