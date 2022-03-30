@@ -108,19 +108,23 @@ public class UserServlet extends HttpServlet {
 
 	private void postUserAdd(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String username = req.getParameter("username");
+		String password = req.getParameter("password");
 		String fullname = req.getParameter("fullname");
 		String phone = req.getParameter("phone");
 		String address = req.getParameter("address");
 		UserRequetModels.CreateUserRequestModel user = new UserRequetModels.CreateUserRequestModel();
 		user.setUsername(username);
+		user.setPassword(password);
 		user.setFullname(fullname);
 		user.setAddress(address);
 		user.setPhone(phone);
 		user.setCreateBy(req.getSession().getAttribute("username").toString());
-		
+		System.out.println(user.toString());
 		boolean check = userService.add(user);
 		if (check) {
 			resp.sendRedirect(req.getContextPath()+ UrlConst.USER_ADD);
+		}else {
+			resp.sendRedirect(req.getContextPath()+ UrlConst.HOME);
 		}
 
 	}
@@ -143,6 +147,8 @@ public class UserServlet extends HttpServlet {
 		boolean check = userService.update(user);
 		if (check) {
 			req.getRequestDispatcher(JspConst.USER_UPDATE).forward(req, resp);
+		}else {
+			resp.sendRedirect(req.getContextPath()+ UrlConst.HOME);
 		}
 
 	}

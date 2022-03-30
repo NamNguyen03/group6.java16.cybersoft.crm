@@ -317,8 +317,8 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 			String query = "update t_user set password_new = ? where username = ? ";
 			PreparedStatement statement = connection.prepareStatement(query);
 
-			statement.setString(2, password);
-			statement.setString(1, username);
+			statement.setString(1, password);
+			statement.setString(2, username);
 
 			statement.executeUpdate();
 			return true;
@@ -401,15 +401,14 @@ public class UserRepoImpl extends EntityRepo<User> implements UserRepo {
 	@Override
 	public boolean update(User user) {
 		try (Connection connection = MySQLConnection.getConnection()) {
-			String query = "update t_user set  fullname= ?, user_address= ?, phone= ?, create_by= ?, update_by= ? where username = ?";
-
+			String query = "update t_user set  fullname= ?, user_address= ?, phone= ?, update_by= ? where username = ?";
+			
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, user.getFullname());
 			statement.setString(2, user.getAddress());
 			statement.setString(3, user.getPhone());
-			statement.setString(4, user.getCreateBy());
-			statement.setString(5, user.getUpdateBy());
-			statement.setString(6, user.getUsername());
+			statement.setString(4, user.getUpdateBy());
+			statement.setString(5, user.getUsername());
 
 			statement.executeUpdate();
 			return true;
