@@ -49,6 +49,7 @@ public class TaskServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		String action = req.getServletPath();
 		switch (action) {
 
@@ -61,6 +62,7 @@ public class TaskServlet extends HttpServlet {
 			} catch (Exception e) {
 			}
 			req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
+
 			break;
 
 		case UrlConst.TASK:
@@ -187,6 +189,7 @@ public class TaskServlet extends HttpServlet {
 
 	}
 
+
 	private void getListTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 
@@ -194,6 +197,16 @@ public class TaskServlet extends HttpServlet {
 
 		List<TaskResponseModels.TaskResponse> listTask = taskService.getListTaskByProjectId(project_id);
 		req.setAttribute("listTask", listTask);
+		req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
+	}
+	
+	
+	
+	private void getTaskById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int task_id = Integer.parseInt(req.getParameter("id"));
+		
+		TaskResponseModels.TaskResponse task = taskService.findById(task_id);
+		req.setAttribute("task", task);
 		req.getRequestDispatcher(JspConst.TASK).forward(req, resp);
 	}
 
