@@ -8,9 +8,9 @@ public class MySQLConnection {
 	private static final String url = "jdbc:mysql://194.59.164.63:3306/u411554605_my_crm";
 	private static final String username = "u411554605_my_crm_root";
 	private static final String password = "Nam12345";
-	
+
 	private static Connection connection;
-	
+
 	public static Connection getConnection() {
 		try {
 			if (connection != null && !connection.isClosed()) {
@@ -19,7 +19,7 @@ public class MySQLConnection {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection(url, username, password);
@@ -30,7 +30,7 @@ public class MySQLConnection {
 			System.out.println("connect db fails");
 			e.printStackTrace();
 		}
-		
+
 		return connection;
 	}
 }

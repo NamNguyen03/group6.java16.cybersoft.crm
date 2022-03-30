@@ -46,10 +46,12 @@ public class TaskServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String path = req.getServletPath();
+		System.out.println(path);
 		switch (path) {
 
 		case UrlConst.LIST_TASK:
 			getListTask(req, resp);
+			
 			break;
 		case UrlConst.TASK:
 			getTaskById(req, resp);
@@ -106,17 +108,6 @@ public class TaskServlet extends HttpServlet {
 
 	}
 
-	private void getPageUpdateStatusTask(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-	
-		UpdateStatusTaskResponse task = new UpdateStatusTaskResponse();
-		int task_id = Integer.parseInt(req.getAttribute("id").toString());
-		System.out.println(task_id);
-		task = taskService.getTaskUpdateById(task_id);
-		req.setAttribute("task", task);
-		req.getRequestDispatcher(JspConst.UPDATE_STATUS_TASK).forward(req, resp);
-
-	}
 
 	private void getListTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -127,8 +118,12 @@ public class TaskServlet extends HttpServlet {
 		List<StatusTask> listStatus = taskService.getListStatusTask();
 		req.setAttribute("listStatus", listStatus );
 		req.setAttribute("listTask", listTask);
+		System.out.println("get list task");
 		req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
 	}
+	
+	
+	
 	private void getTaskById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int task_id = Integer.parseInt(req.getParameter("id"));
 		

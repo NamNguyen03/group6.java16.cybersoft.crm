@@ -5,7 +5,7 @@
 <%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
 <head>
 <meta charset="UTF-8">
-<title>User Dashboard</title>
+<title>Task</title>
 </head>
 <body>
 	<!-- Breadcrumb -->
