@@ -1,3 +1,5 @@
+<%@ page import="group6.java16.cybersoft.javabackend.crm.util.UrlConst"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Header -->
 
         <div id="header" class="mdk-header bg-dark js-mdk-header m-0" data-fixed data-effects="waterfall">
@@ -52,7 +54,7 @@
                                         Edit account
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="login.html">Logout</a>
+                                    	<a class="dropdown-item" href="<c:url value="<%=UrlConst.LOGIN %>" />">Logout</a>
                                 </div>
                             </li>
                         </ul>

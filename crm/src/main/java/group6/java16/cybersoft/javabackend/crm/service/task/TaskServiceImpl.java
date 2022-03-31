@@ -7,8 +7,10 @@ import java.util.List;
 
 import group6.java16.cybersoft.javabackend.crm.model.Project;
 import group6.java16.cybersoft.javabackend.crm.model.Task;
+import group6.java16.cybersoft.javabackend.crm.repository.ProjectRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.StatusRepo;
 import group6.java16.cybersoft.javabackend.crm.repository.TaskRepo;
+import group6.java16.cybersoft.javabackend.crm.repository.impl.ProjectRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.StatusRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.repository.impl.TaskRepoImpl;
 import group6.java16.cybersoft.javabackend.crm.service.status.StatusResponseModels.StatusTask;
@@ -22,10 +24,13 @@ public class TaskServiceImpl implements TaskService {
 
 	private TaskRepo taskRepo;
 	private StatusRepo statusRepo;
+	private ProjectRepo projectRepo;
+	
 
 	public TaskServiceImpl() {
 		taskRepo = new TaskRepoImpl();
 		statusRepo = new StatusRepoImpl();
+		projectRepo = new ProjectRepoImpl();
 	}
 
 	@Override
@@ -43,13 +48,10 @@ public class TaskServiceImpl implements TaskService {
 		if (task.getName() == null || task.getDescription() == null || task.getCreateBy() == null) {
 			return false;
 		}
-		if (taskRepo.existsByID(task.getName())) {
+		Project project = projectRepo.findById(task.getProjectId());
+		if (!projectRepo.existsByNameAndLeader(project.getName(), task.getCreateBy())) {
 			return false;
 		}
-		if (!taskRepo.isAdmin(task.getCreateBy())) {
-			return false;
-		}
-
 		return taskRepo.add(task);
 	}
 

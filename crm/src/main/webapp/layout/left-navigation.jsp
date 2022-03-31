@@ -46,10 +46,13 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.LIST_TASK%>" />">
-                                 Task List 
+                                Task List 
                             </a>
                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.TASK%>" />">
                                 Manage Task
+                            </a>
+                             <a class="dropdown-item" href="<c:url value="<%=UrlConst.CREATE_STATUS_TASK%>" />">
+                                Create Status Task
                             </a>
                         </div>
                     </li>

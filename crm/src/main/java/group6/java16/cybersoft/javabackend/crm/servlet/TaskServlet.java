@@ -36,7 +36,10 @@ import group6.java16.cybersoft.javabackend.crm.service.task.TaskServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
-@WebServlet(name = "taskServlet", urlPatterns = { UrlConst.TASK, UrlConst.UPDATE_TASK, UrlConst.LIST_TASK })
+@WebServlet(name = "taskServlet", urlPatterns = { UrlConst.TASK,
+		UrlConst.UPDATE_TASK,
+		UrlConst.CREATE_STATUS_TASK,
+		UrlConst.LIST_TASK })
 public class TaskServlet extends HttpServlet {
 
 	private TaskService taskService;
@@ -66,14 +69,19 @@ public class TaskServlet extends HttpServlet {
 			break;
 
 		case UrlConst.TASK:
-				int idProject = Integer.parseInt(req.getSession().getAttribute("projectId").toString());
-				List<GetUserInProjectResponseModel> users = userService.findAllUserInProject(idProject);
-				req.setAttribute("users", users);
-				List<TaskResponse> listTask = taskService.getListTaskByProjectId(idProject);
-				req.setAttribute("tasks", listTask);
+			int idProject = Integer.parseInt(req.getSession().getAttribute("projectId").toString());
+			List<GetUserInProjectResponseModel> users = userService.findAllUserInProject(idProject);
+			req.setAttribute("users", users);
+			List<TaskResponse> listTask = taskService.getListTaskByProjectId(idProject);
+			req.setAttribute("tasks", listTask);
 
 			req.getRequestDispatcher(JspConst.TASK).forward(req, resp);
 			break;
+
+		case UrlConst.CREATE_STATUS_TASK:
+
+			req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);
+
 		default:
 			break;
 		}
@@ -85,32 +93,21 @@ public class TaskServlet extends HttpServlet {
 		switch (action) {
 		case UrlConst.TASK:
 			postTaskAdd(req, resp);
-			try {
-				int idProject = Integer.parseInt(req.getSession().getAttribute("projectId").toString());
-				List<GetUserInProjectResponseModel> users = userService.findAllUserInProject(idProject);
-				req.setAttribute("users", users);
-				List<TaskResponse> listTask = taskService.getListTaskByProjectId(idProject);
-				req.setAttribute("tasks", listTask);
-
-			} catch (Exception e) {
-			}
-			req.getRequestDispatcher(JspConst.TASK).forward(req, resp);
 			break;
+
 		case UrlConst.UPDATE_TASK:
 			postTaskUpdate(req, resp);
 			break;
-		case UrlConst.UPDATE_STATUS_TASK:
-			updateStatusTask(req, resp);
-			break;
+
+
 		case UrlConst.LIST_TASK:
 			getListTask(req, resp);
 			break;
-		// case UrlConst.TASK:
-		// getTaskById(req, resp);
-		// break;
+
 		case UrlConst.CREATE_STATUS_TASK:
 			createStatusTask(req, resp);
 			break;
+
 		default:
 			break;
 		}
@@ -199,12 +196,12 @@ public class TaskServlet extends HttpServlet {
 		req.setAttribute("listTask", listTask);
 		req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
 	}
-	
-	
-	
+
+
+
 	private void getTaskById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int task_id = Integer.parseInt(req.getParameter("id"));
-		
+
 		TaskResponseModels.TaskResponse task = taskService.findById(task_id);
 		req.setAttribute("task", task);
 		req.getRequestDispatcher(JspConst.TASK).forward(req, resp);

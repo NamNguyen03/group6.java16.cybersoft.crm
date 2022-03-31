@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class="container page_container">
-
+			<img alt="" src="<c:url value="/assets/images/dashboard.jpg" />" width="100%">
 		</div>
 	</div>
 </body>

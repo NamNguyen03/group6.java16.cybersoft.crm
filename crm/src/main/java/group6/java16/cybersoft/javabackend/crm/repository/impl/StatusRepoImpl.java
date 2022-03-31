@@ -49,7 +49,7 @@ public class StatusRepoImpl extends EntityRepo<Status> implements StatusRepo {
 
 	@Override
 	public boolean createStatusTask(String status_name) {
-		String query = "INSERT INTO CRM.status_task (status_task_name) VALUE (?)";
+		String query = "INSERT INTO status_task (status_task_name) VALUE (?)";
 		System.out.println(status_name);
 		try (Connection connection = MySQLConnection.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);

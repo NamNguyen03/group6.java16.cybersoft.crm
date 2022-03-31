@@ -47,6 +47,7 @@ public abstract class AuthFilter implements Filter {
 			if (servletPath.startsWith(UrlConst.ROLE) || servletPath.startsWith(UrlConst.USER_ADD)
 
 					|| servletPath.startsWith(UrlConst.ADMIN_RESET_PASSWORD)
+					|| servletPath.startsWith(UrlConst.CREATE_STATUS_TASK)
 					|| servletPath.startsWith(UrlConst.USER_LIST) || servletPath.startsWith(UrlConst.PROJECT_ADD)
 					|| servletPath.startsWith(UrlConst.PROJECT_UPDATE)) {
         
@@ -57,8 +58,8 @@ public abstract class AuthFilter implements Filter {
 			}
 
 
-			if (servletPath.startsWith(UrlConst.PROJECT_USER) || servletPath.startsWith(UrlConst.CREATE_STATUS_TASK)
-					|| servletPath.startsWith(UrlConst.TASK)) {
+			if (servletPath.startsWith(UrlConst.PROJECT_USER) || 
+				servletPath.startsWith(UrlConst.TASK)) {
 
 				try {
 					int idProject = Integer.parseInt(String.valueOf(req.getSession().getAttribute("projectId")));

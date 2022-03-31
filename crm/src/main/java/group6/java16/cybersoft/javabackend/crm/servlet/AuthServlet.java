@@ -27,6 +27,11 @@ public class AuthServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session = req.getSession(); 
+		session.setAttribute("fullname", null);
+		session.setAttribute("username", null);
+		session.setAttribute("projectName",null);
+		session.setAttribute("projectId", null);
 		req.getRequestDispatcher(JspConst.AUTH_LOGIN)
 			.forward(req, resp);
 	}
