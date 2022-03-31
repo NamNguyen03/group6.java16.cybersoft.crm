@@ -20,7 +20,10 @@ import group6.java16.cybersoft.javabackend.crm.service.project.ProjectRequetMode
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectService;
 import group6.java16.cybersoft.javabackend.crm.service.project.ProjectServiceImpl;
+import group6.java16.cybersoft.javabackend.crm.service.status.StatusResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.status.StatusResponseModels.StatusTask;
+import group6.java16.cybersoft.javabackend.crm.service.status.StatusTaskService;
+import group6.java16.cybersoft.javabackend.crm.service.status.StatusTaskServiceImpl;
 import group6.java16.cybersoft.javabackend.crm.service.task.TaskRequestModel;
 import group6.java16.cybersoft.javabackend.crm.service.task.TaskResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.task.TaskResponseModels.TaskResponse;
@@ -39,15 +42,19 @@ import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 @WebServlet(name = "taskServlet", urlPatterns = { UrlConst.TASK,
 		UrlConst.UPDATE_TASK,
 		UrlConst.CREATE_STATUS_TASK,
+		UrlConst.REMOVE_STATUS_TASK,
+		UrlConst.UPDATE_STATUS_TASK_IN_PROJECT,
 		UrlConst.LIST_TASK })
 public class TaskServlet extends HttpServlet {
 
 	private TaskService taskService;
 	private UserService userService;
+	private StatusTaskService statusTaskService;
 
 	public TaskServlet() {
 		taskService = new TaskServiceImpl();
 		userService = new UserServiceImpl();
+		statusTaskService = new StatusTaskServiceImpl();
 	}
 
 	@Override
@@ -57,14 +64,7 @@ public class TaskServlet extends HttpServlet {
 		switch (action) {
 
 		case UrlConst.LIST_TASK:
-			try {
-				int idProject = Integer.parseInt(req.getSession().getAttribute("projectId").toString());
-				List<TaskResponse> listTask = taskService.getListTaskByProjectId(idProject);
-				req.setAttribute("tasks", listTask);
-
-			} catch (Exception e) {
-			}
-			req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
+			getListTask(req, resp);
 
 			break;
 
@@ -79,12 +79,18 @@ public class TaskServlet extends HttpServlet {
 			break;
 
 		case UrlConst.CREATE_STATUS_TASK:
-
-			req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);
+			getPageCreateStatusTask(req, resp);
 
 		default:
 			break;
 		}
+	}
+
+	private void getPageCreateStatusTask(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		List<StatusResponseModels.StatusTask> listStatus = statusTaskService.getAll();
+		req.setAttribute("listStatus" , listStatus);
+		req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);
 	}
 
 	@Override
@@ -106,6 +112,14 @@ public class TaskServlet extends HttpServlet {
 
 		case UrlConst.CREATE_STATUS_TASK:
 			createStatusTask(req, resp);
+			break;
+			
+		case UrlConst.UPDATE_STATUS_TASK_IN_PROJECT:
+			updateStatusTask(req, resp);
+			break;
+			
+		case UrlConst.REMOVE_STATUS_TASK:
+			removeStatusTask(req, resp);
 			break;
 
 		default:
@@ -164,27 +178,23 @@ public class TaskServlet extends HttpServlet {
 	 * @throws IOException
 	 * @throws ServletException
 	 */
-	private void updateStatusTask(HttpServletRequest req, HttpServletResponse resp)
+	private void removeStatusTask(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		int task_id = Integer.parseInt(req.getParameter("taskId"));
-		String status_name = req.getParameter("statusTask");
-		System.out.println(status_name);
-		taskService.updateStatusTask(task_id, status_name);
-		getListTask(req, resp);
-
+		int task_id = Integer.parseInt(req.getParameter("id"));
+		boolean check = taskService.deleteStatusTask(task_id);
+		
+		if(check) {
+			req.setAttribute("notification", new MyNotification("Delete status task successfully", false));
+		}
+		else {
+			req.setAttribute("notification", new MyNotification("Delete status task failed", true));
+		}
+		
+		
+		getPageCreateStatusTask(req, resp);
 	}
 
-	private void getPageUpdateStatusTask(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		UpdateStatusTaskResponse task = new UpdateStatusTaskResponse();
-		int task_id = Integer.parseInt(req.getAttribute("id").toString());
-		System.out.println(task_id);
-		task = taskService.getTaskUpdateById(task_id);
-		req.setAttribute("task", task);
-		req.getRequestDispatcher(JspConst.UPDATE_STATUS_TASK).forward(req, resp);
-
-	}
 
 
 	private void getListTask(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -194,37 +204,49 @@ public class TaskServlet extends HttpServlet {
 
 		List<TaskResponseModels.TaskResponse> listTask = taskService.getListTaskByProjectId(project_id);
 		req.setAttribute("listTask", listTask);
+		
+		List<StatusResponseModels.StatusTask> listStatus = statusTaskService.getAll();
+		req.setAttribute("listStatus" , listStatus);
+		
 		req.getRequestDispatcher(JspConst.LIST_TASK).forward(req, resp);
 	}
 
-
-
-	private void getTaskById(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int task_id = Integer.parseInt(req.getParameter("id"));
-
-		TaskResponseModels.TaskResponse task = taskService.findById(task_id);
-		req.setAttribute("task", task);
-		req.getRequestDispatcher(JspConst.TASK).forward(req, resp);
-	}
 
 	private void createStatusTask(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String status_name = req.getParameter("statusName");
 		boolean exists = taskService.existByName(status_name);
-		if (!exists) {
-			req.setAttribute("message", "invalid status name !!");
+		if (exists) {
+			req.setAttribute("notification", new MyNotification("invalid status name ", true));
 
 		} else {
 			boolean create = taskService.createStatusTask(status_name);
 			if (create) {
-				req.setAttribute("message", "create success!!");
-				;
+				req.setAttribute("notification", new MyNotification("create status task successfully", false));
 			} else {
-				req.setAttribute("message", "create failed!!");
+				req.setAttribute("notification", new MyNotification("create status task failed", true));
 			}
 		}
-		req.getRequestDispatcher(JspConst.CREATE_STATUS_TASK).forward(req, resp);
-		;
+		getPageCreateStatusTask(req, resp);
+		
+
+	}
+
+	/**
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void updateStatusTask(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+
+		int task_id = Integer.parseInt(req.getParameter("taskId"));
+		String status_name = req.getParameter("statusTask");
+		System.out.println(status_name);
+		req.setAttribute("notification", new MyNotification("Update status task successfully", false));
+		taskService.updateStatusTask(task_id, status_name);
+		getListTask(req, resp);
 
 	}
 }

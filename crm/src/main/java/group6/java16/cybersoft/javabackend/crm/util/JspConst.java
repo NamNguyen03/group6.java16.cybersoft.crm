@@ -29,7 +29,7 @@ public class JspConst {
 	public static final String WORK_SPACE = "/WEB-INF/views/pages/work-space.jsp";
 	
 	//Task
-	public static final String LIST_TASK = "/WEB-INF/views/pages/task/task-list.jsp";
+	public static final String LIST_TASK = "/WEB-INF/views/pages/task/list-task.jsp";
 	public static final String TASK = "/WEB-INF/views/pages/task/task.jsp";
 	public static final String UPDATE_TASK = "/WEB-INF/views/pages/task/update-list.jsp";
 }

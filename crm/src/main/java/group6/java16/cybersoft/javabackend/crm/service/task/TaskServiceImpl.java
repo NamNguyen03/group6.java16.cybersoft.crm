@@ -122,4 +122,12 @@ public class TaskServiceImpl implements TaskService {
 	public boolean existByName(String name) {
 		return statusRepo.existsByName(name);
 	}
+
+	@Override
+	public boolean deleteStatusTask(int task_id) {
+		if(!statusRepo.existsById(task_id)) {
+			return false;
+		}
+		return statusRepo.deleteById(task_id);
+	}
 }

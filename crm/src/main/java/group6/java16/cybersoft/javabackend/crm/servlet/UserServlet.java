@@ -27,6 +27,7 @@ import group6.java16.cybersoft.javabackend.crm.service.user.UserRequetModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserResponseModels;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserService;
 import group6.java16.cybersoft.javabackend.crm.service.user.UserServiceImpl;
+import group6.java16.cybersoft.javabackend.crm.share.model.MyNotification;
 import group6.java16.cybersoft.javabackend.crm.util.JspConst;
 import group6.java16.cybersoft.javabackend.crm.util.UrlConst;
 
@@ -119,14 +120,13 @@ public class UserServlet extends HttpServlet {
 		user.setAddress(address);
 		user.setPhone(phone);
 		user.setCreateBy(req.getSession().getAttribute("username").toString());
-		System.out.println(user.toString());
 		boolean check = userService.add(user);
 		if (check) {
-			resp.sendRedirect(req.getContextPath()+ UrlConst.USER_ADD);
+			req.setAttribute("notification", new MyNotification("Create User successfully", false));
 		}else {
-			resp.sendRedirect(req.getContextPath()+ UrlConst.HOME);
+			req.setAttribute("notification", new MyNotification("Create User failed", true));
 		}
-
+		req.getRequestDispatcher(JspConst.USER_ADD).forward(req, resp);
 	}
 	
 	private void postUserUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

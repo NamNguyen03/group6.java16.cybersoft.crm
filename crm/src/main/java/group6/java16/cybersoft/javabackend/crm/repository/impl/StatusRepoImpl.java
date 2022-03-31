@@ -68,7 +68,7 @@ public class StatusRepoImpl extends EntityRepo<Status> implements StatusRepo {
 	@Override
 	public boolean existsByName(String name) {
 		if(name == null || "".equals(name)) {
-			return true;
+			return false;
 		}
 
 		try (Connection connection = MySQLConnection.getConnection()) {
@@ -79,12 +79,55 @@ public class StatusRepoImpl extends EntityRepo<Status> implements StatusRepo {
 
 			results.next();
 
-			return !results.getBoolean(1);
+			return results.getBoolean(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return true;
+		return false;
+	}
+
+	@Override
+	public boolean existsById(int task_id) {
+		if(task_id < 0 ) {
+			return false;
+		}
+
+		try (Connection connection = MySQLConnection.getConnection()) {
+			String query = "select exists(select id from status_task where id = ? )";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, task_id);
+			ResultSet results = statement.executeQuery();
+
+			results.next();
+
+			return results.getBoolean(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean deleteById(int task_id) {
+		if(task_id < 0 ) {
+			return false;
+		}
+		
+		String query = "DELETE FROM status_task WHERE id = ? ";
+		try (Connection connection = MySQLConnection.getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, task_id);
+
+			statement.executeUpdate();
+			return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("create status task fails");
+		}
+		return false;
 	}
 	
 }

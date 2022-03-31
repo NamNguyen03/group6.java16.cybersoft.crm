@@ -10,7 +10,8 @@ public class UrlConst {
 	//task
 	public static final String TASK = "/task";
 	public static final String LIST_TASK="/list-task";
-	public static final String UPDATE_STATUS_TASK = "/update-status";
+	public static final String UPDATE_STATUS_TASK_IN_PROJECT = "/update-status";
+	public static final String REMOVE_STATUS_TASK = "/remove-status";
 	public static final String CREATE_STATUS_TASK = "/create-status-task";
 	public static final String ASSIGNMENT_TASK = "/assignment-task";
 	public static final String UPDATE_TASK = "/update-task";

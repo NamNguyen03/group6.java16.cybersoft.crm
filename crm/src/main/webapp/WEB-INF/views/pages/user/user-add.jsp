@@ -5,6 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Add New User</title>
+<style >
+.notification {
+	display: flex;
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	color: white;
+}
+
+</style>
 </head>
 <body>
 	<!-- Breadcrumb -->
@@ -62,4 +72,19 @@
             </div>
         </div>
      </div>
+     	<c:if test="${notification!=null}">
+		<div class="notification p-3" id="notification">
+			<div class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
+				<c:out value="${notification.message}" />
+				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
+					<i onclick="closeNotification()" data-v-da9425c4="" class="material-icons" style="cursor: pointer;">close</i> 
+				</div>
+			</div>  
+		</div>
+	</c:if>
+	<script>
+		function closeNotification(){
+			document.getElementById( 'notification' ).style.display = 'none';
+		}
+	</script>
 </body>

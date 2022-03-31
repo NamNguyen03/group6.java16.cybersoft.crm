@@ -39,7 +39,7 @@ public class TaskRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 			statement.setInt(4, task.getStatusId());
 			statement.setInt(5, task.getUserId());
 			statement.setInt(6, task.getProjectId());
-			
+
 			statement.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -102,7 +102,7 @@ public class TaskRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 				task.setUserName(result.getString("fullname"));
 				task.setProjectName(result.getString("project_name"));
 
-			
+
 			}
 
 		} catch (SQLException e) {
@@ -195,57 +195,59 @@ public class TaskRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 		}
 		return tasks;
 	}
+	
 	public void updateStatusTask(int task_id, String status_name) {
 		String query =  "update task set status_id = (select id from status_task where status_task.status_task_name = ?) where id = ? ";
 
-		
+
 		try (Connection connection = MySQLConnection.getConnection()){
-		PreparedStatement statement = connection.prepareStatement(query);
-		statement.setString(1,status_name);
-		statement.setInt(2,task_id);
-		statement.executeUpdate();
-		connection.close();
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1,status_name);
+			statement.setInt(2,task_id);
+			statement.executeUpdate();
+			connection.close();
 
 
-	}catch(SQLException e)
-	
+		}catch(SQLException e)
+
 		{
-		System.out.println("update status task fails");
-		e.printStackTrace();
+			System.out.println("update status task fails");
+			e.printStackTrace();
+		}
 	}
-}
+	
 	@Override
 	public List<TaskResponseModels.TaskResponse> getListTaskByProjectId(int project_id){
 
-			List<TaskResponseModels.TaskResponse> listTasks = new ArrayList<>();
-			try (Connection connection = MySQLConnection.getConnection())  {
-				String query ="  select  task.id,task_name,task_description,task.create_by as 'create_by_task' ,task.create_date as 'create_date_task',task.update_by,\r\n"
-						+ " task.update_date,task.user_id,task.status_id,task.project_id,t_user.fullname,project.project_name,status_task.status_task_name\r\n"
-						+ " from task join t_user on task.user_id = t_user.id \r\n"
-						+ "			join project on task.project_id = project.id\r\n"
-						+ "            join status_task on task.status_id = status_task.id\r\n"
-						+ "	where task.project_id = ?";
+		List<TaskResponseModels.TaskResponse> listTasks = new ArrayList<>();
+		try (Connection connection = MySQLConnection.getConnection())  {
+			String query ="  select  task.id,task_name,task_description,task.create_by as 'create_by_task' ,task.create_date as 'create_date_task',task.update_by,\r\n"
+					+ " task.update_date,task.user_id,task.status_id,task.project_id,t_user.fullname,project.project_name,status_task.status_task_name\r\n"
+					+ " from task join t_user on task.user_id = t_user.id \r\n"
+					+ "			join project on task.project_id = project.id\r\n"
+					+ "            join status_task on task.status_id = status_task.id\r\n"
+					+ "	where task.project_id = ?";
 
-				PreparedStatement statement = connection.prepareStatement(query);
-				statement.setInt(1,project_id);
-				ResultSet results = statement.executeQuery();
-				
-				TaskResponseModels.TaskResponse task;
-				while (results.next()) {
-					task = new TaskResponseModels.TaskResponse();
-					task.setId(results.getInt("id"));
-					task.setTaskName(results.getString("task_name"));
-					task.setDescription(results.getString("task_description"));
-					task.setUserName(results.getString("fullname"));
-					task.setCreateBy(results.getString("create_by_task"));
-					task.setCreateDate(results.getDate("create_date_task"));
-					task.setStatusName(results.getString("status_task_name"));
-					listTasks.add(task);
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1,project_id);
+			ResultSet results = statement.executeQuery();
+
+			TaskResponseModels.TaskResponse task;
+			while (results.next()) {
+				task = new TaskResponseModels.TaskResponse();
+				task.setId(results.getInt("id"));
+				task.setTaskName(results.getString("task_name"));
+				task.setDescription(results.getString("task_description"));
+				task.setUserName(results.getString("fullname"));
+				task.setCreateBy(results.getString("create_by_task"));
+				task.setCreateDate(results.getDate("create_date_task"));
+				task.setStatusName(results.getString("status_task_name"));
+				listTasks.add(task);
 			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return listTasks;
 	}
 
@@ -268,8 +270,8 @@ public class TaskRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 			task.setUserName(results.getString("fullname"));
 			task.setStatusName(results.getString("status_task_name"));
 			task.setProjectName(results.getString("project_name"));
-			
-			
+
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -284,7 +286,7 @@ public class TaskRepoImpl extends EntityRepo<MyEntity> implements TaskRepo {
 
 		return checkRole(taskName, "ADMIN");
 	}
-	
+
 	private boolean checkRole(String username, String roleName) {
 		if (username == null || "".equals(username)) {
 			return false;

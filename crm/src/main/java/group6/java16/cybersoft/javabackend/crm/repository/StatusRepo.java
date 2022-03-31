@@ -23,4 +23,17 @@ public interface StatusRepo  {
 	 */
 	boolean existsByName(String name);
 
+	/**
+	 * @param task_id
+	 * @return
+	 */
+	boolean existsById(int task_id);
+
+	/**
+	 * @param task_id
+	 * @return
+	 */
+	boolean deleteById(int task_id);
+	
+
 }

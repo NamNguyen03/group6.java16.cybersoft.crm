@@ -59,4 +59,9 @@ public interface TaskService {
 	 */
 	boolean existByName(String name);
 
+	/**
+	 * @param task_id
+	 */
+	boolean deleteStatusTask(int task_id);
+
 }

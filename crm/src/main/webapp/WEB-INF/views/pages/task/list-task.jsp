@@ -11,6 +11,13 @@
 width:120px;
 
 }
+.notification {
+	display: flex;
+	position: absolute;
+	top: 180px;
+	right: 30px;
+	color: white;
+}
 
 </style>
 </head>
@@ -67,9 +74,7 @@ width:120px;
 									<td>${task.description }</td>
 									<td>${task.statusName }</td>
 									
-									<form
-										action="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK%>" />"
-										method="POST">
+									<form action="<c:url value="<%=UrlConst.UPDATE_STATUS_TASK_IN_PROJECT%>" />" method="POST">
 
 										<td>
 											<div class="form-group">
@@ -81,7 +86,8 @@ width:120px;
 													</c:forEach>
 												</select>
 											</div>
-										</td> <input type="hidden" name="taskId" value="${task.id}" />
+										</td> 
+										<input type="hidden" name="taskId" value="${task.id}" />
 										<td><button type="submit" class="btn btn-primary">Submit</button></td>
 									</form>
 
@@ -94,6 +100,21 @@ width:120px;
 		</div>
 	</div>
 	<!-- END BODY -->
+		<c:if test="${notification!=null}">
+		<div class="notification p-3" id="notification">
+			<div class="d-flex p-2  ${notification.isError ? 'bg-danger' : 'bg-success'}">
+				<c:out value="${notification.message}" />
+				<div data-v-da9425c4="" data-v-70995076="" class="icon ml-3">
+					<i onclick="closeNotification()" data-v-da9425c4="" class="material-icons" style="cursor: pointer;">close</i> 
+				</div>
+			</div>  
+		</div>
+	</c:if>
+	<script>
+		function closeNotification(){
+			document.getElementById( 'notification' ).style.display = 'none';
+		}
+	</script>
 </body>
 
 >

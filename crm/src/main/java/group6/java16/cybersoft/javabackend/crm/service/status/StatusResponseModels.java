@@ -20,7 +20,7 @@ public class StatusResponseModels {
 	public static class StatusTask {
 
 		private int id;
-		private String StatusName;
+		private String statusName;
 
 	}
 }
